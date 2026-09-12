@@ -8,24 +8,67 @@ const FounderCompanion = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative px-6 py-24 sm:py-28">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+    <section className="founder-section">
+      <div className="founder-container grid items-center gap-12 lg:grid-cols-[0.75fr_1.25fr]">
         <motion.div
-          initial={reduceMotion ? undefined : { opacity: 0, scale: 0.9 }}
-          whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto flex h-40 w-40 items-center justify-center rounded-full border border-cyan-400/25 bg-cyan-400/10 sm:h-52 sm:w-52"
-          aria-hidden="true"
+          initial={
+            reduceMotion
+              ? undefined
+              : {
+                  opacity: 0,
+                  scale: 0.8,
+                }
+          }
+          whileInView={
+            reduceMotion
+              ? undefined
+              : {
+                  opacity: 1,
+                  scale: 1,
+                }
+          }
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{
+            duration: 0.8,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="relative mx-auto flex h-64 w-64 items-center justify-center rounded-full border border-cyan-400/20 bg-cyan-400/[0.04] shadow-[0_0_100px_rgba(34,211,238,0.08)] sm:h-80 sm:w-80"
         >
-          <Users className="h-16 w-16 text-cyan-300 sm:h-20 sm:w-20" />
+          <motion.div
+            animate={
+              reduceMotion
+                ? undefined
+                : {
+                    rotate: 360,
+                  }
+            }
+            transition={{
+              duration: 18,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute inset-5 rounded-full border border-dashed border-cyan-400/20"
+          />
+
+          <div className="flex h-28 w-28 items-center justify-center rounded-full border border-cyan-400/20 bg-cyan-400/10 shadow-[0_0_50px_rgba(34,211,238,0.12)]">
+            <Users className="h-14 w-14 text-cyan-300" />
+          </div>
         </motion.div>
 
         <div>
-          <SectionHeading eyebrow="A companion on the path" title="He's not completely alone" />
-          <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--text-muted)] sm:text-lg">
+          <SectionHeading
+            eyebrow="A companion on the path"
+            title="He's not completely alone"
+          />
+
+          <p className="mt-7 max-w-2xl text-base leading-8 text-slate-400 sm:text-lg">
             {companionSummary}
           </p>
+
+          <div className="mt-8 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400/70">
+            <span className="h-px w-10 bg-cyan-400/30" />
+            Guidance • Combat • Truth
+          </div>
         </div>
       </div>
     </section>

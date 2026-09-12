@@ -1,13 +1,14 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { Flame, Gamepad2 } from "lucide-react";
+import { Flame, Gamepad2, ArrowDown } from "lucide-react";
 
-import { category, gameSubtitle, gameTitle, heroSummary, heroTagline } from "../data/founderContent";
+import {
+  category,
+  gameSubtitle,
+  gameTitle,
+  heroSummary,
+  heroTagline,
+} from "../data/founderContent";
 
-/**
- * Ember/fire-toned hero, layered on top of the site's existing dark
- * background tokens. Fire is the game's first and emotionally central
- * element, so the accent shift is deliberate and scoped to this page.
- */
 const FounderHero = () => {
   const reduceMotion = useReducedMotion();
 
@@ -15,75 +16,78 @@ const FounderHero = () => {
     reduceMotion
       ? {}
       : {
-          initial: { opacity: 0, y: 24 },
+          initial: { opacity: 0, y: 30 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const, delay },
+          transition: {
+            duration: 0.75,
+            delay,
+            ease: [0.22, 1, 0.36, 1] as const,
+          },
         };
 
   return (
-    <section className="relative isolate overflow-hidden px-6 pb-20 pt-36 sm:pt-44">
-      {/* Ambient background: ember glow + subtle grid, purely decorative */}
-      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-        <div className="absolute inset-0 bg-[var(--bg-primary)]" />
-        <div
-          className="absolute left-1/2 top-[-10%] h-[560px] w-[560px] -translate-x-1/2 rounded-full opacity-40 blur-[140px]"
-          style={{ background: "radial-gradient(circle, rgba(251,146,60,0.35), transparent 70%)" }}
-        />
-        <div
-          className="absolute right-[8%] top-[20%] h-[360px] w-[360px] rounded-full opacity-30 blur-[120px]"
-          style={{ background: "radial-gradient(circle, rgba(200,30,44,0.3), transparent 70%)" }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.6) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-          }}
-        />
-      </div>
+    <section className="founder-hero founder-section px-6 pb-20 pt-32 sm:px-8 lg:px-16">
+      <div className="founder-hero-glow" aria-hidden="true" />
+      <div className="founder-hero-ring" aria-hidden="true" />
 
-      <div className="mx-auto flex max-w-[1200px] flex-col items-center text-center">
+      <div className="founder-container relative z-10 flex flex-col items-center text-center">
         <motion.div
           {...fadeUp(0)}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-orange-400/25 bg-orange-400/10 px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.18em] text-orange-300"
+          className="founder-kicker"
         >
-          <Gamepad2 className="h-4 w-4" aria-hidden="true" />
+          <Gamepad2 className="h-4 w-4" />
           {category}
         </motion.div>
 
         <motion.h1
           {...fadeUp(0.08)}
-          className="text-5xl font-bold leading-[1.05] text-[var(--text-primary)] sm:text-6xl lg:text-7xl"
+          className="founder-title mt-8 max-w-6xl"
         >
-          {gameTitle}
-          <span className="mt-2 block bg-gradient-to-r from-orange-300 via-red-400 to-orange-200 bg-clip-text text-transparent">
+          <span className="block text-white">
+            {gameTitle}
+          </span>
+
+          <span className="founder-title-gradient mt-4 block">
             {gameSubtitle}
           </span>
         </motion.h1>
 
         <motion.p
-          {...fadeUp(0.16)}
-          className="mt-6 max-w-2xl text-lg font-medium leading-8 text-[var(--text-secondary)] sm:text-xl"
+          {...fadeUp(0.18)}
+          className="mt-8 max-w-3xl text-lg font-medium leading-8 text-slate-300 sm:text-xl"
         >
           {heroTagline}
         </motion.p>
 
         <motion.p
-          {...fadeUp(0.22)}
-          className="mt-4 max-w-2xl text-base leading-7 text-[var(--text-muted)]"
+          {...fadeUp(0.25)}
+          className="mt-5 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base"
         >
           {heroSummary}
         </motion.p>
 
         <motion.a
-          {...fadeUp(0.3)}
+          {...fadeUp(0.34)}
           href="#origin"
-          className="mt-10 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-600 px-7 py-3.5 text-base font-semibold text-white shadow-[0_10px_40px_rgba(234,88,12,0.35)] transition-transform duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+          whileHover={reduceMotion ? undefined : { scale: 1.04 }}
+          whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+          className="group mt-10 inline-flex items-center gap-3 rounded-full border border-orange-400/30 bg-gradient-to-r from-orange-500 to-red-600 px-7 py-4 font-semibold text-white shadow-[0_0_45px_rgba(251,146,60,0.18)] transition-shadow hover:shadow-[0_0_65px_rgba(251,146,60,0.3)]"
         >
-          <Flame className="h-5 w-5" aria-hidden="true" />
-          Begin the story
+          <Flame className="h-5 w-5" />
+
+          <span>Begin the story</span>
+
+          <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-1" />
         </motion.a>
+
+        <motion.div
+          {...fadeUp(0.48)}
+          className="mt-16 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-600"
+        >
+          <span className="h-px w-8 bg-slate-700" />
+          Scroll to explore
+          <span className="h-px w-8 bg-slate-700" />
+        </motion.div>
       </div>
     </section>
   );

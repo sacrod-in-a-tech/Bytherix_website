@@ -6,24 +6,48 @@ import FounderElements from "./components/FounderElements";
 import FounderCompanion from "./components/FounderCompanion";
 import FounderEnemies from "./components/FounderEnemies";
 import FounderClosing from "./components/FounderClosing";
+import "./founder.css";
 
-/**
- * "Founder – The Beginning of Journey" product page.
- *
- * Content is sourced entirely from the uploaded game design document.
- * See IMPLEMENTATION_SUMMARY.md at the repo root for the section-by-section
- * content mapping and design rationale.
- */
+const FounderAmbient = () => (
+  <div className="founder-ambient" aria-hidden="true">
+    <div className="founder-grid founder-grid-moving" />
+    <div className="founder-orb founder-orb-orange" />
+    <div className="founder-orb founder-orb-red" />
+    <div className="founder-orb founder-orb-blue" />
+  </div>
+);
+
 const OurFounderPage = () => {
   return (
-    <main className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
+    <main className="founder-page">
+      <FounderAmbient />
+
       <FounderHero />
+
+      <div className="founder-divider" />
+
       <FounderOrigin />
+
+      <div className="founder-divider" />
+
       <FounderWorld />
+
+      <div className="founder-divider" />
+
       <FounderCombat />
+
+      <div className="founder-divider" />
+
       <FounderElements />
+
+      <div className="founder-divider" />
+
       <FounderCompanion />
+
+      <div className="founder-divider" />
+
       <FounderEnemies />
+
       <FounderClosing />
     </main>
   );

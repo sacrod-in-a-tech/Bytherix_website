@@ -1,20 +1,18 @@
 import { motion, useReducedMotion } from "framer-motion";
 
-import { elements, elementsSummary } from "../data/founderContent";
+import {
+  elements,
+  elementsSummary,
+} from "../data/founderContent";
+
 import SectionHeading from "../ui/SectionHeading";
 
 const FounderElements = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden px-6 py-24 sm:py-28">
-      <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-[130px]"
-        style={{ background: "radial-gradient(circle, rgba(251,146,60,0.5), transparent 70%)" }}
-        aria-hidden="true"
-      />
-
-      <div className="relative mx-auto max-w-[1200px]">
+    <section className="founder-section overflow-hidden">
+      <div className="founder-container">
         <SectionHeading
           eyebrow="Elemental power system"
           title="Power is earned, not given"
@@ -23,52 +21,81 @@ const FounderElements = () => {
           tone="ember"
         />
 
-        {/* Progression track: unlocked element -> future elements */}
-        <div className="mx-auto mt-16 flex max-w-2xl flex-col items-center gap-6 sm:flex-row sm:justify-center sm:gap-4">
+        <div className="relative mx-auto mt-16 flex max-w-5xl flex-col items-center gap-5 md:flex-row md:items-stretch md:justify-center">
           {elements.map((element, index) => {
             const Icon = element.icon;
-            const isUnlocked = element.status === "unlocked";
+            const unlocked = element.status === "unlocked";
 
             return (
-              <div key={element.name} className="flex items-center gap-4 sm:gap-4">
+              <div
+                key={element.name}
+                className="flex w-full items-center md:w-auto"
+              >
                 <motion.div
-                  initial={reduceMotion ? undefined : { opacity: 0, scale: 0.85 }}
-                  whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.5, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-                  className={`flex w-56 flex-col items-center gap-3 rounded-2xl border p-6 text-center shadow-[var(--shadow-card)] ${
-                    isUnlocked
-                      ? "border-orange-400/40 bg-gradient-to-b from-orange-400/15 to-transparent"
-                      : "border-[var(--border-primary)] bg-[var(--surface-primary)]"
+                  initial={
+                    reduceMotion
+                      ? undefined
+                      : {
+                          opacity: 0,
+                          scale: 0.9,
+                        }
+                  }
+                  whileInView={
+                    reduceMotion
+                      ? undefined
+                      : {
+                          opacity: 1,
+                          scale: 1,
+                        }
+                  }
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: index * 0.18,
+                  }}
+                  className={`founder-card relative w-full p-7 text-center md:w-[330px] ${
+                    unlocked
+                      ? "border-orange-400/30 bg-orange-500/[0.06]"
+                      : "opacity-70"
                   }`}
                 >
-                  <span
-                    className={`flex h-14 w-14 items-center justify-center rounded-full border ${
-                      isUnlocked
-                        ? "border-orange-400/40 bg-orange-400/15 text-orange-300"
-                        : "border-[var(--border-secondary)] bg-[var(--bg-tertiary)] text-[var(--text-muted)]"
-                    }`}
-                  >
-                    <Icon className="h-7 w-7" aria-hidden="true" />
+                  {unlocked && (
+                    <motion.div
+                      animate={
+                        reduceMotion
+                          ? undefined
+                          : {
+                              opacity: [0.2, 0.5, 0.2],
+                              scale: [1, 1.08, 1],
+                            }
+                      }
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                      }}
+                      className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/10 blur-3xl"
+                    />
+                  )}
+
+                  <span className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-orange-400/25 bg-orange-400/10 text-orange-300">
+                    <Icon className="h-7 w-7" />
                   </span>
 
-                  <span
-                    className={`text-xs font-semibold uppercase tracking-[0.16em] ${
-                      isUnlocked ? "text-orange-300" : "text-[var(--text-muted)]"
-                    }`}
-                  >
-                    {isUnlocked ? "First element" : "What comes next"}
+                  <span className="relative mt-5 block text-[10px] font-bold uppercase tracking-[0.2em] text-orange-400">
+                    {unlocked ? "First element" : "What comes next"}
                   </span>
 
-                  <h3 className="text-lg font-bold text-[var(--text-primary)]">{element.name}</h3>
-                  <p className="text-sm leading-6 text-[var(--text-muted)]">{element.meaning}</p>
+                  <h3 className="relative mt-2 text-2xl font-bold text-white">
+                    {element.name}
+                  </h3>
+
+                  <p className="relative mt-3 text-sm leading-7 text-slate-400">
+                    {element.meaning}
+                  </p>
                 </motion.div>
 
                 {index < elements.length - 1 && (
-                  <span
-                    className="hidden h-px w-10 bg-gradient-to-r from-orange-400/60 to-transparent sm:block"
-                    aria-hidden="true"
-                  />
+                  <div className="mx-3 hidden h-px w-16 bg-gradient-to-r from-orange-400/50 to-red-400/20 md:block" />
                 )}
               </div>
             );
