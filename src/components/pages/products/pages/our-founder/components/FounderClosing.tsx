@@ -65,7 +65,7 @@ const FounderClosing = () => {
 
         <Link
           to="/products"
-          className="group mt-10 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-7 py-4 font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:border-orange-400/30 hover:bg-orange-400/[0.06] hover:shadow-[0_0_45px_rgba(251,146,60,0.12)]"
+          className="group mt-10 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-7 py-4 font-semibold text-[#fb923c] backdrop-blur-xl transition-all duration-300 hover:border-orange-400/30 hover:bg-orange-400/[0.06] hover:shadow-[0_0_45px_rgba(251,146,60,0.12)]"
         >
           Explore all Bytherix products
 

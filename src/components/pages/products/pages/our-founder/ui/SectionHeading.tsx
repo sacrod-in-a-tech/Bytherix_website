@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
 interface SectionHeadingProps {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   description?: ReactNode;
   align?: "left" | "center";
@@ -10,11 +10,10 @@ interface SectionHeadingProps {
 }
 
 const SectionHeading = ({
-  eyebrow,
+
   title,
   description,
   align = "left",
-  tone = "default",
 }: SectionHeadingProps) => {
   const reduceMotion = useReducedMotion();
 
@@ -23,10 +22,7 @@ const SectionHeading = ({
       ? "mx-auto items-center text-center"
       : "items-start text-left";
 
-  const eyebrowClass =
-    tone === "ember"
-      ? "text-orange-400"
-      : "text-cyan-400";
+ const titleClass = "text-[#fb923c]";
 
   return (
     <motion.div
@@ -39,11 +35,10 @@ const SectionHeading = ({
       }}
       className={`founder-heading flex max-w-3xl flex-col gap-4 ${alignClass}`}
     >
-      <span className={`founder-eyebrow ${eyebrowClass}`}>
-        {eyebrow}
-      </span>
 
-      <h2 className="text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-6xl">
+      <h2
+        className={`text-4xl font-bold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-6xl ${titleClass}`}
+      >
         {title}
       </h2>
 

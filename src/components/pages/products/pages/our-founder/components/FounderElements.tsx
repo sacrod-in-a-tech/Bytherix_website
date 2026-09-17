@@ -77,15 +77,11 @@ const FounderElements = () => {
                     />
                   )}
 
-                  <span className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-orange-400/25 bg-orange-400/10 text-orange-300">
-                    <Icon className="h-7 w-7" />
+                  <span className="relative mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-orange-400/25 bg-orange-400/10 text-orange-300">
+                    <Icon className="h-5 w-5" />
                   </span>
 
-                  <span className="relative mt-5 block text-[10px] font-bold uppercase tracking-[0.2em] text-orange-400">
-                    {unlocked ? "First element" : "What comes next"}
-                  </span>
-
-                  <h3 className="relative mt-2 text-2xl font-bold text-white">
+                  <h3 className="relative mt-4 text-2xl font-bold text-white">
                     {element.name}
                   </h3>
 

@@ -2,7 +2,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Flame, Gamepad2, ArrowDown } from "lucide-react";
 
 import {
-  category,
   gameSubtitle,
   gameTitle,
   heroSummary,
@@ -31,19 +30,12 @@ const FounderHero = () => {
       <div className="founder-hero-ring" aria-hidden="true" />
 
       <div className="founder-container relative z-10 flex flex-col items-center text-center">
-        <motion.div
-          {...fadeUp(0)}
-          className="founder-kicker"
-        >
-          <Gamepad2 className="h-4 w-4" />
-          {category}
-        </motion.div>
 
         <motion.h1
           {...fadeUp(0.08)}
-          className="founder-title mt-8 max-w-6xl"
+          className="founder-title mt-4 max-w-6xl"
         >
-          <span className="block text-white">
+          <span className="founder-title-gradient mt-4 block">
             {gameTitle}
           </span>
 
@@ -80,14 +72,6 @@ const FounderHero = () => {
           <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-1" />
         </motion.a>
 
-        <motion.div
-          {...fadeUp(0.48)}
-          className="mt-16 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-600"
-        >
-          <span className="h-px w-8 bg-slate-700" />
-          Scroll to explore
-          <span className="h-px w-8 bg-slate-700" />
-        </motion.div>
       </div>
     </section>
   );

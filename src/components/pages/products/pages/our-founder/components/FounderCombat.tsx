@@ -14,7 +14,6 @@ const FounderCombat = () => {
     <section className="founder-section">
       <div className="founder-container">
         <SectionHeading
-          eyebrow="Combat rooted in tradition"
           title="No guns. No robots. Just steel and skill."
           description={combatPhilosophy}
           tone="ember"
