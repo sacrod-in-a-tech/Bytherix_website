@@ -22,7 +22,6 @@ import {
 
 export const gameTitle = "Founder";
 export const gameSubtitle = "The Beginning of Journey";
-export const category = "Story-driven action-adventure";
 
 export const heroTagline =
   "A boy loses everything to an ancient evil. What he becomes to hunt it down is the story.";

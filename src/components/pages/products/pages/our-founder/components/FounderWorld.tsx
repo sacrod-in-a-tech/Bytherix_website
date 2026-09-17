@@ -14,9 +14,9 @@ const FounderWorld = () => {
     <section className="founder-section">
       <div className="founder-container">
         <SectionHeading
-          eyebrow="A journey across a living world"
           title="One map opens into many"
           description={worldSummary}
+          tone="ember"
         />
 
         <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3">
@@ -60,10 +60,6 @@ const FounderWorld = () => {
                 <div className="flex items-start justify-between">
                   <span className="founder-icon">
                     <Icon className="h-6 w-6" />
-                  </span>
-
-                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-600">
-                    0{index + 1}
                   </span>
                 </div>
 

@@ -7,15 +7,10 @@ const FounderOrigin = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section
-      id="origin"
-      className="founder-section"
-    >
+    <section id="origin" className="founder-section">
       <div className="founder-container">
         <SectionHeading
-          eyebrow="A story that starts with tragedy"
           title="One family. One night. One purpose."
-          tone="ember"
         />
 
         <motion.ol
@@ -56,11 +51,7 @@ const FounderOrigin = () => {
               </span>
 
               <div className="pt-1">
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-400/70">
-                  Chapter {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">
+                <h3 className="mt-2 text-2xl font-bold tracking-tight text-[#fb923c]">
                   {beat.title}
                 </h3>
 
@@ -77,3 +68,4 @@ const FounderOrigin = () => {
 };
 
 export default FounderOrigin;
+

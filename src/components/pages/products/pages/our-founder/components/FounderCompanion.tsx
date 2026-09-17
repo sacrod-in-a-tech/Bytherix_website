@@ -57,16 +57,16 @@ const FounderCompanion = () => {
 
         <div>
           <SectionHeading
-            eyebrow="A companion on the path"
             title="He's not completely alone"
+
           />
 
           <p className="mt-7 max-w-2xl text-base leading-8 text-slate-400 sm:text-lg">
             {companionSummary}
           </p>
 
-          <div className="mt-8 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400/70">
-            <span className="h-px w-10 bg-cyan-400/30" />
+          <div className="mt-8 flex items-center gap-3 text-l font-semibold uppercase tracking-[0.18em] text-[#fb923c]">
+            <span className="h-px w-25 bg-[#fb923c] " />
             Guidance • Combat • Truth
           </div>
         </div>

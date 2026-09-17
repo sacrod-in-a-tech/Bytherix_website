@@ -258,24 +258,6 @@
   position: relative;
 }
 
-.founder-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  color: #fb923c;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-}
-
-.founder-eyebrow::before {
-  content: "";
-  width: 28px;
-  height: 1px;
-  background: linear-gradient(to right, #fb923c, transparent);
-}
-
 .founder-heading-line {
   width: 70px;
   height: 2px;
