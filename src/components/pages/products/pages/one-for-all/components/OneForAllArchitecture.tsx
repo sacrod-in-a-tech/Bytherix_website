@@ -10,10 +10,9 @@ const OneForAllArchitecture = () => {
     <section className="relative px-6 py-8 lg:py-8 sm:py-12">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
-          eyebrow="How the system is structured"
-          title="A layered architecture, built with security from the start"
-          description="Rather than one monolithic tool, One For All is designed as layers: an experience layer for owners and staff, industry modules on top of a shared core, and a security and infrastructure layer underneath all of it."
-        />
+  title="A layered architecture, built with security from the start"
+  description="Rather than one monolithic tool, One For All is designed as layers: an experience layer for owners and staff, industry modules on top of a shared core, and a security and infrastructure layer underneath all of it."
+/>
 
         <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           {/* Layered stack visualization */}
