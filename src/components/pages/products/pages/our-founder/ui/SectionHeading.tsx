@@ -6,14 +6,22 @@ interface SectionHeadingProps {
   title: string;
   description?: ReactNode;
   align?: "left" | "center";
-  tone?: "default" | "ember";
+  tone?: "default" | "ember" | "cyan" | "void";
 }
 
-const SectionHeading = ({
+const toneClass: Record<NonNullable<SectionHeadingProps["tone"]>, string> = {
+  default: "founder-heading-default",
+  ember: "founder-heading-ember",
+  cyan: "founder-heading-cyan",
+  void: "founder-heading-void",
+};
 
+const SectionHeading = ({
+  eyebrow,
   title,
   description,
   align = "left",
+  tone = "default",
 }: SectionHeadingProps) => {
   const reduceMotion = useReducedMotion();
 
@@ -21,8 +29,6 @@ const SectionHeading = ({
     align === "center"
       ? "mx-auto items-center text-center"
       : "items-start text-left";
-
- const titleClass = "text-[#fb923c]";
 
   return (
     <motion.div
@@ -33,12 +39,10 @@ const SectionHeading = ({
         duration: 0.7,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`founder-heading flex max-w-3xl flex-col gap-4 ${alignClass}`}
+      className={`founder-heading flex max-w-3xl flex-col gap-4 ${toneClass[tone]} ${alignClass}`}
     >
 
-      <h2
-        className={`text-4xl font-bold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-6xl ${titleClass}`}
-      >
+      <h2 className="founder-heading-title text-4xl font-bold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
         {title}
       </h2>
 

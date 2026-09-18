@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { Flame, Gamepad2, ArrowDown } from "lucide-react";
+import { Flame, ArrowDown } from "lucide-react";
 
 import {
   gameSubtitle,
@@ -60,7 +60,7 @@ const FounderHero = () => {
 
         <motion.a
           {...fadeUp(0.34)}
-          href="#origin"
+          href="#tragedy"
           whileHover={reduceMotion ? undefined : { scale: 1.04 }}
           whileTap={reduceMotion ? undefined : { scale: 0.97 }}
           className="group mt-10 inline-flex items-center gap-3 rounded-full border border-orange-400/30 bg-gradient-to-r from-orange-500 to-red-600 px-7 py-4 font-semibold text-white shadow-[0_0_45px_rgba(251,146,60,0.18)] transition-shadow hover:shadow-[0_0_65px_rgba(251,146,60,0.3)]"

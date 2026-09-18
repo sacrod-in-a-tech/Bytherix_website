@@ -137,7 +137,7 @@ const SocialProof = () => {
           CTA AREA
           ============================================================ */}
 
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4 lg:justify-start">
+      <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4 lg:justify-start">
 
         {/* Primary */}
         <a
@@ -145,6 +145,7 @@ const SocialProof = () => {
           className="
             group
             inline-flex
+            w-full
             h-11
             items-center
             justify-center
@@ -162,6 +163,7 @@ const SocialProof = () => {
             hover:bg-white/90
             hover:shadow-[0_12px_36px_rgba(0,0,0,0.35)]
             active:translate-y-0
+            sm:w-auto
           "
         >
           <span>Explore Services</span>
@@ -174,24 +176,32 @@ const SocialProof = () => {
           className="
             group
             inline-flex
+            w-full
             h-11
             items-center
+            justify-center
             gap-2.5
             rounded-full
-            px-3
+            bg-blue-900
+            px-5
             text-sm
-            font-medium
-            text-white/70
-            transition-colors
+            font-semibold
+            text-[#080b12]
+            shadow-[0_8px_30px_rgba(0,0,0,0.25)]
+            transition-all
             duration-300
-            hover:text-white
+            hover:-translate-y-0.5
+            hover:bg-white/90
+            hover:shadow-[0_12px_36px_rgba(0,0,0,0.35)]
+            active:translate-y-0
+            sm:w-auto
           "
         >
           <span
             className="
               flex
-              h-9
-              w-9
+              h-7
+              w-7
               shrink-0
               items-center
               justify-center

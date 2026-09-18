@@ -23,6 +23,25 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+.homepage-container {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@media (min-width: 640px) {
+  .homepage-container {
+    padding-inline: 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .homepage-container {
+    padding-inline: 80px;
+  }
+}
+
 #root {
   min-height: 100vh;
   background: #050814;

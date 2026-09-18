@@ -491,3 +491,592 @@
     transition: none;
   }
 }
+/* -------------------------------------------------------
+   Hero refinements
+------------------------------------------------------- */
+
+.founder-hero-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 30%, transparent 40%, #070b16 92%);
+}
+
+.founder-title-sub {
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: rgba(248, 250, 252, 0.55);
+}
+
+/* -------------------------------------------------------
+   Eyebrow / heading tones
+------------------------------------------------------- */
+
+.founder-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fdba74;
+}
+
+.founder-eyebrow-dash {
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+
+.founder-heading-cyan .founder-eyebrow,
+.founder-eyebrow-cyan {
+  color: #67e8f9;
+}
+
+.founder-heading-void .founder-eyebrow,
+.founder-eyebrow-void {
+  color: #cbd5e1;
+}
+
+.founder-heading-cyan .founder-heading-title {
+  color: #a5f3fc;
+}
+
+.founder-heading-default .founder-heading-title,
+.founder-heading-ember .founder-heading-title {
+  color: #fb923c;
+}
+
+/* -------------------------------------------------------
+   Chapter navigation
+------------------------------------------------------- */
+
+.founder-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.founder-nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform-origin: 0% 50%;
+  background: linear-gradient(to right, #fb923c, #ef4444);
+  z-index: 41;
+}
+
+.founder-nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.1rem 1.25rem 0 0;
+  padding: 0.55rem 1.1rem;
+  border-radius: 9999px;
+  border: 1px solid var(--founder-border);
+  background: rgba(7, 11, 22, 0.72);
+  backdrop-filter: blur(14px);
+  color: #f8fafc;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.founder-nav-toggle-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #fb923c;
+  box-shadow: 0 0 10px rgba(251, 146, 60, 0.7);
+}
+
+.founder-nav-list {
+  list-style: none;
+  margin: 0.5rem 1.25rem 0 0;
+  padding: 0.6rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.15rem;
+  border-radius: 18px;
+  border: 1px solid var(--founder-border);
+  background: rgba(7, 11, 22, 0.86);
+  backdrop-filter: blur(16px);
+  min-width: 200px;
+}
+
+.founder-nav-list-open {
+  display: flex;
+}
+
+.founder-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(248, 250, 252, 0.55);
+  font-size: 0.82rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.founder-nav-item:hover {
+  background: rgba(251, 146, 60, 0.08);
+  color: #f8fafc;
+}
+
+.founder-nav-item-active {
+  color: #fdba74;
+  background: rgba(251, 146, 60, 0.1);
+}
+
+.founder-nav-item-index {
+  font-size: 0.68rem;
+  font-weight: 700;
+  opacity: 0.6;
+  width: 1.4rem;
+}
+
+@media (max-width: 640px) {
+  .founder-nav-toggle {
+    margin-right: 0.85rem;
+  }
+
+  .founder-nav-list {
+    margin-right: 0.85rem;
+  }
+}
+
+/* -------------------------------------------------------
+   Embers
+------------------------------------------------------- */
+
+.founder-embers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.founder-ember {
+  position: absolute;
+  bottom: -5%;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: #fdba74;
+  box-shadow: 0 0 6px rgba(251, 146, 60, 0.8);
+  opacity: 0;
+  animation-name: founderEmberRise;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+}
+
+.founder-embers-cyan .founder-ember {
+  background: #67e8f9;
+  box-shadow: 0 0 6px rgba(103, 232, 249, 0.8);
+}
+
+.founder-embers-void .founder-ember {
+  background: #e2e8f0;
+  box-shadow: 0 0 6px rgba(226, 232, 240, 0.55);
+}
+
+@keyframes founderEmberRise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0);
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-320px) translateX(18px);
+  }
+}
+
+/* -------------------------------------------------------
+   Tragedy chapter
+------------------------------------------------------- */
+
+.founder-tragedy {
+  position: relative;
+}
+
+.founder-tragedy-veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 20%, rgba(0, 0, 0, 0.7), transparent 70%);
+}
+
+.founder-tragedy-card-final {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: linear-gradient(145deg, rgba(69, 15, 15, 0.5), rgba(15, 23, 42, 0.6));
+}
+
+/* -------------------------------------------------------
+   World map + quest log
+------------------------------------------------------- */
+
+.founder-map {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+  padding: 2.5rem clamp(1.5rem, 4vw, 3rem);
+  border-radius: 24px;
+  border: 1px solid var(--founder-border);
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.4));
+}
+
+.founder-map-track {
+  position: absolute;
+  left: clamp(2.5rem, 6vw, 4.5rem);
+  right: clamp(2.5rem, 6vw, 4.5rem);
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(251, 146, 60, 0.5),
+    rgba(148, 163, 184, 0.15) 40%,
+    transparent
+  );
+}
+
+.founder-map-node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 9999px;
+  z-index: 1;
+}
+
+.founder-map-node-active {
+  border: 1px solid rgba(251, 146, 60, 0.4);
+  background: rgba(251, 146, 60, 0.1);
+  color: #fdba74;
+  box-shadow: 0 0 30px rgba(251, 146, 60, 0.15);
+}
+
+.founder-map-node-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.founder-map-node-locked {
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  border: 1px dashed rgba(148, 163, 184, 0.3);
+  background: rgba(15, 23, 42, 0.6);
+  color: rgba(148, 163, 184, 0.6);
+}
+
+.founder-map-continues {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: rgba(148, 163, 184, 0.55);
+}
+
+.founder-questlog {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.founder-quest-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.75rem clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.founder-quest-row-body {
+  flex: 1;
+}
+
+.founder-quest-connector {
+  position: absolute;
+  left: clamp(2.6rem, 4vw, 3.3rem);
+  bottom: -1rem;
+  width: 1px;
+  height: 1rem;
+  background: rgba(251, 146, 60, 0.25);
+}
+
+/* -------------------------------------------------------
+   Weapon showcase
+------------------------------------------------------- */
+
+.founder-weapon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2.5rem 1.5rem;
+  border-radius: 24px;
+  border: 1px solid var(--founder-border);
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.55), rgba(15, 23, 42, 0.45));
+  text-align: center;
+  transition: border-color 350ms ease, box-shadow 350ms ease;
+}
+
+.founder-weapon:hover {
+  border-color: rgba(251, 146, 60, 0.3);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25), 0 0 40px rgba(251, 146, 60, 0.08);
+}
+
+.founder-weapon-plinth {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+}
+
+.founder-weapon-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid rgba(251, 146, 60, 0.18);
+}
+
+.founder-weapon-ring::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border-radius: 9999px;
+  border: 1px dashed rgba(251, 146, 60, 0.14);
+}
+
+.founder-weapon-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 92px;
+  height: 92px;
+  border-radius: 9999px;
+  border: 1px solid rgba(251, 146, 60, 0.3);
+  background: rgba(251, 146, 60, 0.07);
+  color: #fdba74;
+  box-shadow: 0 0 40px rgba(251, 146, 60, 0.1);
+}
+
+.founder-weapon-body {
+  position: relative;
+}
+
+.founder-weapon-index {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(251, 146, 60, 0.55);
+  margin-bottom: 0.5rem;
+}
+
+/* -------------------------------------------------------
+   Power progression rail
+------------------------------------------------------- */
+
+.founder-power-node-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.founder-power-node {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  padding: 2rem;
+  border-radius: 22px;
+  border: 1px solid var(--founder-border);
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.65), rgba(15, 23, 42, 0.5));
+  text-align: center;
+}
+
+.founder-power-node-unlocked {
+  border-color: rgba(251, 146, 60, 0.35);
+  background: rgba(251, 146, 60, 0.06);
+}
+
+.founder-power-node-locked {
+  opacity: 0.65;
+}
+
+.founder-power-glow {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  width: 140px;
+  height: 140px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: rgba(251, 146, 60, 0.14);
+  filter: blur(40px);
+}
+
+.founder-power-icon {
+  position: relative;
+  display: flex;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(251, 146, 60, 0.3);
+  background: rgba(251, 146, 60, 0.1);
+  color: #fdba74;
+}
+
+.founder-power-node-locked .founder-power-icon {
+  border-color: rgba(148, 163, 184, 0.25);
+  background: rgba(148, 163, 184, 0.06);
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.founder-power-status {
+  position: relative;
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(251, 146, 60, 0.6);
+}
+
+.founder-power-node-locked .founder-power-status {
+  color: rgba(148, 163, 184, 0.6);
+}
+
+.founder-power-link {
+  width: 70px;
+  height: 1px;
+  margin: 0 1rem;
+  background: linear-gradient(to right, rgba(251, 146, 60, 0.5), rgba(148, 163, 184, 0.15));
+  transform-origin: left center;
+}
+
+@media (max-width: 768px) {
+  .founder-power-link {
+    width: 1px;
+    height: 44px;
+    margin: 0.25rem 0;
+    background: linear-gradient(to bottom, rgba(251, 146, 60, 0.5), rgba(148, 163, 184, 0.15));
+  }
+}
+
+/* -------------------------------------------------------
+   Encounter system
+------------------------------------------------------- */
+
+.founder-encounter-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.founder-encounter-tile-active {
+  border-color: rgba(251, 146, 60, 0.4);
+  box-shadow: 0 0 35px rgba(251, 146, 60, 0.1);
+}
+
+.founder-encounter-panel {
+  min-height: 160px;
+}
+
+/* -------------------------------------------------------
+   Queen Boksi cinematic moment
+------------------------------------------------------- */
+
+.founder-queen {
+  background: radial-gradient(ellipse at 50% 0%, rgba(69, 10, 10, 0.35), transparent 60%), #050710;
+}
+
+.founder-queen-veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 30%, rgba(127, 29, 29, 0.22), transparent 65%);
+}
+
+.founder-queen-silhouette {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 9999px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(127, 29, 29, 0.12);
+  color: rgba(252, 165, 165, 0.85);
+  box-shadow: 0 0 80px rgba(239, 68, 68, 0.15);
+}
+
+.founder-queen-title {
+  background: linear-gradient(100deg, #fecaca 0%, #ef4444 45%, #7f1d1d 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* -------------------------------------------------------
+   Responsive additions
+------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .founder-nav {
+    display: none;
+  }
+
+  .founder-map {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .founder-map-track {
+    display: none;
+  }
+
+  .founder-map-continues {
+    margin-left: 0;
+  }
+
+  .founder-weapon {
+    padding: 2rem 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-nav-progress {
+    transform: none !important;
+  }
+}

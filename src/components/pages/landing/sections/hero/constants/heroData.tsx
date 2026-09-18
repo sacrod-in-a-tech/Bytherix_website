@@ -74,9 +74,9 @@ export const STATS: Stat[] = [
         />
       </svg>
     ),
-    value: "10+",
+    value: "3+",
     label: "Years of Experience",
-    desc: "A decade of delivering innovative solutions.",
+    desc: "Building innovative digital solutions with dedication and expertise.",
     bg: "bg-blue-500",
   },
   {
@@ -95,9 +95,9 @@ export const STATS: Stat[] = [
         />
       </svg>
     ),
-    value: "500+",
+    value: "50+",
     label: "Happy Clients",
-    desc: "Businesses trust us to bring their ideas to life.",
+    desc: "Businesses trust us to turn ideas into impactful solutions.",
     bg: "bg-emerald-500",
   },
   {
@@ -116,9 +116,9 @@ export const STATS: Stat[] = [
         />
       </svg>
     ),
-    value: "1000+",
+    value: "15+",
     label: "Projects Delivered",
-    desc: "Successful projects across diverse industries.",
+    desc: "Successful digital projects built for diverse needs.",
     bg: "bg-purple-500",
   },
   {
@@ -139,7 +139,7 @@ export const STATS: Stat[] = [
     ),
     value: "99%",
     label: "Client Satisfaction",
-    desc: "Our commitment to quality drives client success.",
+    desc: "Our commitment to quality drives lasting client satisfaction.",
     bg: "bg-orange-500",
   },
 ];

@@ -168,7 +168,7 @@ export default function Services() {
           Matching inspect layout: relative z-10 w-full px-6 sm:px-12 lg:px-20
       ------------------------------------------------- */}
 
-      <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20">
+      <div className="homepage-container relative z-10">
         {/* -------------------------------------------------
             Heading
         ------------------------------------------------- */}

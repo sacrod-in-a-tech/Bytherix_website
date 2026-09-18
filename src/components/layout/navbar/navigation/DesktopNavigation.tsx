@@ -170,7 +170,7 @@ const DesktopNavigation = ({
           duration: 0.35,
           delay: docked ? 0.1 : 0,
         }}
-        className="relative z-20 ml-auto hidden items-center gap-4 lg:flex xl:gap-5 2xl:gap-6"
+        className="relative z-20 ml-auto hidden items-center gap-4 xl:flex 2xl:gap-5"
       >
         <nav className="flex items-center gap-4 xl:gap-5 2xl:gap-6">
           {NAV_ITEMS.map((item) => {
@@ -411,7 +411,7 @@ const DesktopNavigation = ({
               setActiveDropdown(null);
               setHoveredNavItem(null);
             }}
-            className="absolute left-3 right-3 top-[calc(100%-2px)] z-[90] hidden lg:block"
+            className="absolute left-3 right-3 top-[calc(100%-2px)] z-[90] hidden xl:block"
           >
             <div className="mx-auto w-full max-w-[1600px] overflow-hidden rounded-b-2xl rounded-t-xl border border-white/[0.14] bg-[#080F29]/95 shadow-[0_18px_42px_rgba(0,0,0,0.45),0_0_30px_rgba(0,174,239,0.08)] backdrop-blur-xl">
               {/* Top glow line */}

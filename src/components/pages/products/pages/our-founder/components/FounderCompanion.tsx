@@ -8,45 +8,18 @@ const FounderCompanion = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="founder-section">
+    <section id="companion" className="founder-section">
       <div className="founder-container grid items-center gap-12 lg:grid-cols-[0.75fr_1.25fr]">
         <motion.div
-          initial={
-            reduceMotion
-              ? undefined
-              : {
-                  opacity: 0,
-                  scale: 0.8,
-                }
-          }
-          whileInView={
-            reduceMotion
-              ? undefined
-              : {
-                  opacity: 1,
-                  scale: 1,
-                }
-          }
+          initial={reduceMotion ? undefined : { opacity: 0, scale: 0.8 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            duration: 0.8,
-            ease: [0.22, 1, 0.36, 1],
-          }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="relative mx-auto flex h-64 w-64 items-center justify-center rounded-full border border-cyan-400/20 bg-cyan-400/[0.04] shadow-[0_0_100px_rgba(34,211,238,0.08)] sm:h-80 sm:w-80"
         >
           <motion.div
-            animate={
-              reduceMotion
-                ? undefined
-                : {
-                    rotate: 360,
-                  }
-            }
-            transition={{
-              duration: 18,
-              repeat: Infinity,
-              ease: "linear",
-            }}
+            animate={reduceMotion ? undefined : { rotate: 360 }}
+            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
             className="absolute inset-5 rounded-full border border-dashed border-cyan-400/20"
           />
 
@@ -56,18 +29,21 @@ const FounderCompanion = () => {
         </motion.div>
 
         <div>
-          <SectionHeading
-            title="He's not completely alone"
+          <SectionHeading eyebrow="Companion" title="He's not completely alone" tone="cyan" />
 
-          />
-
-          <p className="mt-7 max-w-2xl text-base leading-8 text-slate-400 sm:text-lg">
+          <motion.blockquote
+            initial={reduceMotion ? undefined : { opacity: 0, y: 16 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="founder-companion-quote mt-7 max-w-2xl border-l-2 border-cyan-400/30 pl-5 text-base leading-8 text-slate-300 sm:text-lg"
+          >
             {companionSummary}
-          </p>
+          </motion.blockquote>
 
-          <div className="mt-8 flex items-center gap-3 text-l font-semibold uppercase tracking-[0.18em] text-[#fb923c]">
-            <span className="h-px w-25 bg-[#fb923c] " />
-            Guidance • Combat • Truth
+          <div className="mt-8 flex items-center gap-3 text-l font-semibold uppercase tracking-[0.18em] text-cyan-300/90">
+            <span className="h-px w-16 bg-cyan-400/60" />
+            Guidance &middot; Combat &middot; Truth
           </div>
         </div>
       </div>
