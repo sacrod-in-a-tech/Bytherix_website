@@ -4,7 +4,7 @@ import PortfolioCTA from "./components/PortfolioCTA";
 
 const PortfolioPage = () => {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#050812] text-white">
+    <main className="min-h-screen overflow-hidden bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <PortfolioHero />
       <PortfolioProjects />
       <PortfolioCTA />

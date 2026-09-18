@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 
 const PortfolioCTA = () => {
   return (
-    <section className="py-16 md:py-20 lg:py-24">
+    <section className="py-8 md:py-8 lg:py-8">
       <div className="mx-[4vw] w-auto">
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -15,13 +15,13 @@ const PortfolioCTA = () => {
           <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/20 blur-[100px]" />
 
           <div className="relative">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-400">
+            {/* <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-400">
               Have a project in mind?
-            </p>
+            </p> */}
 
             <h2 className="mx-auto mt-4 max-w-3xl text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">
               Let's build something
-              <span className="text-blue-500"> remarkable.</span>
+              <span className="block text-[#2f4ebc]"> remarkable.</span>
             </h2>
 
             <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-slate-400">
