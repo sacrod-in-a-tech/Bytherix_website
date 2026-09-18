@@ -8,7 +8,7 @@ const OneForAllRoadmap = () => {
     <section className="relative px-6 py-8 lg:py-8 sm:py-12">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
-          eyebrow="Where it's headed"
+          // eyebrow="Where it's headed"
           title="Beyond management: a more intelligent platform"
           description="The long-term vision goes beyond traditional business management. These are potential directions for the platform, not shipped features."
         />

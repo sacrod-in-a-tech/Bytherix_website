@@ -63,8 +63,9 @@ const ProjectShowcase = ({
             </div>
 
             <div>
-              <p className="mb-3 text-sm font-inter font-semibold uppercase text-[var(--text-secondary)]">
-                Technologies
+              <p className="mt-8 mb-3 text-sm font-inter font-semibold uppercase text-[var(--text-secondary)]">
+                
+            Technologies
               </p>
 
               <div className="flex flex-wrap gap-2">

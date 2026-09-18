@@ -9,8 +9,8 @@ const OneForAllProblem = () => {
     <section className="relative px-6 py-8 lg:py-8 sm:py-12">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
-          eyebrow="Why a unified platform"
-          title="Running separate software for every task adds up"
+          // eyebrow=""
+          title="Why a unified platform"
           description="Many businesses depend on a different system for accounting, inventory, billing, attendance, customers and reporting. Each one may work on its own, but running them together creates problems of its own."
         />
 

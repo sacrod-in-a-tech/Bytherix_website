@@ -31,7 +31,7 @@ const OneForAllCapabilities = () => {
         </StaggerGrid>
 
         <div className="mt-16">
-          <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)]">
+          <h3 className="text-sm font-semibold uppercase text-[var(--text-muted)]">
             Designed to support businesses such as
           </h3>
           <div className="mt-5 flex flex-wrap gap-3">

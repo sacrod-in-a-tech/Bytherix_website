@@ -157,7 +157,7 @@ const OneForAllHero = () => {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--brand-blue-border)] bg-[var(--brand-blue-soft)] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent-blue)]">
-            <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+            {/* <Sparkles className="h-3.5 w-3.5" aria-hidden="true" /> */}
             Product &middot; {productName}
           </span>
 

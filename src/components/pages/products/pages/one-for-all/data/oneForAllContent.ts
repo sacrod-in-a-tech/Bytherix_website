@@ -67,7 +67,7 @@ export interface RoadmapItem {
 }
 
 export const productName = "One For All Management System";
-export const productTagline = "One Account. Multiple Businesses. One Management Platform.";
+export const productTagline = "";
 export const heroHeadline = "One platform for every business you run";
 export const heroSummary =
   "A cloud-based, multi-business management platform being developed by Bytherix Technology to bring sales, inventory, employees, customers, finance, operations and reporting for several businesses into a single secure dashboard.";
@@ -169,7 +169,7 @@ export const ecosystemNodes = [
   "Business",
   "Inventory",
   "Finance",
-  "Human resources",
+  "Team",
   "Customers",
   "Reports",
 ];
