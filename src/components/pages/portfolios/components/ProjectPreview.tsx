@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
@@ -32,7 +33,7 @@ const ProjectPreview = ({
             <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
           </div>
 
-          <span className="max-w-[55%] truncate text-xs text-slate-500">
+          <span className="max-w-[55%] truncate text-xs text-[var(--text-secondary)]">
             {title}
           </span>
 
@@ -40,7 +41,7 @@ const ProjectPreview = ({
             href={liveUrl}
             target="_blank"
             rel="noreferrer"
-            className="text-slate-500 transition-colors hover:text-white"
+            className="text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
           >
             <ExternalLink size={15} />
           </a>
@@ -70,3 +71,4 @@ const ProjectPreview = ({
 };
 
 export default ProjectPreview;
+

@@ -10,7 +10,6 @@ export interface PortfolioProject {
   technologies: string[];
   features: string[];
   stats: {
-    label: string;
     value: string;
   }[];
 }
@@ -41,15 +40,15 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
     stats: [
       {
-        label: "Category",
+        
         value: "Fitness",
       },
       {
-        label: "Platform",
+        
         value: "Web",
       },
       {
-        label: "Focus",
+        
         value: "User Experience",
       },
     ],
@@ -76,15 +75,16 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
     stats: [
       {
-        label: "Category",
+        
         value: "Hospitality",
       },
       {
-        label: "Platform",
+       
         value: "Web",
       },
       {
-        label: "Focus",
+        
+
         value: "Experience",
       },
     ],
