@@ -562,7 +562,7 @@ export default function CourseShowcase() {
 
       {/* Main Container */}
 
-      <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20">
+      <div className="homepage-container relative z-10">
         {/* Intro Heading */}
 
         <motion.div

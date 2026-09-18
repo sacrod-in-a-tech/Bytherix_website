@@ -1,117 +1,76 @@
-import { motion, useReducedMotion } from "framer-motion";
-import { Crown } from "lucide-react";
+import { useState } from "react";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 
-import {
-  antagonist,
-  enemies,
-} from "../data/founderContent";
-
+import { enemies } from "../data/founderContent";
 import SectionHeading from "../ui/SectionHeading";
 
 const FounderEnemies = () => {
   const reduceMotion = useReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const active = enemies[activeIndex];
+  const ActiveIcon = active.icon;
 
   return (
-    <section className="founder-section">
+    <section id="enemies" className="founder-section">
       <div className="founder-container">
-        <SectionHeading
-          title="Enemies that shape the world"
-        />
+        <SectionHeading eyebrow="Threats" title="Enemies that shape the world" />
 
-        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Encounter selector: choosing a threat changes the response panel,
+            so the visitor reads it as an encounter rather than a card grid. */}
+        <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {enemies.map((enemy, index) => {
             const Icon = enemy.icon;
+            const isActive = index === activeIndex;
 
             return (
-              <motion.div
+              <motion.button
                 key={enemy.name}
-                initial={
-                  reduceMotion
-                    ? undefined
-                    : {
-                        opacity: 0,
-                        y: 25,
-                      }
-                }
-                whileInView={
-                  reduceMotion
-                    ? undefined
-                    : {
-                        opacity: 1,
-                        y: 0,
-                      }
-                }
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.08,
-                }}
-                whileHover={
-                  reduceMotion
-                    ? undefined
-                    : {
-                        y: -7,
-                      }
-                }
-                className="founder-card p-6"
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                initial={reduceMotion ? undefined : { opacity: 0, y: 20 }}
+                whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: index * 0.07 }}
+                whileHover={reduceMotion ? undefined : { y: -5 }}
+                className={`founder-encounter-tile founder-card ${
+                  isActive ? "founder-encounter-tile-active" : ""
+                }`}
+                aria-pressed={isActive}
               >
-                <div className="flex items-center justify-between">
-                  <span className="founder-icon h-12 w-12 rounded-xl">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                </div>
-
-                <h3 className="mt-6 text-lg font-bold text-white">
+                <span className="founder-icon h-11 w-11 rounded-xl">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span className="mt-4 block text-sm font-bold text-white">
                   {enemy.name}
-                </h3>
-
-                <p className="mt-3 text-sm leading-6 text-slate-400">
-                  {enemy.description}
-                </p>
-              </motion.div>
+                </span>
+              </motion.button>
             );
           })}
         </div>
 
-        <motion.div
-          initial={
-            reduceMotion
-              ? undefined
-              : {
-                  opacity: 0,
-                  y: 35,
-                }
-          }
-          whileInView={
-            reduceMotion
-              ? undefined
-              : {
-                  opacity: 1,
-                  y: 0,
-                }
-          }
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{
-            duration: 0.75,
-          }}
-          className="founder-card relative mt-8 overflow-hidden border-red-500/25 bg-gradient-to-br from-red-950/50 via-slate-950/70 to-slate-950/60 p-8 sm:p-12"
-        >
-          <div className="absolute -right-12 h-1 w-11 rounded-full bg-red-500/10 blur-[100px]" />
+        <div className="founder-encounter-panel founder-card mt-6 p-8 sm:p-10">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active.name}
+              initial={reduceMotion ? undefined : { opacity: 0, x: 16 }}
+              animate={reduceMotion ? undefined : { opacity: 1, x: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0, x: -16 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col gap-4 sm:flex-row sm:items-start"
+            >
+              <span className="founder-icon h-14 w-14 flex-shrink-0">
+                <ActiveIcon className="h-7 w-7" />
+              </span>
 
-          <div className="relative">
-            <span className="founder-icon border-red-400/25 bg-red-400/10 text-red-300">
-              <Crown className="h-6 w-6" />
-            </span>
-
-            <h3 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">
-              {antagonist.name}
-            </h3>
-
-            <p className="mt-5 max-w-4xl text-base leading-8 text-slate-400 sm:text-lg">
-              {antagonist.description}
-            </p>
-          </div>
-        </motion.div>
+              <div>
+                <h3 className="text-2xl font-bold text-white">{active.name}</h3>
+                <p className="mt-3 max-w-2xl text-base leading-7 text-slate-400">
+                  {active.description}
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
-import BYTHERIXlogo from "../../../../../../assets/BYTHERIXlogo.png";
-import hero from "../../../../../../assets/hero.png";
+import BYTHERIXlogo from "../../../../../../assets/products/one for all.jpeg";
+import hero from "../../../../../../assets/products/pam.jpeg";
 import react from "../../../../../../assets/react.svg";
 import vite from "../../../../../../assets/vite.svg";
 
