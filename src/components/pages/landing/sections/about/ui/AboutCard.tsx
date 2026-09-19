@@ -50,14 +50,46 @@ export default function AboutCard({
   }, [displayedSlide, isFlipping, slides.length]);
 
   const backSlide = slides[backSlideIndex];
-  const rotation = isFlipping ? 180 : 0;
+
+  const handleClick = () => {
+    if (!imagesReady || isFlipping) {
+      return;
+    }
+
+    if (reducedMotion) {
+      onFlipComplete();
+      return;
+    }
+
+    onImageClick();
+  };
 
   return (
     <motion.div
-      style={{ y: browserY, scale: browserScale }}
-      initial={reducedMotion ? false : { opacity: 0, y: 30 }}
-      whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      style={{
+        y: browserY,
+        scale: browserScale,
+      }}
+      initial={
+        reducedMotion
+          ? false
+          : {
+              opacity: 0,
+              y: 30,
+            }
+      }
+      whileInView={
+        reducedMotion
+          ? undefined
+          : {
+              opacity: 1,
+              y: 0,
+            }
+      }
+      viewport={{
+        once: true,
+        margin: "-100px",
+      }}
       transition={{
         duration: 0.9,
         ease: [0.22, 1, 0.36, 1],
@@ -68,45 +100,49 @@ export default function AboutCard({
 
       <div
         className="relative mx-auto w-full min-w-0 max-w-[820px] overflow-visible px-0 sm:px-1 md:px-2 lg:px-3"
-        style={{ perspective: "1600px" }}
+        style={{
+          perspective: "1600px",
+        }}
       >
-        <div className="relative mx-auto aspect-video w-full max-w-[820px]">
-          <motion.div
-            className="absolute inset-0 h-full w-full cursor-pointer rounded-2xl border border-[#3157d5]/25 bg-white shadow-2xl dark:border-white/14 dark:bg-[#07101d] dark:shadow-black/50 transform-gpu will-change-transform [transform-style:preserve-3d]"
-            style={{
-              transformStyle: "preserve-3d",
-              WebkitTransformStyle: "preserve-3d",
-            }}
-            animate={{ rotateY: rotation }}
-            transition={{
-              duration: isFlipping && !reducedMotion ? 0.8 : 0,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            onAnimationComplete={() => {
-              if (isFlipping) {
-                onFlipComplete();
-              }
-            }}
-            onClick={
-              imagesReady && !isFlipping ? onImageClick : undefined
+        <motion.div
+          className="relative mx-auto aspect-video w-full max-w-[820px]"
+          animate={{
+            rotateY: isFlipping && !reducedMotion ? 180 : 0,
+          }}
+          transition={{
+            duration: isFlipping && !reducedMotion ? 0.55 : 0,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          onAnimationComplete={() => {
+            if (isFlipping && !reducedMotion) {
+              onFlipComplete();
             }
+          }}
+          style={{
+            transformStyle: "preserve-3d",
+            WebkitTransformStyle: "preserve-3d",
+            transformOrigin: "center center",
+            willChange: "transform",
+          }}
+          onClick={handleClick}
+        >
+          {/* FRONT FACE */}
+          <div
+            className="absolute inset-0 h-full w-full cursor-pointer rounded-2xl border border-[#3157d5]/25 bg-white shadow-2xl dark:border-white/14 dark:bg-[#07101d] dark:shadow-black/50"
+            style={{
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              transform: "rotateY(0deg)",
+            }}
           >
-            <div
-              className="absolute inset-0 overflow-hidden rounded-2xl bg-white dark:bg-[#07101d]"
-              style={{
-                backfaceVisibility: "hidden",
-                WebkitBackfaceVisibility: "hidden",
-                transform: "rotateY(0deg) translateZ(1px)",
-                WebkitTransform: "rotateY(0deg) translateZ(1px)",
-              }}
-            >
+            <div className="absolute inset-0 overflow-hidden rounded-2xl bg-white dark:bg-[#07101d]">
               <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-px bg-linear-to-r from-transparent via-[#3157d5]/80 to-[#fd3b30]/70" />
 
               <img
                 src={currentSlide.image}
                 alt={`Bytherix experience ${displayedSlide + 1}`}
                 draggable={false}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-full w-[58%] -translate-x-1/2 -translate-y-1/2 select-none object-contain object-center"
+                className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-center"
               />
 
               <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#3157d5]/8 via-transparent to-transparent dark:from-black/25" />
@@ -115,23 +151,25 @@ export default function AboutCard({
                 Click to explore
               </div>
             </div>
+          </div>
 
-            <div
-              className="absolute inset-0 overflow-hidden rounded-2xl bg-white dark:bg-[#07101d]"
-              style={{
-                backfaceVisibility: "hidden",
-                WebkitBackfaceVisibility: "hidden",
-                transform: "rotateY(180deg) translateZ(1px)",
-                WebkitTransform: "rotateY(180deg) translateZ(1px)",
-              }}
-            >
+          {/* BACK FACE */}
+          <div
+            className="absolute inset-0 h-full w-full cursor-pointer rounded-2xl border border-[#3157d5]/25 bg-white shadow-2xl dark:border-white/14 dark:bg-[#07101d] dark:shadow-black/50"
+            style={{
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+            }}
+          >
+            <div className="absolute inset-0 overflow-hidden rounded-2xl bg-white dark:bg-[#07101d]">
               <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-px bg-linear-to-r from-transparent via-[#3157d5]/80 to-[#fd3b30]/70" />
 
               <img
                 src={backSlide.image}
                 alt={`Bytherix experience ${backSlideIndex + 1}`}
                 draggable={false}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-full w-[58%] -translate-x-1/2 -translate-y-1/2 select-none object-contain object-center"
+                className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-center"
               />
 
               <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#fd3b30]/7 via-transparent to-transparent dark:from-black/25" />
@@ -140,8 +178,8 @@ export default function AboutCard({
                 Click to explore
               </div>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </motion.div>
   );

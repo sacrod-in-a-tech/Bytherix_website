@@ -1,34 +1,15 @@
-import BYTHERIXlogo from "../../../../../../assets/products/one for all.jpeg";
-import hero from "../../../../../../assets/products/pam.jpeg";
-import react from "../../../../../../assets/react.svg";
-import vite from "../../../../../../assets/vite.svg";
-
-/* =========================================================
-   COLORS
-========================================================= */
+import oneForAll from "../../../../../../assets/products/one for all.jpeg";
+import pam from "../../../../../../assets/products/pam.jpeg";
+import founder from "../../../../../../assets/products/founder.jpeg";
 
 export const AZURE_BLUE = "#3157d5";
-
 export const VIVID_RED = "#fd3b30";
-
 export const SOFT_TEAL = "#29bcae";
-
 export const FEATURE_GREEN = "#188670";
 
-/* =========================================================
-   TYPES
-========================================================= */
-
-export type FeatureIconType =
-  | "code"
-  | "shield"
-  | "globe";
-
 export interface BuilderFeature {
-  num: string;
   title: string;
   body: string;
-  icon: FeatureIconType;
 }
 
 export interface BuilderSlide {
@@ -37,149 +18,75 @@ export interface BuilderSlide {
   title: string;
   body: string;
   features: BuilderFeature[];
-  
 }
-
-/* =========================================================
-   SLIDES
-========================================================= */
 
 export const BUILDER_SLIDES: BuilderSlide[] = [
   {
-    image: BYTHERIXlogo,
-    label: "Motion System",
-    title:
-      "Make every interaction feel alive.",
-    body: `Create smooth interactions,
-scroll effects, transitions and
-micro animations that make
-your interface feel polished
-and responsive.`,
+    image: oneForAll,
+    label: "All-in-One Platform",
+    title: "One Platform. Every Business.",
+    body: `Manage your businesses, branches, employees,
+inventory, customers, finances, and operations
+from one powerful platform.`,
     features: [
       {
-        num: "01",
-        title: "Interactive Experiences",
-        body:
-          "We create smooth interfaces with meaningful motion, transitions and interactive experiences.",
-        icon: "code",
+        title: "Centralized Management",
+        body: "Seamlessly oversee multiple business branches, inventory, and employees from a single unified dashboard.",
       },
       {
-        num: "02",
-        title: "Responsive Motion",
-        body:
-          "Every animation is carefully designed to feel natural across desktop, tablet and mobile.",
-        icon: "shield",
+        title: "Secure Access",
+        body: "Ensure complete control over your business data with role-based user permissions and encrypted data safety.",
       },
       {
-        num: "03",
-        title: "Modern Interfaces",
-        body:
-          "Clean visual systems combine modern UI, motion and technology to create memorable products.",
-        icon: "globe",
+        title: "Scalable Operations",
+        body: "Track real-time analytics, revenue reports, and daily sales performance designed to grow with your business.",
       },
     ],
   },
 
   {
-    image: hero,
-    label: "Smart Workflow",
-    title:
-      "Design. Animate. Ship.",
-    body: `Build the experience visually,
-adjust the timing and interaction,
-and turn your ideas into
-production-ready experiences.`,
+    image: founder,
+    label: "Action RPG Game",
+    title: "The Beginning of Journey.",
+    body: `A boy, a tragedy, and a journey to find
+the one who destroyed his world. Experience
+epic boss fights, dark dungeons, and elemental mastery.`,
     features: [
       {
-        num: "01",
-        title: "Design Faster",
-        body:
-          "Turn ideas into interactive prototypes and real digital experiences without unnecessary complexity.",
-        icon: "code",
+        title: "Dynamic Combat & Arsenal",
+        body: "Wield traditional weapons like the Khukuri and Katana paired with unique skill trees and gear upgrades.",
       },
       {
-        num: "02",
-        title: "Build Securely",
-        body:
-          "Security and reliability remain part of the system from the first design decision to deployment.",
-        icon: "shield",
+        title: "Elemental Powers",
+        body: "Master natural elements—Fire, Water, Earth, Wind, and Lightning—to defeat dark forces and boss fights.",
       },
       {
-        num: "03",
-        title: "Ready to Scale",
-        body:
-          "Our systems are designed to evolve with your business, users and future technology.",
-        icon: "globe",
+        title: "Story-Driven Quest",
+        body: "Progress through immersive chapters, defeat powerful bosses, and track your rank on the global leaderboard.",
       },
     ],
   },
 
   {
-    image: react,
-    label: "AI & Intelligent Systems",
-    title:
-      "Build smarter digital systems.",
-    body: `Develop intelligent solutions,
-combine automation with modern
-technology, and turn complex
-ideas into practical systems.`,
+    image: pam,
+    label: "Healthcare Monitoring System",
+    title: "Smarter Monitoring | Healthier Tomorrow",
+    body: `Real-time health tracking and intelligent assistance
+delivering precise vital monitoring, continuous ECG logs,
+and instant clinical alerts for better patient care.`,
     features: [
       {
-        num: "01",
-        title: "AI Solutions",
-        body:
-          "Intelligent systems are designed around real business and user needs.",
-        icon: "code",
+        title: "Comprehensive Vitals",
+        body: "Monitor continuous Heart Rate, SpO2, Body Temperature, Blood Pressure, and Respiratory Rate in real time.",
       },
       {
-        num: "02",
-        title: "Smart Automation",
-        body:
-          "Automate repetitive workflows and improve efficiency with reliable technology.",
-        icon: "shield",
+        title: "Live ECG & Logging",
+        body: "Track real-time Lead-I ECG waveforms alongside automated data logging for accurate patient diagnostic records.",
       },
       {
-        num: "03",
-        title: "Future Ready",
-        body:
-          "Scalable systems are built to evolve with users, products and technology.",
-        icon: "globe",
+        title: "Smart Alerts & Connectivity",
+        body: "Receive immediate automated health alerts via seamless Bluetooth and Wi-Fi sync directly to your monitoring dashboard.",
       },
     ],
-    
   },
-
-  {
-    image: vite,
-    label: "Digital Products & Innovation",
-    title:
-      "Turn ideas into real products.",
-    body: `Design, develop and launch
-scalable digital products that
-solve real problems and create
-measurable user value.`,
-    features: [
-      {
-        num: "01",
-        title: "Product Engineering",
-        body:
-          "From concept to deployment, every product is engineered with usability, performance and reliability in mind.",
-        icon: "code",
-      },
-      {
-        num: "02",
-        title: "Scalable Architecture",
-        body:
-          "Flexible and maintainable architectures help products grow smoothly as users and requirements increase.",
-        icon: "shield",
-      },
-      {
-        num: "03",
-        title: "Digital Innovation",
-        body:
-          "Modern technologies are combined to transform ideas into practical and future-ready digital solutions.",
-        icon: "globe",
-      },
-    ],
-  } 
 ];
