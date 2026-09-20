@@ -3,12 +3,14 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { Crown } from "lucide-react";
 
 import { antagonist } from "../data/founderContent";
+import { queenWitchesImage } from "../data/founderImages";
 import EmberField from "../ui/EmberField";
 
 /**
  * The Queen Boksi is the center of the story's conflict, so she gets a
  * slow, dedicated reveal rather than sitting in the enemy grid: the
- * environment darkens, a silhouette resolves, then the text arrives.
+ * environment darkens, a background image resolves alongside the
+ * silhouette, then the text arrives.
  */
 const FounderQueen = () => {
   const reduceMotion = useReducedMotion();
@@ -22,9 +24,29 @@ const FounderQueen = () => {
   const veilOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const silhouetteScale = useTransform(scrollYProgress, [0, 1], [0.86, 1]);
   const silhouetteOpacity = useTransform(scrollYProgress, [0, 1], [0, 0.9]);
+  const bgOpacity = useTransform(scrollYProgress, [0, 1], [0, 0.55]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.12, 1]);
 
   return (
     <section id="queen" ref={sectionRef} className="founder-queen relative overflow-hidden">
+      {/* Background layer — replace `queenWitchesImage` in
+          data/founderImages.ts with the real art; the blend, overlay and
+          text-readability scrim below stay the same. */}
+      <div className="founder-queen-media" aria-hidden="true">
+        <motion.img
+          src={queenWitchesImage.src}
+          alt=""
+          className="founder-queen-media-image"
+          style={
+            reduceMotion
+              ? undefined
+              : { opacity: bgOpacity, scale: bgScale }
+          }
+          loading="lazy"
+        />
+        <div className="founder-queen-media-scrim" />
+      </div>
+
       <motion.div
         className="founder-queen-veil"
         style={reduceMotion ? undefined : { opacity: veilOpacity }}
@@ -34,18 +56,6 @@ const FounderQueen = () => {
       <EmberField tone="void" count={16} />
 
       <div className="founder-container relative flex flex-col items-center px-6 py-28 text-center sm:px-8 lg:px-16">
-        <motion.div
-          style={
-            reduceMotion
-              ? undefined
-              : { scale: silhouetteScale, opacity: silhouetteOpacity }
-          }
-          className="founder-queen-silhouette"
-          aria-hidden="true"
-        >
-          <Crown className="h-16 w-16" strokeWidth={1.1} />
-        </motion.div>
-
         <motion.span
           initial={reduceMotion ? undefined : { opacity: 0, y: 14 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -53,8 +63,8 @@ const FounderQueen = () => {
           transition={{ duration: 0.6 }}
           className="founder-eyebrow founder-eyebrow-void mt-10"
         >
-          <span className="founder-eyebrow-dash" />
-          The center of everything
+          {/* <span className="founder-eyebrow-dash" /> */}
+          <h3 className="text-sm">The center of everything </h3>
         </motion.span>
 
         <motion.h2

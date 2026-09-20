@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Flame, ArrowDown } from "lucide-react";
 
 import {
@@ -7,9 +8,22 @@ import {
   heroSummary,
   heroTagline,
 } from "../data/founderContent";
+import { founderHeroImage } from "../data/founderImages";
 
 const FounderHero = () => {
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // A slow, cinematic drift as the visitor scrolls past the hero — the
+  // background moves slower than the page (parallax) and settles.
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.08, 1.18]);
+  const contentFade = useTransform(scrollYProgress, [0, 0.8], [1, 0.2]);
 
   const fadeUp = (delay = 0) =>
     reduceMotion
@@ -25,12 +39,37 @@ const FounderHero = () => {
         };
 
   return (
-    <section className="founder-hero founder-section px-6 pb-20 pt-32 sm:px-8 lg:px-16">
+    <section
+      ref={sectionRef}
+      className="founder-hero founder-section px-6 pb-20 pt-32 sm:px-8 lg:px-16"
+    >
+      {/* Background layer: image + gradient/vignette overlays. Replace
+          `founderHeroImage` in data/founderImages.ts with the real key
+          art and everything below (parallax, overlays, readability
+          scrims) keeps working unchanged. */}
+      <div className="founder-hero-media" aria-hidden="true">
+        <motion.img
+          src={founderHeroImage.src}
+          alt=""
+          className="founder-hero-media-image"
+          style={
+            reduceMotion
+              ? undefined
+              : { y: imageY, scale: imageScale }
+          }
+          loading="eager"
+        />
+        <div className="founder-hero-media-scrim" />
+        <div className="founder-hero-media-grid" />
+      </div>
+
       <div className="founder-hero-glow" aria-hidden="true" />
       <div className="founder-hero-ring" aria-hidden="true" />
 
-      <div className="founder-container relative z-10 flex flex-col items-center text-center">
-
+      <motion.div
+        style={reduceMotion ? undefined : { opacity: contentFade }}
+        className="founder-container relative z-10 flex flex-col items-center text-center"
+      >
         <motion.h1
           {...fadeUp(0.08)}
           className="founder-title mt-4 max-w-6xl"
@@ -71,8 +110,7 @@ const FounderHero = () => {
 
           <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-1" />
         </motion.a>
-
-      </div>
+      </motion.div>
     </section>
   );
 };

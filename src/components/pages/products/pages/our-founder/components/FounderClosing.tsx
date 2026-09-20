@@ -1,17 +1,34 @@
+import { useRef, type PointerEvent as ReactPointerEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Flame } from "lucide-react";
 
 import { closingHook, closingStatement } from "../data/founderContent";
+import ParticleCanvas from "../ui/ParticleCanvas";
 
 const FounderClosing = () => {
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLElement>) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect || !sectionRef.current) return;
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    sectionRef.current.style.setProperty("--closing-mouse-x", `${x}%`);
+    sectionRef.current.style.setProperty("--closing-mouse-y", `${y}%`);
+  };
 
   return (
     <section
       id="beyond"
-      className="relative overflow-hidden px-6 pb-28 pt-24 sm:px-8 sm:pb-36 lg:px-16"
+      ref={sectionRef}
+      onPointerMove={handlePointerMove}
+      className="founder-closing relative overflow-hidden px-6 pb-28 pt-24 sm:px-8 sm:pb-36 lg:px-16"
     >
+      <ParticleCanvas mode="ambient" className="founder-closing-canvas" />
+
+      <div className="founder-closing-mouse-glow" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 h-[500px] bg-[radial-gradient(circle_at_50%_100%,rgba(239,68,68,0.14),transparent_65%)]" />
 
       <motion.div
@@ -38,7 +55,7 @@ const FounderClosing = () => {
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 bg-gradient-to-r from-orange-300 via-red-400 to-orange-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-6xl"
+          className="mt-8 bg-gradient-to-r from-orange-300 via-red-400 to-orange-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-6xl founder-closing-title"
         >
           {closingHook}
         </motion.h2>
