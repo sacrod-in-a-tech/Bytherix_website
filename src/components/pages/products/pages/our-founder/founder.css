@@ -827,171 +827,6 @@
 }
 
 /* -------------------------------------------------------
-   Weapon showcase
-------------------------------------------------------- */
-
-.founder-weapon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  padding: 2.5rem 1.5rem;
-  border-radius: 24px;
-  border: 1px solid var(--founder-border);
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.55), rgba(15, 23, 42, 0.45));
-  text-align: center;
-  transition: border-color 350ms ease, box-shadow 350ms ease;
-}
-
-.founder-weapon:hover {
-  border-color: rgba(251, 146, 60, 0.3);
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25), 0 0 40px rgba(251, 146, 60, 0.08);
-}
-
-.founder-weapon-plinth {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 160px;
-  height: 160px;
-}
-
-.founder-weapon-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  border: 1px solid rgba(251, 146, 60, 0.18);
-}
-
-.founder-weapon-ring::before {
-  content: "";
-  position: absolute;
-  inset: 18px;
-  border-radius: 9999px;
-  border: 1px dashed rgba(251, 146, 60, 0.14);
-}
-
-.founder-weapon-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 92px;
-  height: 92px;
-  border-radius: 9999px;
-  border: 1px solid rgba(251, 146, 60, 0.3);
-  background: rgba(251, 146, 60, 0.07);
-  color: #fdba74;
-  box-shadow: 0 0 40px rgba(251, 146, 60, 0.1);
-}
-
-.founder-weapon-body {
-  position: relative;
-}
-
-.founder-weapon-index {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: rgba(251, 146, 60, 0.55);
-  margin-bottom: 0.5rem;
-}
-
-/* -------------------------------------------------------
-   Power progression rail
-------------------------------------------------------- */
-
-.founder-power-node-wrap {
-  display: flex;
-  align-items: center;
-}
-
-.founder-power-node {
-  position: relative;
-  width: 100%;
-  max-width: 320px;
-  padding: 2rem;
-  border-radius: 22px;
-  border: 1px solid var(--founder-border);
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.65), rgba(15, 23, 42, 0.5));
-  text-align: center;
-}
-
-.founder-power-node-unlocked {
-  border-color: rgba(251, 146, 60, 0.35);
-  background: rgba(251, 146, 60, 0.06);
-}
-
-.founder-power-node-locked {
-  opacity: 0.65;
-}
-
-.founder-power-glow {
-  position: absolute;
-  left: 50%;
-  top: 30%;
-  width: 140px;
-  height: 140px;
-  transform: translate(-50%, -50%);
-  border-radius: 9999px;
-  background: rgba(251, 146, 60, 0.14);
-  filter: blur(40px);
-}
-
-.founder-power-icon {
-  position: relative;
-  display: flex;
-  width: 56px;
-  height: 56px;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  border: 1px solid rgba(251, 146, 60, 0.3);
-  background: rgba(251, 146, 60, 0.1);
-  color: #fdba74;
-}
-
-.founder-power-node-locked .founder-power-icon {
-  border-color: rgba(148, 163, 184, 0.25);
-  background: rgba(148, 163, 184, 0.06);
-  color: rgba(148, 163, 184, 0.7);
-}
-
-.founder-power-status {
-  position: relative;
-  display: block;
-  margin-top: 0.9rem;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(251, 146, 60, 0.6);
-}
-
-.founder-power-node-locked .founder-power-status {
-  color: rgba(148, 163, 184, 0.6);
-}
-
-.founder-power-link {
-  width: 70px;
-  height: 1px;
-  margin: 0 1rem;
-  background: linear-gradient(to right, rgba(251, 146, 60, 0.5), rgba(148, 163, 184, 0.15));
-  transform-origin: left center;
-}
-
-@media (max-width: 768px) {
-  .founder-power-link {
-    width: 1px;
-    height: 44px;
-    margin: 0.25rem 0;
-    background: linear-gradient(to bottom, rgba(251, 146, 60, 0.5), rgba(148, 163, 184, 0.15));
-  }
-}
-
-/* -------------------------------------------------------
    Encounter system
 ------------------------------------------------------- */
 
@@ -1069,14 +904,438 @@
   .founder-map-continues {
     margin-left: 0;
   }
-
-  .founder-weapon {
-    padding: 2rem 1.25rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .founder-nav-progress {
     transform: none !important;
+  }
+}
+
+/* -------------------------------------------------------
+   Hero background media
+------------------------------------------------------- */
+
+.founder-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 0 0 40px 40px;
+}
+
+.founder-hero-media-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: saturate(1.05) contrast(1.05);
+  will-change: transform;
+}
+
+.founder-hero-media-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, #070b16 8%, rgba(7, 11, 22, 0.55) 45%, rgba(7, 11, 22, 0.35) 70%),
+    linear-gradient(to right, rgba(7, 11, 22, 0.55), transparent 30%, transparent 70%, rgba(7, 11, 22, 0.55)),
+    radial-gradient(ellipse at 50% 30%, rgba(251, 146, 60, 0.12), transparent 60%);
+}
+
+.founder-hero-media-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 50% 35%, black 0%, transparent 70%);
+}
+
+@media (max-width: 768px) {
+  .founder-hero-media {
+    border-radius: 0 0 24px 24px;
+  }
+
+  .founder-hero-media-image {
+    object-position: center 22%;
+  }
+}
+
+/* -------------------------------------------------------
+   Weapon showcase cards (image-forward)
+------------------------------------------------------- */
+
+.founder-weapon-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  align-items: flex-end;
+  border-radius: 26px;
+  border: 1px solid var(--founder-border);
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.55), rgba(15, 23, 42, 0.6));
+  transition: border-color 350ms ease, box-shadow 350ms ease, transform 350ms ease;
+}
+
+.founder-weapon-card:hover {
+  border-color: rgba(251, 146, 60, 0.35);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35), 0 0 50px rgba(251, 146, 60, 0.1);
+  transform: translateY(-4px);
+}
+
+.founder-weapon-card-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.founder-weapon-card-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.1) contrast(1.08) brightness(0.92);
+}
+
+.founder-weapon-card-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(7, 11, 22, 0.96) 8%, rgba(7, 11, 22, 0.55) 42%, rgba(7, 11, 22, 0.05) 70%),
+    linear-gradient(115deg, rgba(7, 11, 22, 0.65) 0%, transparent 55%);
+}
+
+.founder-weapon-card-icon {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 9999px;
+  border: 1px solid rgba(251, 146, 60, 0.4);
+  background: rgba(7, 11, 22, 0.55);
+  color: #fdba74;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(251, 146, 60, 0.18);
+}
+
+.founder-weapon-card-body {
+  position: relative;
+  z-index: 1;
+  padding: 2rem clamp(1.5rem, 4vw, 2.5rem) 2.25rem;
+}
+
+@media (max-width: 768px) {
+  .founder-weapon-card {
+    min-height: 340px;
+  }
+}
+
+/* -------------------------------------------------------
+   Elemental power showcase
+------------------------------------------------------- */
+
+.founder-element-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.founder-element-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 9999px;
+  border: 1px solid var(--founder-border);
+  background: rgba(15, 23, 42, 0.5);
+  color: rgba(226, 232, 240, 0.75);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 250ms ease, color 250ms ease, background 250ms ease, box-shadow 250ms ease;
+}
+
+.founder-element-tab:hover {
+  border-color: rgba(251, 146, 60, 0.3);
+  color: #f8fafc;
+}
+
+.founder-element-tab-active {
+  border-color: color-mix(in srgb, var(--element-accent) 60%, transparent);
+  background: color-mix(in srgb, var(--element-accent) 14%, transparent);
+  color: #f8fafc;
+  box-shadow: 0 0 30px color-mix(in srgb, var(--element-accent) 25%, transparent);
+}
+
+.founder-element-stage {
+  position: relative;
+  overflow: hidden;
+  min-height: 460px;
+  border-radius: 28px;
+  border: 1px solid var(--founder-border);
+  background: radial-gradient(ellipse at 50% 20%, color-mix(in srgb, var(--element-accent) 12%, transparent), #070b16 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 500ms ease;
+}
+
+.founder-particle-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.founder-element-canvas {
+  pointer-events: auto;
+  z-index: 0;
+  cursor: grab;
+}
+
+.founder-element-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 100%, rgba(5, 7, 16, 0.85), transparent 55%);
+}
+
+.founder-element-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  max-width: 560px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.founder-element-icon {
+  display: flex;
+  width: 68px;
+  height: 68px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--element-accent) 55%, transparent);
+  background: color-mix(in srgb, var(--element-accent) 16%, transparent);
+  color: var(--element-accent);
+  box-shadow: 0 0 45px color-mix(in srgb, var(--element-accent) 30%, transparent);
+  margin-bottom: 0.75rem;
+}
+
+.founder-element-status {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--element-accent);
+}
+
+.founder-element-name {
+  margin-top: 0.6rem;
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #f8fafc;
+}
+
+.founder-element-tagline {
+  margin-top: 0.35rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--element-accent);
+}
+
+.founder-element-meaning {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.founder-element-motion-toggle {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid var(--founder-border);
+  background: rgba(7, 11, 22, 0.72);
+  color: rgba(226, 232, 240, 0.8);
+  font-size: 0.72rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .founder-element-stage {
+    min-height: 400px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-element-canvas {
+    cursor: default;
+  }
+}
+
+/* -------------------------------------------------------
+   Companion 3D visual
+------------------------------------------------------- */
+
+.founder-companion-stage {
+  display: flex;
+  justify-content: center;
+}
+
+.founder-companion-card {
+  position: relative;
+  width: 260px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .founder-companion-card {
+    width: 320px;
+    height: 380px;
+  }
+}
+
+.founder-companion-image-wrap {
+  position: relative;
+  width: 78%;
+  height: 78%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+}
+
+.founder-companion-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.founder-companion-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(34, 211, 238, 0.22), transparent 65%);
+  mix-blend-mode: screen;
+}
+
+.founder-companion-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  pointer-events: none;
+}
+
+.founder-companion-ring-dashed {
+  inset: 6%;
+  border-style: dashed;
+  border-color: rgba(34, 211, 238, 0.16);
+}
+
+/* -------------------------------------------------------
+   Queen Boksi background media
+------------------------------------------------------- */
+
+.founder-queen-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.founder-queen-media-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  filter: grayscale(0.3) saturate(1.2) contrast(1.1);
+  mix-blend-mode: luminosity;
+}
+
+.founder-queen-media-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 25%, transparent 20%, #050710 78%),
+    linear-gradient(to top, #050710 5%, transparent 45%);
+}
+
+/* -------------------------------------------------------
+   Closing cinematic section
+------------------------------------------------------- */
+
+.founder-closing {
+  --closing-mouse-x: 50%;
+  --closing-mouse-y: 40%;
+  position: relative;
+}
+
+.founder-closing-canvas {
+  z-index: 0;
+}
+
+.founder-closing-mouse-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    480px circle at var(--closing-mouse-x) var(--closing-mouse-y),
+    rgba(251, 146, 60, 0.12),
+    transparent 60%
+  );
+  transition: background 200ms ease;
+}
+
+.founder-closing-title {
+  animation: founderClosingGlow 4s ease-in-out infinite;
+}
+
+@keyframes founderClosingGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 18px rgba(251, 146, 60, 0.15));
+  }
+  50% {
+    filter: drop-shadow(0 0 34px rgba(251, 146, 60, 0.35));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-closing-title {
+    animation: none;
   }
 }

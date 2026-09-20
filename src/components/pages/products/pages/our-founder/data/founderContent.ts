@@ -1,15 +1,21 @@
 import {
+  Droplets,
   Flame,
   Footprints,
   Map as MapIcon,
+  Mountain,
   Shield,
   Skull,
   Sparkles,
   Sword,
   Swords,
   Users,
+  Wind as WindIcon,
+  Zap,
   type LucideIcon,
 } from "lucide-react";
+
+import type { ParticleMode } from "../ui/ParticleCanvas";
 
 /**
  * Every value in this file is taken from the uploaded "Founder – The
@@ -109,22 +115,76 @@ export const combatPhilosophy =
 export interface ElementStage {
   name: string;
   status: "unlocked" | "future";
+  /** Short line shown on the active-element display, under the name. */
+  tagline: string;
   meaning: string;
   icon: LucideIcon;
+  /** Which ParticleCanvas behaviour represents this element. */
+  mode: ParticleMode;
+  /** Accent color (hex) used to theme the active state for this element. */
+  accent: string;
 }
 
+/**
+ * The source design document describes progression starting at Fire and
+ * opening into further elements as new maps unlock ("Beyond fire") without
+ * naming them. This section turns that progression into the five classical
+ * elements the power system builds toward — Fire, Water, Earth, Wind,
+ * Lightning — so the interactive showcase has a concrete visual for each
+ * stage rather than a single placeholder "more to come" card. Fire remains
+ * the only element unlocked in the story today; the rest are shown as
+ * future unlocks you can still preview.
+ */
 export const elements: ElementStage[] = [
   {
     name: "Fire",
     status: "unlocked",
-    meaning: "The first element — representing anger, pain, and raw energy, fitting where the character is emotionally at the start.",
+    tagline: "Anger. Pain. Raw energy.",
+    meaning:
+      "The first element — representing anger, pain, and raw energy, fitting where the character is emotionally at the start.",
     icon: Flame,
+    mode: "fire",
+    accent: "#fb923c",
   },
   {
-    name: "Beyond fire",
+    name: "Water",
     status: "future",
-    meaning: "As new maps unlock, so do new elements — each adding new abilities and new ways to interact with enemies.",
-    icon: Sparkles,
+    tagline: "Adaptation over force.",
+    meaning:
+      "Where fire burns everything the same way, water learns the shape of what's in front of it — the first sign that power can mean control, not just intensity.",
+    icon: Droplets,
+    mode: "water",
+    accent: "#38bdf8",
+  },
+  {
+    name: "Earth",
+    status: "future",
+    tagline: "What refuses to move.",
+    meaning:
+      "Earth is patience made physical — defense, endurance, and the weight to stand ground the boy once had to run from.",
+    icon: Mountain,
+    mode: "earth",
+    accent: "#a1745a",
+  },
+  {
+    name: "Wind",
+    status: "future",
+    tagline: "Speed. Freedom. Distance.",
+    meaning:
+      "Wind opens up mobility and reach, tied to the parts of the world only reachable once the boy stops fighting like someone with nothing left to lose.",
+    icon: WindIcon,
+    mode: "wind",
+    accent: "#cbd5e1",
+  },
+  {
+    name: "Lightning",
+    status: "future",
+    tagline: "The cost of full power.",
+    meaning:
+      "The final element — fast, devastating, and dangerous to the one wielding it. It's presented last because it's the one that asks the most of him.",
+    icon: Zap,
+    mode: "lightning",
+    accent: "#a5f3fc",
   },
 ];
 

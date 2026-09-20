@@ -1,32 +1,89 @@
-import { motion, useReducedMotion } from "framer-motion";
-import { Users } from "lucide-react";
+import { useRef, type PointerEvent as ReactPointerEvent } from "react";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 
 import { companionSummary } from "../data/founderContent";
+import { companionImage } from "../data/founderImages";
 import SectionHeading from "../ui/SectionHeading";
 
 const FounderCompanion = () => {
   const reduceMotion = useReducedMotion();
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Pointer-driven tilt: cheap, dependency-free "3D" feel without a WebGL
+  // model. useSpring smooths the raw pointer delta so the tilt settles
+  // rather than snapping.
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const rotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [10, -10]), {
+    stiffness: 120,
+    damping: 14,
+  });
+  const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-12, 12]), {
+    stiffness: 120,
+    damping: 14,
+  });
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (reduceMotion) return;
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
+    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handlePointerLeave = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+  };
 
   return (
     <section id="companion" className="founder-section">
       <div className="founder-container grid items-center gap-12 lg:grid-cols-[0.75fr_1.25fr]">
-        <motion.div
-          initial={reduceMotion ? undefined : { opacity: 0, scale: 0.8 }}
-          whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto flex h-64 w-64 items-center justify-center rounded-full border border-cyan-400/20 bg-cyan-400/[0.04] shadow-[0_0_100px_rgba(34,211,238,0.08)] sm:h-80 sm:w-80"
-        >
+        <div className="founder-companion-stage" style={{ perspective: 1000 }}>
           <motion.div
-            animate={reduceMotion ? undefined : { rotate: 360 }}
-            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-5 rounded-full border border-dashed border-cyan-400/20"
-          />
+            ref={cardRef}
+            onPointerMove={handlePointerMove}
+            onPointerLeave={handlePointerLeave}
+            initial={reduceMotion ? undefined : { opacity: 0, scale: 0.85 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            style={
+              reduceMotion
+                ? undefined
+                : { rotateX, rotateY, transformStyle: "preserve-3d" }
+            }
+            className="founder-companion-card"
+          >
+            <motion.div
+              animate={
+                reduceMotion
+                  ? undefined
+                  : { y: [0, -14, 0] }
+              }
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="founder-companion-image-wrap"
+              style={{ transform: "translateZ(40px)" }}
+            >
+              <img
+                src={companionImage.src}
+                alt={companionImage.alt}
+                className="founder-companion-image"
+                loading="lazy"
+              />
+              <div className="founder-companion-glow" aria-hidden="true" />
+            </motion.div>
 
-          <div className="flex h-28 w-28 items-center justify-center rounded-full border border-cyan-400/20 bg-cyan-400/10 shadow-[0_0_50px_rgba(34,211,238,0.12)]">
-            <Users className="h-14 w-14 text-cyan-300" />
-          </div>
-        </motion.div>
+            <div className="founder-companion-ring" aria-hidden="true" />
+            <div className="founder-companion-ring founder-companion-ring-dashed" aria-hidden="true" />
+          </motion.div>
+        </div>
 
         <div>
           <SectionHeading eyebrow="Companion" title="He's not completely alone" tone="cyan" />
