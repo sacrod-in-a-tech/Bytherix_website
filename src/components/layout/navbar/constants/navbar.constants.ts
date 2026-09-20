@@ -166,8 +166,8 @@ export const DROPDOWN_CONTENT: Record<string, DropdownSection[]> = {
       sectionIcon: Store,
       items: [
         { label: "All Products", icon: Store },
-        { label: "Digital Products", icon: ShoppingBag },
-        { label: "Software", icon: Code2 },
+        // { label: "Digital Products", icon: ShoppingBag },
+        // { label: "Software", icon: Code2 },
       ],
     },
     {
@@ -175,8 +175,8 @@ export const DROPDOWN_CONTENT: Record<string, DropdownSection[]> = {
       sectionIcon: GraduationCap,
       items: [
         { label: "Courses", icon: BookOpen },
-        { label: "Featured Courses", icon: Sparkles },
-        { label: "Certifications", icon: ShieldCheck },
+        // { label: "Featured Courses", icon: Sparkles },
+        // { label: "Certifications", icon: ShieldCheck },
         { label: "Teach on Bytherix", icon: Headset },
       ],
     },
