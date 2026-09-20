@@ -22,22 +22,21 @@ const itemVariants: Variants = {
 
 const StoryPurpose = () => {
   return (
-    <section className="relative bg-[var(--bg-secondary)] px-5 py-8 lg:py-8 sm:px-10 sm:py-24 lg:px-20 ">
-      <div className="mx-auto max-w-3xl lg:max-w-6xl">
+    <section className="relative bg-[var(--bg-secondary)] px-5 lg:py-3 sm:px-10 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-8xl">
         <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="space-y-10 sm:space-y-16">
-          <motion.div variants={itemVariants} className="space-y-4 sm:space-y-6">
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-semibold uppercase tracking-widest text-[var(--accent-blue)] sm:text-sm">→ 02</span>
+          <motion.div variants={itemVariants} className="space-y-3 sm:space-y-6">
+            <div className="flex items-center gap-1 py-1">
               <h2 className="text-xl font-bold sm:text-2xl lg:text-3xl">More than a company</h2>
             </div>
-            <p className="max-w-2xl text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
+            <p className="max-w-8xl text-base leading-relaxed text-[var(--text-secondary)] mt-0 sm:text-lg">
               But as they learned more, they realized something important. There was a lot of talent around them that wasn't getting the opportunities it deserved.
             </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="space-y-3 border-l-4 border-[var(--accent-red)] bg-[var(--surface-secondary)] px-5 py-6 sm:space-y-4 sm:px-8 sm:py-8">
+          <motion.div variants={itemVariants} className="space-y-3 border-l-4 border-[var(--accent-red)] bg-[var(--surface-secondary)] px-5 py-3 sm:space-y-4 sm:px-8 sm:py-3">
             <p className="text-xl font-bold leading-tight sm:text-2xl lg:text-3xl">We didn't just want to build a company.</p>
-            <p className="text-lg leading-tight text-[var(--text-secondary)] sm:text-xl">We wanted to build a place where people could learn, build, and grow together.</p>
+            <p className="text-base leading-tight text-[var(--text-secondary)] sm:text-xl lg:text-lg">We wanted to build a place where people could learn, build, and grow together.</p>
           </motion.div>
 
           <motion.div variants={containerVariants} className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">

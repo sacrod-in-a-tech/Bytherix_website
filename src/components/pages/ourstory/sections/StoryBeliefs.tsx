@@ -23,15 +23,14 @@ const itemVariants: Variants = {
 
 const StoryBeliefs = () => {
   return (
-    <section className="relative bg-[var(--bg-primary)] px-3 py-8 lg:py-8 sm:px-10 sm:py-24 lg:px-8 ">
+    <section className="relative bg-[var(--bg-primary)] px-3 py-3 sm:px-10 lg:px-8 ">
       <div className="pointer-events-none absolute right-0 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-gradient-to-l from-[var(--accent-green)]/10 to-transparent blur-3xl sm:h-80 sm:w-80" />
 
-      <div className="relative z-10 mx-auto max-w-3xl lg:max-w-5xl">
-        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="space-y-10 sm:space-y-16">
+      <div className="relative z-10 mx-auto max-w-8xl">
+        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="space-y-7 sm:space-y-10">
           <motion.div variants={itemVariants} className="space-y-4 sm:space-y-6">
             <div className="flex items-center gap-3">
-              <span className="text-xs font-semibold uppercase tracking-widest text-[var(--accent-blue)] sm:text-sm">→ 06</span>
-              <h2 className="text-xl font-bold sm:text-2xl lg:text-3xl">What we believe</h2>
+             <h2 className="text-xl font-bold sm:text-2xl lg:text-3xl">What we believe</h2>
             </div>
             <p className="max-w-2xl text-base text-[var(--text-secondary)] sm:text-lg">These core beliefs have guided every decision from day one and continue to shape Bytherix Technology.</p>
           </motion.div>
