@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "framer-motion";
 
 const FACTS = [
@@ -12,10 +10,10 @@ const FACTS = [
 const StoryBeginning = () => {
   return (
     <section className="relative bg-[var(--bg-secondary)] px-3 py-8 lg:py-8 sm:px-10 sm:py-24 lg:px-8 ">
-      <div className="mx-auto max-w-3xl lg:max-w-4xl">
+      <div className="mx-auto max-w-8xl lg:max-w-8xl">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7 }} className="space-y-10 sm:space-y-12">
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[var(--accent-blue)] sm:text-sm">→ 01</span>
+          <div className="flex items-center gap-1">
+            {/* <span className="text-xs font-semibold uppercase tracking-widest text-[var(--accent-blue)] sm:text-sm">→ 01</span> */}
             <h2 className="text-xl font-bold sm:text-2xl lg:text-3xl">How Bytherix began</h2>
           </div>
 

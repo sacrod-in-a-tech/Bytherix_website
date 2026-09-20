@@ -14,25 +14,34 @@ const itemVariants: Variants = {
 
 const StoryHero = () => {
   return (
-    <section className="relative flex w-full items-center overflow-hidden px-5 py-8 sm:min-h-screen sm:px-10 sm:py-24 lg:px-20 lg:py-8">
+    <section className="relative flex w-full item-start overflow-hidden px-3 py-3 sm:px-7 sm:py-3 lg:px-10 lg:py-5">
       <div className="pointer-events-none absolute -right-24 top-10 h-56 w-56 rounded-full bg-[var(--accent-green)]/10 blur-3xl sm:h-72 sm:w-72 lg:h-96 lg:w-96" />
       <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-[var(--accent-blue)]/5 blur-3xl sm:h-80 sm:w-80 lg:h-[26rem] lg:w-[26rem]" />
 
-      <div className="relative z-10 mx-auto w-full max-w-4xl">
-        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6 sm:space-y-8">
-          <motion.div variants={itemVariants} className="flex items-center gap-2.5 sm:gap-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-green)] shadow-[0_0_8px_rgba(23,182,167,0.6)] sm:h-2 sm:w-2" />
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--accent-green)] sm:text-xs">Our Story</span>
-          </motion.div>
-
-          <motion.h1 variants={itemVariants} className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+      <div className="relative z-10 mx-auto w-full max-w-8xl">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-6 sm:space-y-8"
+        >
+          <motion.h1
+            variants={itemVariants}
+            className="text-5xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
+          >
             <span className="block">From a simple conversation</span>
             <span className="block">at a tea stall...</span>
-            <span className="block bg-gradient-to-r from-[var(--accent-green)] via-[var(--accent-blue)] to-[var(--accent-green)] bg-clip-text text-transparent">to a dream of building something global.</span>
+            <span className="block bg-gradient-to-r from-[var(--accent-green)] via-[var(--accent-blue)] to-[var(--accent-green)] bg-clip-text text-transparent">
+              to a dream of building something global.
+            </span>
           </motion.h1>
 
-          <motion.p variants={itemVariants} className="max-w-xl text-base leading-relaxed text-[var(--text-secondary)] sm:max-w-2xl sm:text-lg lg:text-xl">
-            Three years ago, a group of friends sat together at a tea stall with nothing but ideas, ambition, and each other. Today, they are building Bytherix Technology — a company that started from zero to create opportunities for talented people everywhere.
+          <motion.p variants={itemVariants}
+            className="max-w-lg text-sm leading-7 text-[var(--text-secondary)] sm:max-w-xl sm:text-base sm:leading-7 lg:max-w-2xl lg:text-lg lg:leading-8 xl:max-w-3xl">
+            Three years ago, a group of friends sat together at a tea stall with
+            nothing but ideas, ambition, and each other. Today, they are
+            building Bytherix Technology — a company that started from zero to
+            create opportunities for talented people everywhere.
           </motion.p>
 
           {/* <motion.div variants={itemVariants} className="pt-4 sm:pt-8">
