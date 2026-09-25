@@ -14,7 +14,7 @@ const ProjectShowcase = ({
   project,
   index,
 }: ProjectShowcaseProps) => {
-  const reverse = index % 2 !== 0;
+  const reverse = true;
 
   return (
     <section className="relative py-8 md:py-8 lg:py-8">
@@ -53,9 +53,9 @@ const ProjectShowcase = ({
                 */}
               </div>
 
-              <h2 className="text-4xl font-bold leading-tight tracking-tight text-[var(--text-primary)] md:text-5xl">
-                {project.title}
-              </h2>
+             <h2 className="text-4xl font-bold leading-tight tracking-tight text-[#2f4ebc] md:text-5xl">
+  {project.title}
+</h2>
 
               <p className="mt-5 text-base leading-7 text-[var(--text-secondary)] md:text-lg md:leading-8">
                 {project.longDescription}
@@ -84,7 +84,7 @@ const ProjectShowcase = ({
 
             <div className="grid grid-cols-3 gap-3 border-y border-white/10 py-5">
               {project.stats.map((stat) => (
-                <div key={stat.label}>
+                <div>
                   <p className="text-lg font-bold text-[var(--text-primary)]">
                     {stat.value}
                   </p>

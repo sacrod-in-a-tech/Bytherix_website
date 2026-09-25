@@ -9,7 +9,7 @@ const OneForAllCapabilities = () => {
     <section id="capabilities" className="relative px-6 py-8 lg:py-8 sm:py-12">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
-          eyebrow="What it brings together"
+          // eyebrow="What it brings together"
           title="One account, one platform, every core business function"
           description="Instead of centralizing just one function, One For All is designed to bring the operations most businesses share into a single management foundation."
         />
@@ -39,9 +39,9 @@ const OneForAllCapabilities = () => {
               <Pill key={label} label={label} icon={icon} />
             ))}
           </div>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--text-muted)]">
+          {/* <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--text-muted)]">
             Additional industries can be introduced as the platform evolves.
-          </p>
+          </p> */}
         </div>
       </div>
     </section>

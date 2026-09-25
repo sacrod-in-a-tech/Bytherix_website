@@ -31,7 +31,7 @@ const GlassCard = ({ children, className = "" }: GlassCardProps) => {
       variants={glassCardVariants}
       whileHover={reducedMotion ? undefined : { y: -6 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className={`group relative overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--border-primary)] bg-[var(--surface-primary)]/70 p-6 shadow-[var(--shadow-card)] backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-[var(--brand-blue-border)] hover:shadow-[var(--shadow-card-hover)] ${className}`}
+      className={`group relative overflow-hidden rounded-[var(--radius-2xl)] border border-gray-800 bg-[var(--surface-primary)]/70 p-6 shadow-[var(--shadow-card)] backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-[var(--brand-blue-border)] hover:shadow-[var(--shadow-card-hover)] ${className}`}
     >
       {/* Ambient corner glow, purely decorative */}
       <div

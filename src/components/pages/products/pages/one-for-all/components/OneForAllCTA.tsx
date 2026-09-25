@@ -48,9 +48,9 @@ const OneForAllCTA = () => {
             </Link>
           </div>
 
-          <p className="mx-auto mt-8 max-w-lg text-xs leading-6 text-[var(--text-muted)]">
+          {/* <p className="mx-auto mt-8 max-w-lg text-xs leading-6 text-[var(--text-muted)]">
             {developmentNote}
-          </p>
+          </p> */}
         </div>
       </motion.div>
     </section>

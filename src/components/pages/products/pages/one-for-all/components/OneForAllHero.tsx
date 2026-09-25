@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
 import {
-  developmentNote,
+  // developmentNote,
   ecosystemNodes,
   heroHeadline,
   heroSummary,
@@ -190,9 +190,9 @@ const OneForAllHero = () => {
             </a>
           </div>
 
-          <p className="mt-8 max-w-xl text-xs leading-6 text-[var(--text-muted)]">
+          {/* <p className="mt-8 max-w-xl text-xs leading-6 text-[var(--text-muted)]">
             {developmentNote}
-          </p>
+          </p> */}
         </motion.div>
 
         <motion.div

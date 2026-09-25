@@ -17,16 +17,16 @@ const PortfolioProjects = () => {
             Featured Work
           </span> */}
 
-          <h2 className="mt-3 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] md:text-5xl lg:text-6xl">
-            Projects that turn ideas into
-            <span className="block text-[#2f4ebc]"> digital experiences.</span>
-          </h2>
+          {/* <h2 className="mt-3 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] md:text-5xl lg:text-6xl">
+            Our
+            <span className=" text-[#2f4ebc]"> Projects</span>
+          </h2> */}
         </motion.div>
 
-        <p className="max-w-4xl text-base leading-7 text-[var(--text-secondary)] md:text-lg md:leading-8">
+        {/* <p className=" text-base leading-7 text-[var(--text-secondary)] md:text-lg md:leading-8">
           A selection of websites and digital products designed and developed
           with a focus on usability, visual quality and responsive experiences.
-        </p>
+        </p> */}
       </div>
 
       <div className="mt-2">
