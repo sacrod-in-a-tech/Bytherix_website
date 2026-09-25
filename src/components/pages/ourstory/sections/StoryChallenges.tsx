@@ -12,33 +12,20 @@ const StoryChallenges = () => {
       <div className="pointer-events-none absolute -right-24 bottom-24 h-48 w-48 rounded-full bg-[var(--accent-red)]/5 blur-3xl sm:h-64 sm:w-64" />
 
       <div className="relative z-7 mx-auto max-w-8xl">
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.4 }} transition={{ duration: 0.8 }} className="space-y-3 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex items-center justify-center">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.4 }} transition={{ duration: 0.8 }} className="space-y-3 text-left">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex items-center justify-start">
             <h2 className="text-xl font-bold sm:text-2xl lg:text-3xl">The hard days</h2>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.7, delay: 0.1 }} className="space-y-6 sm:space-y-8">
             <div className="space-y-3 sm:space-y-4">
               <h3 className="text-3xl font-bold leading-tight text-[var(--accent-red)] sm:text-4xl lg:text-5xl">Things went wrong.</h3>
-              <p className="mx-auto max-w-7xl text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">Projects failed. Money was tight. Plans changed. Everything seemed harder than expected.</p>
+              <p className="max-w-7xl text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">Projects failed. Money was tight. Plans changed. Everything seemed harder than expected.</p>
             </div>
 
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              whileInView={{ opacity: 1 }} 
-              viewport={{ once: true }} 
-              transition={{ duration: 0.7, delay: 0.2 }} 
-              className="grid grid-cols-1 gap-3 border-y border-[var(--border-primary)] py-6 sm:grid-cols-2 sm:gap-4 sm:py-8"
-            >
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }} className="grid grid-cols-1 gap-3 border-y border-[var(--border-primary)] py-6 sm:grid-cols-2 sm:gap-4 sm:py-8">
               {CHALLENGES.map((challenge, idx) => (
-                <motion.div 
-                  key={challenge} 
-                  initial={{ opacity: 0, y: 15 }} 
-                  whileInView={{ opacity: 1, y: 0 }} 
-                  viewport={{ once: true }} 
-                  transition={{ duration: 0.5, delay: 0.3 + idx * 0.08 }} 
-                  className="rounded-lg bg-[var(--surface-primary)] p-4 border border-[var(--border-primary)] text-base text-[var(--text-secondary)] sm:text-lg"
-                >
+                <motion.div key={challenge} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 + idx * 0.08 }} className="rounded-lg bg-[var(--surface-primary)] p-4 border border-[var(--border-primary)] text-center text-base text-[var(--text-secondary)] sm:text-lg">
                   {challenge}
                 </motion.div>
               ))}
@@ -53,6 +40,7 @@ const StoryChallenges = () => {
               <p className="text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
                 That became their strength. They learned technology. They learned business. They learned from mistakes. They were not alone in the journey.
               </p>
+              
             </motion.div>
           </motion.div>
         </motion.div>

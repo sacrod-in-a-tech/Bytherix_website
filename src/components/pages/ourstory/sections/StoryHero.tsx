@@ -37,10 +37,10 @@ const StoryHero = () => {
           </motion.h1>
 
           <motion.p variants={itemVariants}
-            className="max-w-lg text-sm leading-7 text-[var(--text-secondary)] sm:max-w-xl sm:text-base sm:leading-7 lg:max-w-2xl lg:text-lg lg:leading-8 xl:max-w-3xl">
+            className="max-w-full text-sm leading-7 text-[var(--text-secondary)] sm:text-base sm:leading-7 lg:text-lg lg:leading-8">
             Three years ago, a group of friends sat together at a tea stall with
             nothing but ideas, ambition, and each other. Today, they are
-            building Bytherix Technology — a company that started from zero to
+            building Bytherix Technology, a company that started from zero to
             create opportunities for talented people everywhere.
           </motion.p>
 
