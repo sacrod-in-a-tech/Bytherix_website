@@ -8,7 +8,7 @@ const OneForAllAccess = () => {
     <section className="relative px-6 py-8 lg:py-8 sm:py-12">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
-          eyebrow="Who sees what"
+          // eyebrow="Who sees what"
           title="A hierarchical permission model, from platform to shift"
           description="One For All uses role-based access control so every person, from Bytherix down to a single cashier, only sees the information their responsibilities require."
         />
