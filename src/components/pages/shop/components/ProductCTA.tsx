@@ -12,7 +12,7 @@ export default function ProductCTA() {
         transition={{ duration: 0.55 }}
         className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 px-6 py-14 dark:border-white/[0.08] dark:bg-white/[0.025] sm:px-10 sm:py-20 lg:py-24"
       >
-        <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-72 -translate-x-1/2 rounded-full bg-[#00AEEF]/10 blur-[90px]" />
+        <div className="bg-[#0b1226] pointer-events-none absolute left-1/2 top-0 h-40 w-72 -translate-x-1/2 rounded-full bg-[#00AEEF] blur-[95px]" />
 
         <div className="relative mx-auto max-w-5xl text-center">
           <h2 className="font-inter text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-slate-950 sm:text-5xl md:text-6xl lg:text-7xl dark:text-white">

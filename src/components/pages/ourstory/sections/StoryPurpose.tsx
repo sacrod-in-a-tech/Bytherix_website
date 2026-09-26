@@ -49,7 +49,7 @@ const StoryPurpose = () => {
                   </div>
                   <h3 className="mb-2.5 text-base font-bold sm:mb-3 sm:text-lg">{belief.title}</h3>
                   <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{belief.description}</p>
-                  <div className="absolute bottom-0 left-0 h-1 w-0 rounded-r-full bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-blue)] transition-all duration-500 group-hover:w-12" />
+                  {/* <div className="absolute bottom-0 left-0 h-1 w-0 rounded-r-full bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-blue)] transition-all duration-500 group-hover:w-12" /> */}
                 </motion.div>
               );
             })}

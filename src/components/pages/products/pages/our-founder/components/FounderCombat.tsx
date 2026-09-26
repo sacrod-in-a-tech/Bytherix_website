@@ -21,7 +21,7 @@ const FounderCombat = () => {
       <div className="founder-container">
         <SectionHeading
           eyebrow="Combat"
-          title="No guns. No robots. Just steel and skill."
+          title="Traditional Combat"
           description={combatPhilosophy}
           tone="ember"
         />
@@ -85,10 +85,10 @@ const FounderCombat = () => {
                   <p className="mt-3 max-w-xl text-base leading-7 text-slate-300">
                     {weapon.description}
                   </p>
-                  <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-orange-300/90">
+                  {/* <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-orange-300/90">
                     <span className="h-px w-10 bg-orange-400/50" />
                     Traditional combat
-                  </div>
+                  </div> */}
                 </div>
               </motion.div>
             );

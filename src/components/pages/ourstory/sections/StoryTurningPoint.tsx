@@ -20,11 +20,11 @@ const StoryTurningPoint = () => {
           className="space-y-10 text-center sm:space-y-16"
         >
  
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <motion.span initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
               className="inline-block h-1 w-10 rounded-full bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-blue)] sm:w-12"
             />
-          </div>
+          </div> */}
  
           {/* Heading + paragraph now left-aligned, starting flush with the left edge of the container */}
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}

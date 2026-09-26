@@ -15,11 +15,13 @@ const accentStyles = {
     chip: "border-[#00AEEF]/30 bg-[#00AEEF]/10 text-[#0084BD] dark:text-[#00AEEF]",
     border: "hover:border-[#00AEEF]/40",
   },
+
   green: {
     text: "text-[#0C8F6A] dark:text-[#20C997]",
     chip: "border-[#20C997]/30 bg-[#20C997]/10 text-[#0C8F6A] dark:text-[#20C997]",
     border: "hover:border-[#20C997]/40",
   },
+
   red: {
     text: "text-[#D92D20] dark:text-[#FF3B30]",
     chip: "border-[#FF3B30]/30 bg-[#FF3B30]/10 text-[#D92D20] dark:text-[#FF3B30]",
@@ -54,7 +56,10 @@ export default function ProductCard({
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, delay: 0.1 + index * 0.07 }}
+          transition={{
+            duration: 0.6,
+            delay: 0.1 + index * 0.07,
+          }}
           className="absolute inset-0"
         >
           <img
@@ -69,15 +74,7 @@ export default function ProductCard({
       </div>
 
       <div className="flex flex-1 flex-col p-6 sm:p-7">
-        <span
-          className={`inline-flex w-fit rounded-full border px-3 py-1.5 text-xs font-medium sm:text-sm ${
-            featuredLayout ? accent.chip : neutralChip
-          }`}
-        >
-          {product.label}
-        </span>
-
-        <h3 className="mt-4 text-2xl font-semibold leading-tight tracking-[-0.03em] text-slate-950 dark:text-white">
+        <h3 className="text-2xl font-semibold leading-tight tracking-[-0.03em] text-slate-950 dark:text-white">
           {product.name}
         </h3>
 
@@ -102,6 +99,7 @@ export default function ProductCard({
             className={`inline-flex w-fit items-center gap-2 text-sm font-semibold transition-colors ${accent.text}`}
           >
             <span>{product.action}</span>
+
             <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </Link>
         </div>

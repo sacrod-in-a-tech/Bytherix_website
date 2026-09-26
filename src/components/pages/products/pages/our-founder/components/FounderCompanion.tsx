@@ -98,10 +98,10 @@ const FounderCompanion = () => {
             {companionSummary}
           </motion.blockquote>
 
-          <div className="mt-8 flex items-center gap-3 text-l font-semibold uppercase tracking-[0.18em] text-cyan-300/90">
+          {/* <div className="mt-8 flex items-center gap-3 text-l font-semibold uppercase tracking-[0.18em] text-cyan-300/90">
             <span className="h-px w-16 bg-cyan-400/60" />
             Guidance &middot; Combat &middot; Truth
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

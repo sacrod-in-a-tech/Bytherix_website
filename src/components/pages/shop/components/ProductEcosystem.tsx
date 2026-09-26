@@ -598,11 +598,11 @@ export default function ProductEcosystem() {
     <section className="px-4 pb-10 pt-2 sm:px-6 sm:pb-12 sm:pt-3 lg:px-10 lg:pb-14 lg:pt-4 xl:px-[60px]">
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
-          <p className="text-sm font-semibold text-[#0C8F6A] dark:text-[#20C997]">
+          {/* <p className="text-sm font-semibold text-[#0C8F6A] dark:text-[#20C997]">
             Product Ecosystem
-          </p>
+          </p> */}
 
-          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl lg:text-5xl dark:text-white">
+          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.035em]  sm:text-4xl lg:text-5xl text-[#0C8F6A] dark:text-[#20C997]">
             Everything connects.
           </h2>
 

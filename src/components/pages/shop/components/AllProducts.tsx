@@ -24,7 +24,7 @@ export default function AllProducts({ filter }: AllProductsProps) {
       <div className="mx-auto max-w-7xl">
         {/* Section Introduction */}
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold tracking-wide text-[#0084BD] dark:text-[#00AEEF]">
+          <p className="text-2xl font-semibold tracking-wide text-[#0084BD] dark:text-[#00AEEF]">
             Explore Products
           </p>
 
@@ -73,12 +73,12 @@ export default function AllProducts({ filter }: AllProductsProps) {
             >
               <div className="mb-5">
                 <div className="flex items-center gap-3">
-                  <h3 className="text-xl font-semibold tracking-[-0.02em] text-slate-900 dark:text-white">
+                  <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[#0084BD] dark:text-[#00AEEF]">
                     Digital Products
                   </h3>
                 </div>
 
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">
+                <p className="mt-2  text-l  leading-6 text-slate-500 dark:text-slate-400">
                   Purpose-built digital products designed around specific
                   workflows, industries, and everyday needs.
                 </p>
@@ -114,12 +114,12 @@ export default function AllProducts({ filter }: AllProductsProps) {
             >
               <div className="mb-5">
                 <div className="flex items-center gap-3">
-                  <h3 className="text-xl font-semibold tracking-[-0.02em] text-slate-900 dark:text-white">
+                  <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[#0084BD] dark:text-[#00AEEF]">
                     Software
                   </h3>
                 </div>
 
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">
+                <p className="mt-2  text-l leading-6 text-slate-500 dark:text-slate-400">
                   Connected software experiences built to bring people,
                   processes, and operations together.
                 </p>

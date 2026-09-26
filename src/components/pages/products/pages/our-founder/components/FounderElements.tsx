@@ -26,7 +26,7 @@ const FounderElements = () => {
       <div className="founder-container">
         <SectionHeading
           eyebrow="Elemental power system"
-          title="Power is earned, not given"
+          title="The elemental powers of the founder"
           description={elementsSummary}
           align="center"
           tone="ember"

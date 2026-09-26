@@ -29,8 +29,8 @@ import type { ParticleMode } from "../ui/ParticleCanvas";
 export const gameTitle = "Founder";
 export const gameSubtitle = "The Beginning of Journey";
 
-export const heroTagline =
-  "A boy loses everything to an ancient evil. What he becomes to hunt it down is the story.";
+// export const heroTagline =
+//   "A boy loses everything to an ancient evil. What he becomes to hunt it down is the story.";
 
 export const heroSummary =
   "Founder – The Beginning of Journey follows an ordinary schoolboy whose family is destroyed by a boksi, a figure from Nepali folklore feared for black magic and necromancy. He survives — and that survival becomes his purpose.";

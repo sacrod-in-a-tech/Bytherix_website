@@ -6,7 +6,6 @@ import {
   gameSubtitle,
   gameTitle,
   heroSummary,
-  heroTagline,
 } from "../data/founderContent";
 import { founderHeroImage } from "../data/founderImages";
 
@@ -83,16 +82,15 @@ const FounderHero = () => {
           </span>
         </motion.h1>
 
-        <motion.p
+        {/* <motion.p
           {...fadeUp(0.18)}
           className="mt-8 max-w-3xl text-lg font-medium leading-8 text-slate-300 sm:text-xl"
         >
-          {heroTagline}
-        </motion.p>
+        </motion.p> */}
 
         <motion.p
           {...fadeUp(0.25)}
-          className="mt-5 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base"
+          className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base"
         >
           {heroSummary}
         </motion.p>
