@@ -36,13 +36,13 @@ const StoryHero = () => {
             </span>
           </motion.h1>
 
-          <motion.p variants={itemVariants}
+          {/* <motion.p variants={itemVariants}
             className="max-w-full text-sm leading-7 text-[var(--text-secondary)] sm:text-base sm:leading-7 lg:text-lg lg:leading-8">
             Three years ago, a group of friends sat together at a tea stall with
             nothing but ideas, ambition, and each other. Today, they are
             building Bytherix Technology, a company that started from zero to
             create opportunities for talented people everywhere.
-          </motion.p>
+          </motion.p> */}
 
           {/* <motion.div variants={itemVariants} className="pt-4 sm:pt-8">
             <span className="inline-flex flex-col items-center gap-2 text-[10px] uppercase tracking-widest text-[var(--text-muted)] sm:text-xs">

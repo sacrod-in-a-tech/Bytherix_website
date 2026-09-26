@@ -64,7 +64,7 @@ const FounderQueen = () => {
           className="founder-eyebrow founder-eyebrow-void mt-10"
         >
           {/* <span className="founder-eyebrow-dash" /> */}
-          <h3 className="text-sm">The center of everything </h3>
+          {/* <h3 className="text-sm">The center of everything </h3> */}
         </motion.span>
 
         <motion.h2

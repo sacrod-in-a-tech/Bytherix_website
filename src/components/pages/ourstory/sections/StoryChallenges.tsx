@@ -32,14 +32,14 @@ const StoryChallenges = () => {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.7, delay: 0.4 }} className="space-y-3 pt-1 sm:space-y-5">
-              <p className="text-lg font-semibold text-[var(--accent-green)] sm:text-xl">But we were never alone.</p>
+              {/* <p className="text-lg font-semibold text-[var(--accent-green)] sm:text-xl">But we were never alone.</p> */}
               <div className="relative rounded-2xl border-2 border-[var(--accent-green)] bg-gradient-to-br from-[var(--surface-primary)] to-[var(--surface-secondary)] px-5 py-6 sm:px-6 sm:py-8">
                 <p className="text-xl font-bold leading-tight sm:text-2xl lg:text-3xl">Whenever things became difficult, we looked at each other's faces... and laughed.</p>
-                <p className="mt-3 text-[var(--text-secondary)] sm:mt-4">Not because everything was okay. But because we knew we were not alone.</p>
+                <p className="mt-3 text-[var(--text-secondary)] sm:mt-4"> That became our strength. We learned technology. We learned business. We learned from mistakes. We were not alone in the journey.</p>
               </div>
-              <p className="text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
-                That became their strength. They learned technology. They learned business. They learned from mistakes. They were not alone in the journey.
-              </p>
+              {/* <p className="text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
+                That became our strength. We learned technology. We learned business. We learned from mistakes. We were not alone in the journey.
+              </p> */}
               
             </motion.div>
           </motion.div>

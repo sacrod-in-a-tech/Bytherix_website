@@ -9,7 +9,10 @@ interface SectionHeadingProps {
   tone?: "default" | "ember" | "cyan" | "void";
 }
 
-const toneClass: Record<NonNullable<SectionHeadingProps["tone"]>, string> = {
+const toneClass: Record<
+  NonNullable<SectionHeadingProps["tone"]>,
+  string
+> = {
   default: "founder-heading-default",
   ember: "founder-heading-ember",
   cyan: "founder-heading-cyan",
@@ -17,7 +20,6 @@ const toneClass: Record<NonNullable<SectionHeadingProps["tone"]>, string> = {
 };
 
 const SectionHeading = ({
-  eyebrow,
   title,
   description,
   align = "left",
@@ -41,18 +43,9 @@ const SectionHeading = ({
       }}
       className={`founder-heading flex max-w-3xl flex-col gap-4 ${toneClass[tone]} ${alignClass}`}
     >
-      {/* {eyebrow && (
-        <span className="founder-eyebrow">
-          <span className="founder-eyebrow-dash" />
-          {eyebrow}
-        </span>
-      )} */}
-
       <h2 className="founder-heading-title text-4xl font-bold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
         {title}
       </h2>
-
-      <div className="founder-heading-line" />
 
       {description && (
         <p className="max-w-2xl text-base leading-7 text-slate-400 sm:text-lg sm:leading-8">

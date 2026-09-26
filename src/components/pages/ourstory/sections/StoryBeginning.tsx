@@ -24,7 +24,7 @@ const StoryBeginning = () => {
 
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.6, delay: 0.2 }} className="border-l-4 border-[var(--accent-green)] bg-[var(--surface-secondary)] px-5 py-6 sm:px-6 sm:py-8">
               <p className="text-lg font-semibold leading-tight sm:text-xl lg:text-2xl">Whenever something went wrong or something went right, we would look at each other and laugh.</p>
-              <p className="mt-3 text-xs text-[var(--text-muted)] sm:mt-4 sm:text-sm">A moment that became a favorite memory</p>
+              {/* <p className="mt-3 text-xs text-[var(--text-muted)] sm:mt-4 sm:text-sm">A moment that became a favorite memory</p> */}
             </motion.div>
 
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.6, delay: 0.3 }} className="text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">

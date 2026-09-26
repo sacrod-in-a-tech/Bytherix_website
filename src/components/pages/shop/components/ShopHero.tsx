@@ -56,11 +56,11 @@ export default function ShopHero() {
               EYEBROW
           ================================================= */}
 
-          <div className="mb-5 flex items-center gap-2 font-Inter text-sm font-semibold tracking-[0.01em] sm:text-base lg:text-lg">
+          {/* <div className="mb-5 flex items-center gap-2 font-Inter text-sm font-semibold tracking-[0.01em] sm:text-base lg:text-lg">
             <span className="animate-gradient bg-[length:200%_auto] bg-gradient-to-r from-[#0E9F78] via-[#0088C7] to-[#3157D5] bg-clip-text dark:from-[#20C997] dark:via-[#00AEEF] dark:via-[#38BDF8] dark:to-[#3157D5] text-transparent">
               Bytherix Product Ecosystem
-            </span>
-          </div>
+            </span> 
+          </div> */}
 
           {/* =================================================
               MAIN HEADING

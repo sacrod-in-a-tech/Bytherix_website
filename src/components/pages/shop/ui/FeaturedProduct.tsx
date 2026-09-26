@@ -39,7 +39,7 @@ export default function FeaturedProduct() {
     <section ref={ref} className="relative">
       <div className="mb-5 flex items-center gap-3">
 
-        <p className="text-sm font-semibold tracking-wide text-[#FF3B30]">
+        <p className="text-2xl font-bold tracking-wide text-[#FF3B30] dark:text-[#FF3B30]">
           Featured Product
         </p>
       </div>
