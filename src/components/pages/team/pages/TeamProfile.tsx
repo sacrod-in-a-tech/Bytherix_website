@@ -28,78 +28,23 @@ interface TeamProfileProps {
   onBack?: () => void;
 }
 
-// =====================================================
-// SKILL ICON MAPPING
-// =====================================================
-
-const SKILL_ICON_RULES: Array<{
-  keywords: string[];
-  icon: LucideIcon;
-}> = [
-  {
-    keywords: ["ai", "machine learning", "ml"],
-    icon: Brain,
-  },
-  {
-    keywords: ["iot"],
-    icon: Cpu,
-  },
-  {
-    keywords: ["robot"],
-    icon: Bot,
-  },
-  {
-    keywords: ["cyber", "security"],
-    icon: ShieldCheck,
-  },
-  {
-    keywords: ["hack", "penetration"],
-    icon: Terminal,
-  },
-  {
-    keywords: ["software", "development", "app", "web"],
-    icon: Code2,
-  },
-  {
-    keywords: ["engineer"],
-    icon: Wrench,
-  },
-  {
-    keywords: ["research"],
-    icon: Microscope,
-  },
-  {
-    keywords: ["recruitment"],
-    icon: UserPlus,
-  },
-  {
-    keywords: ["human resources", "employee", "relations"],
-    icon: HeartHandshake,
-  },
-  {
-    keywords: ["team"],
-    icon: Users,
-  },
-  {
-    keywords: ["project"],
-    icon: ClipboardList,
-  },
-  {
-    keywords: ["planning"],
-    icon: CalendarCheck2,
-  },
-  {
-    keywords: ["strategy"],
-    icon: Target,
-  },
-  {
-    keywords: ["leadership"],
-    icon: Crown,
-  },
-  {
-    keywords: ["management", "business"],
-    icon: Briefcase,
-  },
+const SKILL_ICON_RULES: Array<{ keywords: string[]; icon: LucideIcon }> = [
+  { keywords: ["ai", "machine learning", "ml"], icon: Brain },
+  { keywords: ["iot"], icon: Cpu },
+  { keywords: ["robot"], icon: Bot },
+  { keywords: ["cyber", "security"], icon: ShieldCheck },
+  { keywords: ["hack", "penetration"], icon: Terminal },
+  { keywords: ["software", "development", "app", "web"], icon: Code2 },
+  { keywords: ["engineer"], icon: Wrench },
+  { keywords: ["research"], icon: Microscope },
+  { keywords: ["recruitment"], icon: UserPlus },
+  { keywords: ["human resources", "employee", "relations"], icon: HeartHandshake },
+  { keywords: ["team"], icon: Users },
+  { keywords: ["project"], icon: ClipboardList },
+  { keywords: ["planning"], icon: CalendarCheck2 },
+  { keywords: ["strategy"], icon: Target },
+  { keywords: ["leadership"], icon: Crown },
+  { keywords: ["management", "business"], icon: Briefcase },
 ];
 
 function getSkillIcon(skill: string): LucideIcon {
@@ -112,10 +57,7 @@ function getSkillIcon(skill: string): LucideIcon {
   return match ? match.icon : Sparkles;
 }
 
-export default function TeamProfile({
-  slug,
-  onBack,
-}: TeamProfileProps) {
+export default function TeamProfile({ slug, onBack }: TeamProfileProps) {
   const member = teamMembers.find((item) => item.slug === slug);
 
   const handleBack = () => {
@@ -133,27 +75,19 @@ export default function TeamProfile({
     window.dispatchEvent(new PopStateEvent("popstate"));
   };
 
-  // =====================================================
-  // MEMBER NOT FOUND
-  // =====================================================
-
   if (!member) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[var(--bg-primary)] px-6">
+      <main className="flex min-h-screen items-center justify-center bg-[var(--bg-primary)] px-5 sm:px-8 lg:px-16">
         <div className="text-center">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-500">
             Bytherix Team
           </p>
 
-          <h1 className="mt-3 font-display text-3xl font-bold text-[var(--text-primary)]">
+          <h1 className="mt-3 font-display text-3xl font-bold text-[var(--text-primary)] sm:text-4xl">
             Team member not found
           </h1>
 
-          <button
-            type="button"
-            onClick={handleBack}
-            className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#132A57] px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-all duration-300 hover:bg-[#3157D5]"
-          >
+          <button type="button" onClick={handleBack} className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#132A57] px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-all duration-300 hover:bg-[#3157D5]">
             <ArrowLeft size={14} />
             Back to Team
           </button>
@@ -162,35 +96,14 @@ export default function TeamProfile({
     );
   }
 
-  // =====================================================
-  // JOURNEY CONTENT
-  // =====================================================
-
-  const journeyParagraphs = member.journeying
-    ? member.journeying.split("\n\n")
-    : ["More details about this journey will be shared soon."];
-
-  // =====================================================
-  // PROFILE
-  // =====================================================
+  const journeyParagraphs = member.journeying ? member.journeying.split("\n\n") : ["More details about this journey will be shared soon."];
 
   return (
     <main className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
-      {/* =====================================================
-          PROFILE HEADER
-      ====================================================== */}
-
       <header className="border-b border-black/5">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-10">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="group flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#3157D5] transition-opacity duration-300 hover:opacity-60"
-          >
-            <ArrowLeft
-              size={15}
-              className="text-[#3157D5] transition-transform duration-300 group-hover:-translate-x-1"
-            />
+        <div className="mx-auto flex max-w-[1600px] items-center justify-between px-5 py-5 sm:px-8 lg:px-16 xl:px-20">
+          <button type="button" onClick={handleBack} className="group flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#3157D5] transition-opacity duration-300 hover:opacity-60 sm:text-xs">
+            <ArrowLeft size={15} className="text-[#3157D5] transition-transform duration-300 group-hover:-translate-x-1" />
             Back to Team
           </button>
 
@@ -200,142 +113,60 @@ export default function TeamProfile({
         </div>
       </header>
 
-      {/* =====================================================
-          PROFILE HERO
-      ====================================================== */}
+      <motion.section initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} className="mx-auto max-w-[1600px] px-5 pb-12 pt-12 sm:px-8 sm:pb-14 sm:pt-14 lg:px-16 lg:pb-16 lg:pt-16 xl:px-20">
+        <div className="grid items-start gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:gap-12">
+          <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.05 }} className="relative overflow-hidden rounded-[24px] bg-[#F3F5F8] sm:rounded-[28px]">
+            <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/15 to-transparent" />
 
-      <motion.section
-        initial={{
-          opacity: 0,
-          y: 18,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{
-          duration: 0.6,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className="mx-auto max-w-7xl px-5 pb-8 pt-12 sm:px-8 sm:pb-10 sm:pt-16 lg:px-10 lg:pb-12 lg:pt-24"
-      >
-        <div className="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-          {/* =================================================
-              IMAGE
-          ================================================== */}
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              scale: 0.97,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
-            transition={{
-              duration: 0.7,
-              delay: 0.05,
-            }}
-            className="relative overflow-hidden rounded-[24px] bg-[#F3F5F8] sm:rounded-[28px]"
-          >
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/10 to-transparent" />
-
-            <img
-              src={member.image}
-              alt={member.name}
-              className="h-[420px] w-full object-cover object-center sm:h-[540px] lg:h-[620px]"
-            />
+            <img src={member.image} alt={member.name} className="h-[440px] w-full object-cover object-center sm:h-[540px] lg:h-[600px] xl:h-[640px]" />
           </motion.div>
 
-          {/* =================================================
-              INTRODUCTION
-          ================================================== */}
-
-          <div>
-            <p className="text-[19px] font-semibold uppercase tracking-[0.2em] text-[#3157D5] sm:text-[25px]">
+          <div className="flex min-h-full flex-col justify-start pt-1 lg:pt-2">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#3157D5] sm:text-xs">
               {member.role}
             </p>
 
-            <h1 className="mt-3 max-w-3xl font-display text-5xl font-bold leading-[0.92] tracking-[-0.045em] text-[var(--text-primary)] sm:text-6xl lg:text-7xl">
+            <h1 className="mt-3 max-w-4xl font-display text-5xl font-bold leading-[0.9] tracking-[-0.05em] text-[var(--text-primary)] sm:text-6xl lg:text-[4.5rem] xl:text-[5rem]">
               {member.name}
             </h1>
 
             {member.description && (
-              <p className="mt-6 max-w-xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base sm:leading-8">
+              <p className="mt-6 max-w-2xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base sm:leading-8">
                 {member.description}
               </p>
             )}
 
             <div className="mt-7 h-px w-16 bg-[#3157D5]" />
 
-            {/* =================================================
-                SOCIAL LINKS
-            ================================================== */}
-
             {(member.linkedin || member.github) && (
               <div className="mt-6 flex items-center gap-3">
                 {member.linkedin && (
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${member.name} LinkedIn`}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-[#DCE3F2] text-[#3157D5] transition-all duration-300 hover:border-[#3157D5] hover:bg-[#3157D5] hover:text-white"
-                  >
+                  <a href={member.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} LinkedIn`} className="flex h-10 w-10 items-center justify-center rounded-full border border-[#DCE3F2] text-[#3157D5] transition-all duration-300 hover:border-[#3157D5] hover:bg-[#3157D5] hover:text-white">
                     <FaLinkedinIn size={16} />
                   </a>
                 )}
 
                 {member.github && (
-                  <a
-                    href={member.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${member.name} GitHub`}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-[#DCE3F2] text-[#3157D5] transition-all duration-300 hover:border-[#3157D5] hover:bg-[#3157D5] hover:text-white"
-                  >
+                  <a href={member.github} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} GitHub`} className="flex h-10 w-10 items-center justify-center rounded-full border border-[#DCE3F2] text-[#3157D5] transition-all duration-300 hover:border-[#3157D5] hover:bg-[#3157D5] hover:text-white">
                     <FaGithub size={16} />
                   </a>
                 )}
               </div>
             )}
 
-            {/* =================================================
-                SKILLS
-            ================================================== */}
-
             {member.skills && member.skills.length > 0 && (
               <div className="mt-8">
-                <p className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#3157D5]">
+                <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#3157D5] sm:text-[11px]">
                   <span className="h-px w-4 bg-[#3157D5]" />
                   Skills
                 </p>
 
-                <div className="grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2">
                   {member.skills.map((skill, index) => {
                     const Icon = getSkillIcon(skill);
 
                     return (
-                      <motion.div
-                        key={`${skill}-${index}`}
-                        initial={{
-                          opacity: 0,
-                          y: 10,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                        }}
-                        transition={{
-                          duration: 0.45,
-                          delay: 0.05 * index,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                        className="group relative flex items-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#00AEEF]/40 hover:bg-[#00AEEF]/[0.06] hover:shadow-[0_8px_30px_-8px_rgba(0,174,239,0.45)]"
-                      >
-                        {/* Soft ambient glow */}
-
+                      <motion.div key={`${skill}-${index}`} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.05 * index, ease: [0.22, 1, 0.36, 1] }} className="group relative flex min-h-[62px] items-center gap-3 overflow-hidden rounded-[16px] border border-black/5 bg-white/[0.03] px-4 py-3.5 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#00AEEF]/40 hover:bg-[#00AEEF]/[0.06] hover:shadow-[0_8px_30px_-8px_rgba(0,174,239,0.45)]">
                         <div className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-[#00AEEF]/0 blur-2xl transition-all duration-500 group-hover:bg-[#00AEEF]/25" />
 
                         <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#00AEEF]/25 bg-[#00AEEF]/10 text-[#00AEEF] transition-all duration-300 group-hover:border-[#00AEEF]/60 group-hover:bg-[#00AEEF]/20 group-hover:shadow-[0_0_16px_rgba(0,174,239,0.55)]">
@@ -355,38 +186,23 @@ export default function TeamProfile({
         </div>
       </motion.section>
 
-      {/* =====================================================
-          BIO / JOURNEY
-      ====================================================== */}
-
-      <section className="mx-auto max-w-7xl px-5 pb-20 pt-6 sm:px-8 sm:pb-24 sm:pt-8 lg:px-10 lg:pb-32 lg:pt-10">
-        <div className="space-y-6">
+      <section className="mx-auto max-w-[1600px] px-5 pb-20 pt-4 sm:px-8 sm:pb-24 sm:pt-6 lg:px-16 lg:pb-28 lg:pt-8 xl:px-20">
+        <div className="mx-auto max-w-[1250px] space-y-6">
           {journeyParagraphs.map((paragraph, index) => (
-            <p
-              key={index}
-              className="text-justify text-base leading-8 text-[var(--text-secondary)] sm:text-lg sm:leading-9"
-            >
+            <p key={index} className="text-justify text-base leading-8 text-[var(--text-secondary)] sm:text-lg sm:leading-9">
               {paragraph}
             </p>
           ))}
         </div>
       </section>
 
-      {/* =====================================================
-          FOOTER CTA
-      ====================================================== */}
-
       <section className="border-t border-black/5">
-        <div className="mx-auto max-w-5xl px-5 py-16 text-center sm:px-8 lg:py-20">
+        <div className="mx-auto max-w-[1600px] px-5 py-16 text-center sm:px-8 lg:px-16 lg:py-20 xl:px-20">
           <p className="text-sm text-[var(--text-secondary)]">
             Discover more about the people building Bytherix.
           </p>
 
-          <button
-            type="button"
-            onClick={handleBack}
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#3157D5] px-7 py-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#132A57]"
-          >
+          <button type="button" onClick={handleBack} className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#3157D5] px-7 py-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#132A57]">
             <ArrowLeft size={14} />
             Back to Team
           </button>

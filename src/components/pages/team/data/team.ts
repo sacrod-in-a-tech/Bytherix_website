@@ -65,28 +65,8 @@ Maybe I don't need one label. I'm an engineer, a developer, a tech enthusiast â€
 
   {
     id: 3,
-    name: "Someone",
-    role: "Head of HR",
-    image: "/team/hr.svg",
-    slug: "some-one",
-    description: "Short description about the team member.",
-    journeying:
-      "More details about Prabin's journey will be shared soon.",
-    linkedin: "",
-    github: "",
-    skills: [
-      "Human Resources",
-      "Leadership",
-      "Team Management",
-      "Recruitment",
-      "Employee Relations",
-    ],
-  },
-
-  {
-    id: 4,
     name: "Shriya Pantha",
-    role: "Project Head",
+    role: "Head of HR",
     image: "/team/shriya.jpeg",
     slug: "shriya-pantha",
     description: "Short description about the team member.",
@@ -95,11 +75,11 @@ Maybe I don't need one label. I'm an engineer, a developer, a tech enthusiast â€
     linkedin: "",
     github: "",
     skills: [
-      "Project Management",
+       "Human Resources",
       "Leadership",
-      "Planning",
-      "Team Coordination",
-      "Project Strategy",
+      "Team Management",
+      "Recruitment",
+      "Employee Relations",
     ],
   },
 ];

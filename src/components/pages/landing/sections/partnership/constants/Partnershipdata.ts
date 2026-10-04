@@ -47,4 +47,20 @@ export const PARTNERS: Partner[] = [
     // add the exact confirmed URL here yourself before enabling the link.
     website: undefined,
   },
+  {
+id: "mindrisers",
+name: "Mindrisers",
+category: "IT Training & Technology Partner",
+// Place the provided logo file at public/partners/mindrisers-logo.png
+logo: "/partners/mindrisers.png",
+description:
+"Mindrisers is an IT training and technology-focused organization providing practical learning, professional development, and digital technology solutions.",
+services: [
+"IT training and education",
+"Professional skill development",
+"Digital technology solutions",
+],
+website: "https://mindriserstech.com/",
+},
+
 ];

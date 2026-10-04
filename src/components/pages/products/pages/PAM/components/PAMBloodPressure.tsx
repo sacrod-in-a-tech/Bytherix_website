@@ -41,9 +41,9 @@ const PAMBloodPressure = () => {
           ))}
         </StaggerGrid>
 
-        <p className="mt-8 max-w-3xl text-sm leading-6 text-[var(--text-muted)]">
+        {/* <p className="mt-8 max-w-3xl text-sm leading-6 text-[var(--text-muted)]">
           {bpNote}
-        </p>
+        </p> */}
       </div>
     </section>
   );
