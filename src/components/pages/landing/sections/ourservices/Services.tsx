@@ -99,7 +99,7 @@ export default function Services() {
       setActiveIndex((current) =>
         current >= maxIndex ? 0 : current + 1,
       );
-    }, 4200);
+    }, 1500);
 
     return () => {
       window.clearInterval(timer);

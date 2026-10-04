@@ -35,9 +35,9 @@ const PAMCompliance = () => {
               <Pill key={label} label={label} />
             ))}
           </div>
-          <p className="mt-4 max-w-2xl text-xs leading-6 text-[var(--text-muted)]">
+          {/* <p className="mt-4 max-w-2xl text-xs leading-6 text-[var(--text-muted)]">
             {intendedUseNote}
-          </p>
+          </p> */}
         </div>
       </div>
     </section>

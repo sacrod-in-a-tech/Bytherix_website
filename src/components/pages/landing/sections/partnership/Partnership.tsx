@@ -53,9 +53,9 @@ const Partnership = () => {
           </span>
         </h2>
 
-        <p className="mx-auto mt-3 text-xl leading-6 text-slate-600/80 dark:text-slate-300/70 sm:text-base font-semibold">
+        {/* <p className="mx-auto mt-3 text-xl leading-6 text-slate-600/80 dark:text-slate-300/70 sm:text-base font-semibold">
           Building stronger connections through collaboration and innovation.
-        </p>
+        </p> */}
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:mt-10 sm:gap-x-14 sm:gap-y-7">
           {PARTNERS.map((partner, index) => (

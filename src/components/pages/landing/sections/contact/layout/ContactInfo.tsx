@@ -76,7 +76,7 @@ const socialLinks: SocialItem[] = [
     id: "youtube",
     icon: "youtube",
     label: "YouTube",
-    href: "https://www.youtube.com/@Bytherix_1",
+    href: "https://www.youtube.com/@Bytherix_Technology",
   },
   {
     id: "facebook",
@@ -94,7 +94,7 @@ const socialLinks: SocialItem[] = [
     id: "tiktok",
     icon: "tiktok",
     label: "TikTok",
-    href: "https://www.tiktok.com/@bytherix",
+    href: "https://www.tiktok.com/@bytherixtechnology",
   },
 ];
 

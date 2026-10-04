@@ -186,12 +186,12 @@ const SOCIAL_LINKS = [
   },
   {
     icon: FaYoutube,
-    href: "https://www.youtube.com/@Bytherix_1",
+    href: "https://www.youtube.com/@Bytherix_Technology",
     label: "YouTube",
   },
   {
     icon: FaTiktok,
-    href: "https://www.tiktok.com/@bytherix",
+    href: "https://www.tiktok.com/@bytherixtechnology",
     label: "TikTok",
   },
 ];

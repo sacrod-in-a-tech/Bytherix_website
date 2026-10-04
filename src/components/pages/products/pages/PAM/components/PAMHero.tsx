@@ -166,9 +166,9 @@ const PAMHero = () => {
             {heroSummary}
           </p>
 
-          <p className="mt-4 max-w-2xl text-sm font-semibold text-[var(--accent-blue)]">
+          {/* <p className="mt-4 max-w-2xl text-sm font-semibold text-[var(--accent-blue)]">
             {productTagline}
-          </p>
+          </p> */}
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link

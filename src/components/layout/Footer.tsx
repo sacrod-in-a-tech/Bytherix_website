@@ -36,7 +36,7 @@ const Footer = () => {
             {/* Social Links */}
             <div className="mt-7 flex items-center gap-3">
               <a
-                href="https://www.youtube.com/@Bytherix_1"
+                href="https://www.youtube.com/@Bytherix_Technology"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
@@ -69,7 +69,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://www.tiktok.com/@bytherix"
+                href="https://www.tiktok.com/@bytherixtechnology"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="TikTok"
@@ -91,22 +91,22 @@ const Footer = () => {
 
             <ul className="mt-5 space-y-3.5 text-sm text-white/55 sm:text-[15px]">
               <li>
-                <a href="#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Web Development
                 </a>
               </li>
               <li>
-                <a href="#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   UI/UX Design
                 </a>
               </li>
               <li>
-                <a href="#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Software Development
                 </a>
               </li>
               <li>
-                <a href="#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Digital Solutions
                 </a>
               </li>
@@ -123,22 +123,22 @@ const Footer = () => {
 
             <ul className="mt-5 space-y-3.5 text-sm text-white/55 sm:text-[15px]">
               <li>
-                <a href="#about" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <a href="/about-company" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#team" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <a href="/our-team" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Our Team
                 </a>
               </li>
               <li>
-                <a href="#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Our Services
                 </a>
               </li>
               <li>
-                <a href="#contact" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <a href="/#contact" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Contact Us
                 </a>
               </li>

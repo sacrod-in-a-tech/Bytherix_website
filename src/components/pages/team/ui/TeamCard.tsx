@@ -8,11 +8,7 @@ interface TeamCardProps {
   position: "left" | "center" | "right";
 }
 
-export default function TeamCard({
-  member,
-  active = false,
-  position,
-}: TeamCardProps) {
+export default function TeamCard({ member, active = false, position }: TeamCardProps) {
   const isCenter = position === "center";
 
   const openProfile = () => {
@@ -29,9 +25,7 @@ export default function TeamCard({
 
     window.history.pushState({}, "", path);
 
-    window.dispatchEvent(
-      new PopStateEvent("popstate"),
-    );
+    window.dispatchEvent(new PopStateEvent("popstate"));
 
     window.scrollTo({
       top: 0,
@@ -39,9 +33,7 @@ export default function TeamCard({
     });
   };
 
-  const handleKeyDown = (
-    event: KeyboardEvent<HTMLElement>,
-  ) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       openProfile();
@@ -54,7 +46,7 @@ export default function TeamCard({
       initial={false}
       animate={{
         width: isCenter ? "48%" : "19%",
-        height: isCenter ? 360 : 305,
+        height: isCenter ? 420 : 350,
         scale: isCenter ? 1 : 0.96,
       }}
       transition={{
@@ -68,8 +60,6 @@ export default function TeamCard({
       aria-label={`View ${member.name}'s profile`}
       className={`group relative shrink-0 cursor-pointer overflow-hidden rounded-[18px] bg-[#F3F5F8] outline-none transition-shadow duration-300 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-[#3157D5] focus-visible:ring-offset-2 ${active ? "z-20" : "z-10"}`}
     >
-      {/* IMAGE */}
-
       <motion.img
         src={member.image}
         alt={member.name}
@@ -83,17 +73,11 @@ export default function TeamCard({
         className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.025]"
       />
 
-      {/* BOTTOM GRADIENT */}
-
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-
-      {/* CLICK INDICATOR */}
 
       <div className="pointer-events-none absolute right-4 top-4 z-20 flex h-9 w-9 translate-y-1 items-center justify-center rounded-full bg-white/90 text-[#132A57] opacity-0 shadow-md backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100" aria-hidden="true">
         <span className="text-base leading-none">↗</span>
       </div>
-
-      {/* SIDE CARD */}
 
       {!isCenter && (
         <div className="absolute inset-x-0 bottom-0 flex justify-center pb-5">
@@ -102,8 +86,6 @@ export default function TeamCard({
           </span>
         </div>
       )}
-
-      {/* ACTIVE CARD */}
 
       {isCenter && (
         <motion.div
