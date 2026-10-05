@@ -127,10 +127,10 @@ const HeroContent = ({ docked }: HeroContentProps) => {
             text-4xl
             sm:text-5xl
             md:text-6xl
-            lg:text-[4.25rem]
-            xl:text-[4.65rem]
+            lg:text-[4.5rem]
+            xl:text-[5.1rem]
             font-extrabold
-            leading-[0.98]
+            leading-[0.92]
             tracking-[-0.045em]
             text-white
           "
@@ -143,9 +143,11 @@ const HeroContent = ({ docked }: HeroContentProps) => {
           ref={rotatorRef}
           className="
             relative
-            mt-3
-            inline-block
-            max-w-full
+            mt-0
+            sm:-mt-1
+            lg:-mt-2
+            block
+            w-full
             overflow-visible
             text-left
           "
@@ -157,15 +159,15 @@ const HeroContent = ({ docked }: HeroContentProps) => {
               invisible
               block
               whitespace-nowrap
-              text-3xl
-              sm:text-4xl
-              md:text-5xl
-              lg:text-[3.7rem]
-              xl:text-[4.1rem]
+              text-4xl
+              sm:text-5xl
+              md:text-6xl
+              lg:text-[4.5rem]
+              xl:text-[5.1rem]
               font-extrabold
-              leading-none
+              leading-[0.92]
               tracking-[-0.04em]
-              px-1
+              px-0.5
             "
           >
             Web Applications
@@ -179,13 +181,13 @@ const HeroContent = ({ docked }: HeroContentProps) => {
                 absolute
                 inset-0
                 whitespace-nowrap
-                text-3xl
-                sm:text-4xl
-                md:text-5xl
-                lg:text-[3.7rem]
-                xl:text-[4.1rem]
+                text-4xl
+                sm:text-5xl
+                md:text-6xl
+                lg:text-[4.5rem]
+                xl:text-[5.1rem]
                 font-extrabold
-                leading-none
+                leading-[0.92]
                 tracking-[-0.04em]
                 bg-linear-to-r
                 from-cyan-300
@@ -194,10 +196,10 @@ const HeroContent = ({ docked }: HeroContentProps) => {
                 bg-clip-text
                 text-transparent
                 will-change-transform
-                px-1
+                px-0.5
               "
               style={{
-                textShadow: "0 0 35px rgba(56,189,248,0.10)",
+                textShadow: "0 0 35px rgba(56,189,248,0.15)",
               }}
             >
               {word}
@@ -209,16 +211,18 @@ const HeroContent = ({ docked }: HeroContentProps) => {
       {/* Description */}
       <p
         className="
-          mt-6
-          max-w-[540px]
+          mt-4
+          sm:mt-5
+          max-w-[520px]
           mx-auto
           lg:mx-0
-          px-2
+          px-1
           sm:px-0
-          text-sm
-          sm:text-base
-          leading-[1.7]
-          text-white/55
+          text-xs
+          sm:text-sm
+          md:text-[15px]
+          leading-[1.65]
+          text-white/60
         "
       >
         We design and engineer modern digital products,
@@ -227,26 +231,10 @@ const HeroContent = ({ docked }: HeroContentProps) => {
         and custom hardware.
       </p>
 
-      {/* Social Proof */}
-      <div className="mt-5">
+      {/* Social Proof & CTAs */}
+      <div className="mt-4 sm:mt-5">
         <SocialProof />
       </div>
-
-      {/* Reserved spacing for future content */}
-      <div
-        className="
-          mt-7
-          hidden
-          lg:flex
-          items-center
-          gap-3
-          text-[9px]
-          font-medium
-          uppercase
-          tracking-[0.22em]
-          text-white/20
-        "
-      />
     </div>
   );
 };

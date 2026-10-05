@@ -156,16 +156,18 @@ const Navbar = ({ docked }: NavbarProps) => {
     <>
       <header
         className="
-          relative
+          sticky
+          top-0
           z-[100]
           w-full
-          bg-[#050814]
+          bg-[#050814]/90
+          backdrop-blur-md
           px-3
-          py-3
+          py-2
           sm:px-4
-          sm:py-3
+          sm:py-2.5
           lg:px-5
-          lg:py-4
+          lg:py-3
           xl:px-6
         "
         style={{
@@ -182,7 +184,7 @@ const Navbar = ({ docked }: NavbarProps) => {
             relative
             mx-auto
             flex
-            min-h-[62px]
+            min-h-[54px]
             w-full
             max-w-[1600px]
             items-center
@@ -192,12 +194,12 @@ const Navbar = ({ docked }: NavbarProps) => {
             bg-[#080F29]
             px-4
             shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_8px_25px_rgba(0,0,0,0.35)]
-            sm:min-h-[66px]
+            sm:min-h-[58px]
             sm:px-5
-            lg:min-h-[68px]
+            lg:min-h-[62px]
             lg:rounded-[22px]
             lg:px-6
-            xl:min-h-[70px]
+            xl:min-h-[64px]
             xl:px-7
           "
         >

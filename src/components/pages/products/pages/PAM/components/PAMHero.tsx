@@ -6,7 +6,6 @@ import {
   heroHeadline,
   heroSummary,
   productName,
-  productTagline,
 } from "../data/pamContent";
 
 /**

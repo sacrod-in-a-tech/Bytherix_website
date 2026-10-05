@@ -1,6 +1,6 @@
 import { Check } from "lucide-react";
 import { SectionHeading, GlassCard, StaggerGrid } from "../ui/shared";
-import { bpMethods, bpNote } from "../data/pamContent";
+import { bpMethods } from "../data/pamContent";
 
 const PAMBloodPressure = () => {
   return (

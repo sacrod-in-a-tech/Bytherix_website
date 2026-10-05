@@ -90,11 +90,12 @@ const RobotLaptopHero = () => {
         w-full
         items-center
         justify-center
-        min-h-[280px]
-        sm:min-h-[380px]
-        md:min-h-[420px]
-        lg:min-h-[520px]
-        xl:min-h-[600px]
+        h-full
+        min-h-[220px]
+        sm:min-h-[280px]
+        md:min-h-[340px]
+        lg:min-h-[400px]
+        xl:min-h-[460px]
       "
       style={{
         perspective: 1200,
@@ -104,9 +105,14 @@ const RobotLaptopHero = () => {
         className="
           relative
           w-full
-          max-w-[760px]
+          max-w-[780px]
           aspect-square
           will-change-transform
+          scale-102
+          sm:scale-105
+          lg:scale-110
+          xl:scale-118
+          origin-center
         "
         initial={{
           opacity: 0,
