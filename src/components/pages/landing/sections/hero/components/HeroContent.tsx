@@ -143,53 +143,58 @@ const HeroContent = ({ docked }: HeroContentProps) => {
           ref={rotatorRef}
           className="
             relative
-
-            /* Responsive right shift */
-            ml-7
-            sm:ml-10
-            md:ml-12
-            lg:ml-15
-            xl:ml-20
-
             mt-3
-
-            h-[3.2rem]
-            sm:h-[3.7rem]
-            md:h-[4.2rem]
-            lg:h-[4.7rem]
-            xl:h-[5rem]
-
-            overflow-hidden
+            inline-block
+            max-w-full
+            overflow-visible
+            text-left
           "
         >
+          {/* Sizer span to reserve width/height based on longest rotating phrase */}
+          <span
+            aria-hidden="true"
+            className="
+              invisible
+              block
+              whitespace-nowrap
+              text-3xl
+              sm:text-4xl
+              md:text-5xl
+              lg:text-[3.7rem]
+              xl:text-[4.1rem]
+              font-extrabold
+              leading-none
+              tracking-[-0.04em]
+              px-1
+            "
+          >
+            Web Applications
+          </span>
+
           {ROTATING_WORDS.map((word) => (
             <span
               key={word}
               className="
                 hero-rotating-word
                 absolute
-                inset-x-0
-                top-0
+                inset-0
                 whitespace-nowrap
-
                 text-3xl
                 sm:text-4xl
                 md:text-5xl
                 lg:text-[3.7rem]
                 xl:text-[4.1rem]
-
                 font-extrabold
                 leading-none
                 tracking-[-0.04em]
-
                 bg-linear-to-r
                 from-cyan-300
                 via-sky-400
                 to-blue-500
                 bg-clip-text
                 text-transparent
-
                 will-change-transform
+                px-1
               "
               style={{
                 textShadow: "0 0 35px rgba(56,189,248,0.10)",

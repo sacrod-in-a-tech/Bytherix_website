@@ -9,13 +9,13 @@ interface HeroProps {
 
 const Hero = ({ docked }: HeroProps) => {
   return (
-    <section className="relative isolate z-10 w-full overflow-hidden min-h-[100svh] py-8 sm:py-10 md:min-h-[calc(100svh-4rem)] md:py-12 lg:flex lg:min-h-[640px] lg:h-[calc(100vh-6rem)] lg:items-center lg:py-0">
+    <section className="relative isolate z-10 flex min-h-screen w-full flex-col pt-3 sm:pt-5 lg:pt-6">
       <HeroBackground />
 
       {/* HERO CANVAS */}
-      <div className="homepage-container relative z-20 flex flex-col">
+      <div className="homepage-container relative z-20 flex flex-1 flex-col justify-between w-full">
         {/* MAIN HERO */}
-        <div className="relative grid w-full items-center grid-cols-1 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:gap-4 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-0 xl:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)]">
+        <div className="relative my-auto grid w-full items-center grid-cols-1 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:gap-4 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-0 xl:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] py-4 sm:py-6">
           {/* LEFT — CONTENT */}
           <div className="relative z-30 flex w-full justify-center md:justify-start lg:justify-start">
             <div className="w-full max-w-[680px] md:max-w-[620px] lg:max-w-[680px] xl:max-w-[720px]">
@@ -24,15 +24,15 @@ const Hero = ({ docked }: HeroProps) => {
           </div>
 
           {/* RIGHT — ROBOT */}
-          <div className="relative z-20 flex w-full items-center justify-center mt-8 sm:mt-10 md:mt-0 md:min-w-0 lg:justify-end lg:translate-x-[2%] lg:translate-y-8 xl:translate-x-[3%] xl:translate-y-10">
-            <div className="relative flex w-full items-center justify-center max-w-[360px] sm:max-w-[440px] md:max-w-[480px] lg:max-w-[600px] lg:scale-[1.05] xl:max-w-[740px] xl:scale-[1.1] 2xl:scale-[1.12] origin-center">
+          <div className="relative z-20 flex w-full items-center justify-center mt-6 sm:mt-8 md:mt-0 md:min-w-0 lg:justify-end">
+            <div className="relative flex w-full items-center justify-center max-w-[320px] sm:max-w-[400px] md:max-w-[440px] lg:max-w-[540px] xl:max-w-[640px] origin-center">
               <RobotLaptopHero />
             </div>
           </div>
         </div>
 
         {/* STATS */}
-        <div className="relative z-40 w-full mt-8 sm:mt-10 md:mt-8 lg:mt-8 xl:mt-8 pb-2 sm:pb-4 lg:pb-4">
+        <div className="relative z-40 w-full mt-auto pt-4 pb-7 sm:pb-9 lg:pb-10">
           <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-white/[0.10] bg-black/[0.20] backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.35)] px-3 py-3 sm:px-4 sm:py-4 md:px-5 md:py-4 lg:px-6 lg:py-4 before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(90deg,transparent,rgba(56,189,248,0.045),transparent)]">
             <div className="grid grid-cols-2 items-stretch divide-x divide-white/[0.07] [&>*:nth-child(n+3)]:border-t [&>*:nth-child(n+3)]:border-white/[0.07] lg:grid-cols-4 lg:[&>*:nth-child(n+3)]:border-t-0">
               {STATS.map((stat) => (

@@ -4,6 +4,7 @@ import {
   FaInstagram,
   FaTiktok,
 } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -91,24 +92,24 @@ const Footer = () => {
 
             <ul className="mt-5 space-y-3.5 text-sm text-white/55 sm:text-[15px]">
               <li>
-                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Web Development
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   UI/UX Design
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Software Development
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Digital Solutions
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -123,24 +124,24 @@ const Footer = () => {
 
             <ul className="mt-5 space-y-3.5 text-sm text-white/55 sm:text-[15px]">
               <li>
-                <a href="/about-company" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/about-company" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/our-team" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/our-team" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Our Team
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/#services" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Our Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#contact" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/#contact" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Contact Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -155,19 +156,19 @@ const Footer = () => {
 
             <ul className="mt-5 space-y-3.5 text-sm text-white/55 sm:text-[15px]">
               <li>
-                <a href="/privacy-policy" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/privacy-policy" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/terms-of-use" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/terms-of-use" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Terms of Use
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/sales-and-refunds" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
+                <Link to="/sales-and-refunds" className="transition-all duration-300 hover:translate-x-1 hover:text-blue-400">
                   Sales and Refunds
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -180,15 +181,15 @@ const Footer = () => {
           </p>
 
           <div className="flex items-center gap-5">
-            <a href="/privacy-policy" className="transition-colors duration-300 hover:text-white">
+            <Link to="/privacy-policy" className="transition-colors duration-300 hover:text-white">
               Privacy Policy
-            </a>
+            </Link>
 
             <span className="h-4 w-px bg-white/15" />
 
-            <a href="/terms-of-use" className="transition-colors duration-300 hover:text-white">
+            <Link to="/terms-of-use" className="transition-colors duration-300 hover:text-white">
               Terms of Use
-            </a>
+            </Link>
           </div>
         </div>
       </div>

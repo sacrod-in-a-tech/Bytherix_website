@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { MutableRefObject } from "react";
+import { Link } from "react-router-dom";
 
 import logo from "../../../assets/logo.png";
 
@@ -37,9 +38,7 @@ const NavbarBrand = ({
     >
       <AnimatePresence>
         {docked && (
-          <motion.a
-            href="/"
-            onClick={onLogoClick}
+          <motion.div
             initial={false}
             animate={{
               opacity: 1,
@@ -49,15 +48,20 @@ const NavbarBrand = ({
               duration: 0.42,
               ease: [0.22, 1, 0.36, 1],
             }}
-            aria-label="Go to Home"
-            className="h-9 w-9 shrink-0 overflow-hidden rounded-full border border-white/20 bg-white shadow-[0_0_7px_rgba(255,255,255,0.045)] sm:h-10 sm:w-10 lg:h-11 lg:w-11"
           >
-            <img
-              src={logo}
-              alt="Bytherix Technology"
-              className="block h-full w-full scale-125 object-cover"
-            />
-          </motion.a>
+            <Link
+              to="/"
+              onClick={onLogoClick}
+              aria-label="Go to Home"
+              className="block h-9 w-9 shrink-0 overflow-hidden rounded-full border border-white/20 bg-white shadow-[0_0_7px_rgba(255,255,255,0.045)] sm:h-10 sm:w-10 lg:h-11 lg:w-11"
+            >
+              <img
+                src={logo}
+                alt="Bytherix Technology"
+                className="block h-full w-full scale-125 object-cover"
+              />
+            </Link>
+          </motion.div>
         )}
       </AnimatePresence>
 

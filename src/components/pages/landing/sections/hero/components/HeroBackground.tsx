@@ -1,5 +1,7 @@
+import { lazy, Suspense } from "react";
 import Planet from "./Planet";
-import HeroTwister from "./SpiralTwister";
+
+const HeroTwister = lazy(() => import("./SpiralTwister"));
 
 const HeroBackground = () => {
   return (
@@ -195,7 +197,9 @@ const HeroBackground = () => {
           `,
         }}
       >
-        <HeroTwister />
+        <Suspense fallback={null}>
+          <HeroTwister />
+        </Suspense>
       </div>
 
       {/* Soft left-side readability overlay */}

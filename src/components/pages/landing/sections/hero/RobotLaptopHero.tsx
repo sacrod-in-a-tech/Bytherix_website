@@ -90,6 +90,11 @@ const RobotLaptopHero = () => {
         w-full
         items-center
         justify-center
+        min-h-[280px]
+        sm:min-h-[380px]
+        md:min-h-[420px]
+        lg:min-h-[520px]
+        xl:min-h-[600px]
       "
       style={{
         perspective: 1200,
@@ -100,6 +105,7 @@ const RobotLaptopHero = () => {
           relative
           w-full
           max-w-[760px]
+          aspect-square
           will-change-transform
         "
         initial={{
@@ -113,7 +119,7 @@ const RobotLaptopHero = () => {
           y: 0,
         }}
         transition={{
-          duration: 1,
+          duration: 0.8,
           ease: [0.22, 1, 0.36, 1],
         }}
         style={{
@@ -131,10 +137,15 @@ const RobotLaptopHero = () => {
         <img
           src={robotLaptopGif}
           alt="Bytherix robot presenting a laptop"
+          width="760"
+          height="760"
+          fetchPriority="high"
+          decoding="async"
           className="
             block
             w-full
             h-auto
+            aspect-square
             select-none
             pointer-events-none
             object-contain
