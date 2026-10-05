@@ -6,7 +6,6 @@ import {
   heroHeadline,
   heroSummary,
   productName,
-  productTagline,
 } from "../data/pamContent";
 
 /**
@@ -33,7 +32,7 @@ const DeviceCoreVisual = () => {
           const y = center + radius * Math.sin(angle);
           return (
             <motion.line
-              key={`line-${index}`}
+              key={index}
               x1={center}
               y1={center}
               x2={x}

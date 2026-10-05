@@ -1,5 +1,5 @@
 import { SectionHeading, GlassCard, StaggerGrid, Pill } from "../ui/shared";
-import { complianceAreas, intendedUseNote, standards } from "../data/pamContent";
+import { complianceAreas, standards } from "../data/pamContent";
 
 const PAMCompliance = () => {
   return (
