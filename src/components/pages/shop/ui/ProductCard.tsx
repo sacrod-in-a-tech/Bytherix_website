@@ -1,3 +1,4 @@
+
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -31,39 +32,33 @@ const accentStyles = {
 export default function ProductCard({
   product,
   index,
-  featuredLayout = false,
+ 
 }: ProductCardProps) {
   const accent = accentStyles[product.accent];
 
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.4,
-        delay: index * 0.06,
+        duration: 0.35,
+        delay: index * 0.04,
       }}
-      whileHover={{ y: -4 }}
-      className={`group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm shadow-slate-200/50 transition-[border-color,box-shadow,transform] duration-300 hover:shadow-lg hover:shadow-slate-300/30 dark:border-white/[0.08] dark:bg-white/[0.025] dark:shadow-none dark:hover:shadow-black/20 ${accent.border}`}
+      whileHover={{ y: -3 }}
+      className={`group relative mx-auto sm:ml-0 sm:mr-auto flex h-full min-h-[250px] w-full max-w-[340px] min-w-0 flex-col overflow-hidden rounded-[18px] border border-slate-200 bg-white shadow-sm shadow-slate-200/50 transition-[border-color,box-shadow,transform] duration-300 hover:shadow-lg hover:shadow-slate-300/30 dark:border-white/[0.08] dark:bg-white/[0.025] dark:shadow-none dark:hover:shadow-black/20 ${accent.border}`}
     >
       {/* Product Image */}
-      <div
-        className={`relative w-full overflow-hidden border-b border-slate-200 bg-gradient-to-b from-slate-50 to-slate-100 dark:border-white/[0.07] dark:from-white/[0.035] dark:to-white/[0.015] ${
-          featuredLayout
-            ? "h-[240px] sm:h-[260px]"
-            : "h-[200px] sm:h-[220px]"
-        }`}
-      >
+      <div className="relative w-full shrink-0 overflow-hidden border-b border-slate-200 dark:border-white/[0.07]">
         <motion.div
-          initial={{ opacity: 0, scale: 0.985 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-30px" }}
           transition={{
-            duration: 0.5,
-            delay: 0.08 + index * 0.05,
+            duration: 0.4,
+            delay: 0.05 + index * 0.03,
           }}
-          className="absolute inset-0"
+          className="w-full"
         >
           <img
             src={product.image}
@@ -71,37 +66,38 @@ export default function ProductCard({
             loading="lazy"
             decoding="async"
             draggable={false}
-            className="h-full w-full object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:group-hover:scale-100 sm:p-4"
+            className="block h-auto w-full object-contain object-center"
           />
         </motion.div>
       </div>
 
       {/* Product Content */}
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
+      <div className="flex flex-1 flex-col p-4">
+        {/* Product Name and Description */}
         <div>
-          <h3 className="text-[22px] font-semibold leading-tight tracking-[-0.025em] text-slate-950 dark:text-white">
+          <h3 className="text-lg font-semibold leading-tight tracking-[-0.02em] text-slate-950 dark:text-white">
             {product.name}
           </h3>
 
-          <p className="mt-2.5 line-clamp-2 text-sm leading-5.5 text-slate-600 dark:text-slate-400">
+          <p className="mt-2 line-clamp-2 text-sm leading-5 text-slate-600 dark:text-slate-400">
             {product.description}
           </p>
         </div>
 
         {/* Tags */}
-        <div className="mt-4 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {product.tags.map((tag) => (
             <span
               key={tag}
-              className={`rounded-full border px-2.5 py-1 text-[11px] font-medium leading-none ${accent.chip}`}
+              className={`rounded-full border px-2 py-1 text-[10px] font-medium leading-none ${accent.chip}`}
             >
               {tag}
             </span>
           ))}
         </div>
 
-        {/* Action */}
-        <div className="mt-auto pt-5">
+        {/* Action Link */}
+        <div className="mt-auto pt-4">
           <Link
             to={product.href}
             className={`inline-flex w-fit items-center gap-1.5 text-sm font-semibold transition-all duration-300 ${accent.text}`}
