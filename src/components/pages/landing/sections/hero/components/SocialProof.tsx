@@ -46,7 +46,7 @@ const Play = () => (
 
 const SocialProof = () => {
   return (
-    <div className="w-full max-w-xl">
+    <div className="mt-7 w-full max-w-xl">
 
       <div className="flex items-center justify-center gap-4 lg:justify-start">
 
@@ -137,7 +137,7 @@ const SocialProof = () => {
           CTA AREA
           ============================================================ */}
 
-      <div className="mt-4 sm:mt-5 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4 lg:justify-start">
+      <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4 lg:justify-start">
 
         {/* Primary */}
         <a
@@ -182,21 +182,17 @@ const SocialProof = () => {
             justify-center
             gap-2.5
             rounded-full
-            border
-            border-blue-400/25
-            bg-[#162758]/80
-            backdrop-blur-md
+            bg-blue-900
             px-5
             text-sm
             font-semibold
-            text-white
-            shadow-[0_4px_20px_rgba(22,39,88,0.4)]
+            text-[#080b12]
+            shadow-[0_8px_30px_rgba(0,0,0,0.25)]
             transition-all
             duration-300
             hover:-translate-y-0.5
-            hover:bg-[#1f3575]/90
-            hover:border-blue-400/40
-            hover:shadow-[0_8px_25px_rgba(22,39,88,0.6)]
+            hover:bg-white/90
+            hover:shadow-[0_12px_36px_rgba(0,0,0,0.35)]
             active:translate-y-0
             sm:w-auto
           "

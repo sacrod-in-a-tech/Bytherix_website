@@ -17,7 +17,12 @@ export default function GlobeCanvas() {
       antialias: true,
     });
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const getPixelRatio = () =>
+      Math.min(
+        window.devicePixelRatio || 1,
+        window.innerWidth < 768 ? 1.25 : 1.5,
+      );
+    renderer.setPixelRatio(getPixelRatio());
 
     const scene = new THREE.Scene();
 
@@ -51,17 +56,24 @@ export default function GlobeCanvas() {
       opacity: 0.9,
     });
 
-    for (let i = 0; i < positionAttribute.count; i += 8) {
-      const node = new THREE.Mesh(nodeGeo, nodeMat);
+    const nodeCount = Math.ceil(positionAttribute.count / 8);
+    const nodes = new THREE.InstancedMesh(nodeGeo, nodeMat, nodeCount);
+    const nodeTransform = new THREE.Object3D();
+    let nodeIndex = 0;
 
-      node.position.set(
+    for (let i = 0; i < positionAttribute.count; i += 8) {
+      nodeTransform.position.set(
         positionAttribute.getX(i),
         positionAttribute.getY(i),
         positionAttribute.getZ(i)
       );
-
-      group.add(node);
+      nodeTransform.updateMatrix();
+      nodes.setMatrixAt(nodeIndex, nodeTransform.matrix);
+      nodeIndex += 1;
     }
+
+    nodes.instanceMatrix.needsUpdate = true;
+    group.add(nodes);
 
     const shellGeo = new THREE.SphereGeometry(2.55, 32, 32);
 
@@ -90,6 +102,40 @@ export default function GlobeCanvas() {
       }
     };
 
+    let frameId = 0;
+    let inViewport = false;
+    let pageVisible = document.visibilityState === "visible";
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+    let reducedMotion = reducedMotionQuery.matches;
+
+    const renderStatic = (): void => {
+      renderer.render(scene, camera);
+    };
+
+    const animate = (): void => {
+      frameId = 0;
+      if (!inViewport || !pageVisible || reducedMotion) return;
+
+      group.rotation.y += 0.0025;
+      group.rotation.x += 0.0007;
+      renderer.render(scene, camera);
+      frameId = requestAnimationFrame(animate);
+    };
+
+    const updateAnimation = (): void => {
+      if (inViewport && pageVisible && !reducedMotion) {
+        if (frameId === 0) {
+          frameId = requestAnimationFrame(animate);
+        }
+      } else {
+        cancelAnimationFrame(frameId);
+        frameId = 0;
+        if (inViewport && pageVisible) renderStatic();
+      }
+    };
+
     const resize = (): void => {
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
@@ -98,35 +144,51 @@ export default function GlobeCanvas() {
         return;
       }
 
+      renderer.setPixelRatio(getPixelRatio());
       renderer.setSize(width, height, false);
 
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
 
       updateGlobeSize();
+      renderStatic();
     };
 
     resize();
 
     window.addEventListener("resize", resize);
 
-    let frameId: number = 0;
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
 
-    const animate = (): void => {
-      frameId = requestAnimationFrame(animate);
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        inViewport = entry.isIntersecting;
+        updateAnimation();
+      },
+      { threshold: 0.01 },
+    );
+    intersectionObserver.observe(canvas);
 
-      group.rotation.y += 0.0025;
-      group.rotation.x += 0.0007;
-
-      renderer.render(scene, camera);
+    const handlePageVisibility = () => {
+      pageVisible = document.visibilityState === "visible";
+      updateAnimation();
+    };
+    const handleMotionPreference = (event: MediaQueryListEvent) => {
+      reducedMotion = event.matches;
+      updateAnimation();
     };
 
-    animate();
+    document.addEventListener("visibilitychange", handlePageVisibility);
+    reducedMotionQuery.addEventListener("change", handleMotionPreference);
 
     return () => {
       cancelAnimationFrame(frameId);
-
+      resizeObserver.disconnect();
+      intersectionObserver.disconnect();
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", handlePageVisibility);
+      reducedMotionQuery.removeEventListener("change", handleMotionPreference);
 
       renderer.dispose();
 

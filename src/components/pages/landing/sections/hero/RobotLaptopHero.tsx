@@ -90,12 +90,6 @@ const RobotLaptopHero = () => {
         w-full
         items-center
         justify-center
-        h-full
-        min-h-[220px]
-        sm:min-h-[280px]
-        md:min-h-[340px]
-        lg:min-h-[400px]
-        xl:min-h-[460px]
       "
       style={{
         perspective: 1200,
@@ -105,14 +99,8 @@ const RobotLaptopHero = () => {
         className="
           relative
           w-full
-          max-w-[780px]
-          aspect-square
+          max-w-[760px]
           will-change-transform
-          scale-102
-          sm:scale-105
-          lg:scale-110
-          xl:scale-118
-          origin-center
         "
         initial={{
           opacity: 0,
@@ -125,7 +113,7 @@ const RobotLaptopHero = () => {
           y: 0,
         }}
         transition={{
-          duration: 0.8,
+          duration: 1,
           ease: [0.22, 1, 0.36, 1],
         }}
         style={{
@@ -143,15 +131,12 @@ const RobotLaptopHero = () => {
         <img
           src={robotLaptopGif}
           alt="Bytherix robot presenting a laptop"
-          width="760"
-          height="760"
           fetchPriority="high"
           decoding="async"
           className="
             block
             w-full
             h-auto
-            aspect-square
             select-none
             pointer-events-none
             object-contain

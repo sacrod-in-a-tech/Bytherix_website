@@ -1,9 +1,12 @@
 import {
+  createContext,
   lazy,
   Suspense,
+  useContext,
   useEffect,
   useState,
 } from "react";
+import { MotionConfig } from "framer-motion";
 
 import {
   createBrowserRouter,
@@ -22,10 +25,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ThemeToggle from "./components/ui/ThemeToggle";
 import TeamProfile from "./components/pages/team/pages/TeamProfile";
 
-import logoImg from "./assets/logo.png";
-import robotLaptopGif from "./assets/robot_blink_full.gif";
-
-// ─── Preloadable lazy imports ──────────────────────────────────────────────────
+const DockedContext = createContext(false);
 
 const loadHome = () => import("./components/pages/landing/Home");
 const Home = lazy(loadHome);
@@ -82,36 +82,7 @@ const AboutCompany = lazy(
   () => import("./components/pages/aboutcompany/AboutCompanyPage")
 );
 
-// ─── Image decode helper ──────────────────────────────────────────────────────
-
-function decodeImage(src: string): Promise<void> {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.src = src;
-    if (img.complete) {
-      if ("decode" in img) {
-        img.decode().then(resolve).catch(resolve);
-      } else {
-        resolve();
-      }
-    } else {
-      img.onload = () => {
-        if ("decode" in img) {
-          img.decode().then(resolve).catch(resolve);
-        } else {
-          resolve();
-        }
-      };
-      img.onerror = () => resolve();
-    }
-  });
-}
-
-// ─── Splash guard (once per browser session) ─────────────────────────────────
-
 const SPLASH_KEY = "bytherix_splash_shown";
-
-// ─── Route helpers ────────────────────────────────────────────────────────────
 
 /**
  * Routes that render as dedicated, full-viewport experiences with no site
@@ -131,8 +102,6 @@ function TeamProfileRoute() {
   );
 }
 
-// ─── Scroll behaviour ─────────────────────────────────────────────────────────
-
 /**
  * On every navigation:
  *  • If the URL has a hash, scroll to that element (e.g. /#services).
@@ -144,33 +113,40 @@ function ScrollHandler() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    let frameId = 0;
+
     if (hash) {
-      // Give the new page a tick to paint before scrolling.
       const id = hash.slice(1);
       const attempt = (tries: number) => {
         const el = document.getElementById(id);
         if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          el.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "auto"
+              : "smooth",
+            block: "start",
+          });
         } else if (tries > 0) {
-          requestAnimationFrame(() => attempt(tries - 1));
+          frameId = requestAnimationFrame(() => attempt(tries - 1));
         }
       };
       attempt(20);
     } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "auto" });
     }
+
+    return () => {
+      if (frameId !== 0) {
+        cancelAnimationFrame(frameId);
+      }
+    };
   }, [pathname, hash]);
 
   return null;
 }
 
-// ─── Persistent Layout (Navbar + Outlet) ─────────────────────────────────────
-
-interface LayoutProps {
-  docked: boolean;
-}
-
-function Layout({ docked }: LayoutProps) {
+function Layout() {
+  const docked = useContext(DockedContext);
   const { pathname } = useLocation();
   const isChromeless = CHROMELESS_ROUTES.includes(pathname);
 
@@ -200,57 +176,39 @@ function Layout({ docked }: LayoutProps) {
   );
 }
 
-// ─── Router factory ───────────────────────────────────────────────────────────
+function HomeRoute() {
+  const docked = useContext(DockedContext);
+  return <Home docked={docked} />;
+}
 
-/**
- * Build the router each render so Layout receives the up-to-date `docked`
- * prop. `createBrowserRouter` is stable with respect to matching — only the
- * element instances update when docked changes.
- */
-function createAppRouter(docked: boolean) {
+function createAppRouter() {
   return createBrowserRouter([
     {
-      element: <Layout docked={docked} />,
+      element: <Layout />,
       children: [
-        // Home
-        { path: "/", element: <Home docked={docked} /> },
 
-        // About Company
+        { path: "/", element: <HomeRoute /> },
         { path: "/about-company", element: <AboutCompany /> },
-
-        // Team
         { path: "/our-team", element: <OurTeam /> },
         { path: "/team/:slug", element: <TeamProfileRoute /> },
-
-        // Shop
         { path: "/shop", element: <Shop /> },
-
-        // Products
         { path: "/products", element: <OurProducts /> },
         { path: "/products/our-founder", element: <OurFounder /> },
         { path: "/products/one-for-all", element: <OneForAll /> },
         { path: "/products/pam", element: <PAM /> },
-
-        // Portfolios
         { path: "/portfolios", element: <OurPortfolios /> },
-
-        // Our Story
         { path: "/our-story", element: <OurStoryPage /> },
-
-        // Blog
         { path: "/blogs", element: <BlogsPage /> },
         { path: "/blogs/:slug", element: <BlogArticle /> },
-
-        // Auth (chromeless — Layout hides chrome for these paths)
         { path: "/login", element: <LoginPage /> },
         { path: "/register", element: <RegisterPage /> },
-
-        // Fallback — redirect unknown paths to home
         { path: "*", element: <Navigate to="/" replace /> },
       ],
     },
   ]);
 }
+
+const appRouter = createAppRouter();
 
 // ─── Root app ─────────────────────────────────────────────────────────────────
 
@@ -266,48 +224,31 @@ function App() {
       return;
     }
 
-    let isMounted = true;
-
-    // Minimum display time to let splash logo animation present smoothly
-    const minTimePromise = new Promise((resolve) =>
-      setTimeout(resolve, INTRO_TOTAL_MS)
-    );
-
-    // Maximum timeout safety fallback (4s) so splash never hangs indefinitely
-    const maxTimeoutPromise = new Promise((resolve) =>
-      setTimeout(resolve, 4000)
-    );
-
-    // Preload initial Home chunk and key hero images in parallel with splash
-    const assetsPromise = Promise.all([
-      loadHome(),
-      decodeImage(logoImg),
-      decodeImage(robotLaptopGif),
-    ]);
-
-    Promise.race([
-      Promise.all([minTimePromise, assetsPromise]),
-      maxTimeoutPromise,
-    ]).then(() => {
-      if (isMounted) {
-        setDocked(true);
-        sessionStorage.setItem(SPLASH_KEY, "true");
-      }
-    });
+    const introDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? 0
+      : INTRO_TOTAL_MS;
+    const timer = window.setTimeout(() => {
+      setDocked(true);
+      sessionStorage.setItem(SPLASH_KEY, "true");
+    }, introDelay);
 
     return () => {
-      isMounted = false;
+      window.clearTimeout(timer);
     };
   }, [initialDocked]);
 
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <main className="relative min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
-          <RouterProvider router={createAppRouter(docked)} />
-        </main>
-      </AuthProvider>
-    </ThemeProvider>
+    <MotionConfig reducedMotion="user">
+      <ThemeProvider>
+        <AuthProvider>
+          <DockedContext.Provider value={docked}>
+            <main className="relative min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
+              <RouterProvider router={appRouter} />
+            </main>
+          </DockedContext.Provider>
+        </AuthProvider>
+      </ThemeProvider>
+    </MotionConfig>
   );
 }
 

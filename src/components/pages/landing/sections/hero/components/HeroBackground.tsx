@@ -1,9 +1,19 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import Planet from "./Planet";
 
 const HeroTwister = lazy(() => import("./SpiralTwister"));
 
 const HeroBackground = () => {
+  const [showTwister, setShowTwister] = useState(false);
+
+  useEffect(() => {
+    let frameId = requestAnimationFrame(() => {
+      frameId = requestAnimationFrame(() => setShowTwister(true));
+    });
+
+    return () => cancelAnimationFrame(frameId);
+  }, []);
+
   return (
     <div
       className="
@@ -198,7 +208,7 @@ const HeroBackground = () => {
         }}
       >
         <Suspense fallback={null}>
-          <HeroTwister />
+          {showTwister && <HeroTwister />}
         </Suspense>
       </div>
 

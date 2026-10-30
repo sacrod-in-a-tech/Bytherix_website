@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 
 import {
   motion,
@@ -283,7 +284,9 @@ const MenuOverlay = ({
   const socialIconClass =
     "group flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.09] bg-white/[0.025] text-white/65 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-105 hover:border-[#00AEEF]/40 hover:bg-[#00AEEF]/10 hover:text-[#00AEEF] hover:shadow-[0_0_18px_rgba(0,174,239,0.14)] active:translate-y-0 active:scale-95 active:border-[#00AEEF]/60 active:bg-[#00AEEF]/15 active:text-[#00AEEF] active:shadow-[0_0_22px_rgba(0,174,239,0.22)] focus-visible:-translate-y-0.5 focus-visible:scale-105 focus-visible:border-[#00AEEF]/50 focus-visible:bg-[#00AEEF]/10 focus-visible:text-[#00AEEF] focus-visible:shadow-[0_0_20px_rgba(0,174,239,0.18)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#00AEEF]/30";
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <AnimatePresence>
       {open && (
         <>
@@ -920,7 +923,8 @@ const MenuOverlay = ({
           </motion.aside>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 };
 

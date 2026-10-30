@@ -2,9 +2,6 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-const GRID_X = 85;
-const GRID_Y = 85;
-const TOTAL_POINTS = GRID_X * GRID_Y;
 const SEP = 0.085;
 
 // Dark Mode Palette (Bright Cyan & Blue)
@@ -17,21 +14,23 @@ const LIGHT_SECONDARY = new THREE.Color("#4338ca");
 
 function ParticleWave({ isDark, paused }: { isDark: boolean; paused: boolean }) {
   const pointsRef = useRef<THREE.Points>(null!);
-  const { viewport, invalidate } = useThree();
+  const { viewport, size, invalidate } = useThree();
+  const gridSize = size.width < 640 ? 40 : size.width < 1024 ? 56 : 68;
 
   useEffect(() => {
     invalidate();
-  }, [isDark, invalidate]);
+  }, [isDark, gridSize, invalidate]);
 
   const { positions, basePositions } = useMemo(() => {
-    const posArr = new Float32Array(TOTAL_POINTS * 3);
-    const baseArr = new Float32Array(TOTAL_POINTS * 3);
+    const totalPoints = gridSize * gridSize;
+    const posArr = new Float32Array(totalPoints * 3);
+    const baseArr = new Float32Array(totalPoints * 3);
 
     let idx = 0;
-    for (let x = 0; x < GRID_X; x++) {
-      for (let y = 0; y < GRID_Y; y++) {
-        const xPos = (x - GRID_X / 2) * SEP;
-        const yPos = (y - GRID_Y / 2) * SEP;
+    for (let x = 0; x < gridSize; x++) {
+      for (let y = 0; y < gridSize; y++) {
+        const xPos = (x - gridSize / 2) * SEP;
+        const yPos = (y - gridSize / 2) * SEP;
 
         posArr[idx] = xPos;
         posArr[idx + 1] = yPos;
@@ -46,18 +45,18 @@ function ParticleWave({ isDark, paused }: { isDark: boolean; paused: boolean }) 
     }
 
     return { positions: posArr, basePositions: baseArr };
-  }, []);
+  }, [gridSize]);
 
   const colors = useMemo(() => {
-    const colArr = new Float32Array(TOTAL_POINTS * 3);
+    const colArr = new Float32Array(gridSize * gridSize * 3);
     const primary = isDark ? DARK_PRIMARY : LIGHT_PRIMARY;
     const secondary = isDark ? DARK_SECONDARY : LIGHT_SECONDARY;
 
     let idx = 0;
-    for (let x = 0; x < GRID_X; x++) {
-      for (let y = 0; y < GRID_Y; y++) {
-        const xPos = (x - GRID_X / 2) * SEP;
-        const yPos = (y - GRID_Y / 2) * SEP;
+    for (let x = 0; x < gridSize; x++) {
+      for (let y = 0; y < gridSize; y++) {
+        const xPos = (x - gridSize / 2) * SEP;
+        const yPos = (y - gridSize / 2) * SEP;
 
         const distFromCenter = Math.sqrt(xPos * xPos + yPos * yPos) / 3.5;
         const mixRatio = Math.max(0, Math.min(1, 1 - distFromCenter));
@@ -71,7 +70,7 @@ function ParticleWave({ isDark, paused }: { isDark: boolean; paused: boolean }) 
       }
     }
     return colArr;
-  }, [isDark]);
+  }, [gridSize, isDark]);
 
   useFrame((state) => {
     if (paused || !pointsRef.current) return;
@@ -82,8 +81,8 @@ function ParticleWave({ isDark, paused }: { isDark: boolean; paused: boolean }) 
     const array = posAttribute.array as Float32Array;
 
     let idx = 0;
-    for (let x = 0; x < GRID_X; x++) {
-      for (let y = 0; y < GRID_Y; y++) {
+    for (let x = 0; x < gridSize; x++) {
+      for (let y = 0; y < gridSize; y++) {
         const baseX = basePositions[idx];
         const baseY = basePositions[idx + 1];
 
@@ -145,6 +144,9 @@ const WaveBackground = ({
   paused?: boolean;
 }) => {
   const [isDark, setIsDark] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const [isPageVisible, setIsPageVisible] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkDarkMode = () => {
@@ -162,8 +164,32 @@ const WaveBackground = ({
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting);
+    });
+    observer.observe(container);
+
+    const updatePageVisibility = () => {
+      setIsPageVisible(document.visibilityState === "visible");
+    };
+    updatePageVisibility();
+    document.addEventListener("visibilitychange", updatePageVisibility);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", updatePageVisibility);
+    };
+  }, []);
+
+  const shouldAnimate = !paused && isInView && isPageVisible;
+
   return (
     <div
+      ref={containerRef}
       aria-hidden="true"
       className={`
         pointer-events-none
@@ -187,7 +213,8 @@ const WaveBackground = ({
       <Canvas
         camera={{ position: [0, 0, 7], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
+        frameloop={shouldAnimate ? "always" : "demand"}
         style={{ background: "transparent" }}
       >
         <ParticleWave isDark={isDark} paused={paused} />

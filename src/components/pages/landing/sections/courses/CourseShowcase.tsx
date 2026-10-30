@@ -200,8 +200,8 @@ function CourseCard({
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
 
         <motion.div
-          className="absolute bottom-0 left-0 h-[3px]"
-          animate={{ width: hovered ? "100%" : "0%" }}
+          className="absolute bottom-0 left-0 h-[3px] w-full origin-left"
+          animate={{ scaleX: hovered ? 1 : 0 }}
           transition={{ duration: 0.4 }}
           style={{ backgroundColor: accent.color }}
         />
