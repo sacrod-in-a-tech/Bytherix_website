@@ -138,11 +138,15 @@ const ParticleCanvas = ({ mode, className, interactive = false }: ParticleCanvas
 
     let width = 0;
     let height = 0;
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let dpr = Math.min(
+      window.devicePixelRatio || 1,
+      window.innerWidth < 768 ? 1.25 : 1.75,
+    );
     let particles: Particle[] = [];
     let bolt: { points: [number, number][]; life: number } | null = null;
     let rafId = 0;
-    let visible = true;
+    let visible = false;
+    let pageVisible = document.visibilityState === "visible";
     let lastTime = performance.now();
 
     const targetCount = () => {
@@ -156,6 +160,10 @@ const ParticleCanvas = ({ mode, className, interactive = false }: ParticleCanvas
       const rect = canvas.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
+      dpr = Math.min(
+        window.devicePixelRatio || 1,
+        window.innerWidth < 768 ? 1.25 : 1.75,
+      );
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = Math.max(1, Math.round(height * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -188,17 +196,6 @@ const ParticleCanvas = ({ mode, className, interactive = false }: ParticleCanvas
     if (interactive) {
       canvas.addEventListener("pointermove", handlePointer);
     }
-
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(canvas);
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        visible = entries[0]?.isIntersecting ?? true;
-      },
-      { threshold: 0.05 },
-    );
-    io.observe(canvas);
 
     const drawBolt = () => {
       if (!bolt) return;
@@ -240,8 +237,8 @@ const ParticleCanvas = ({ mode, className, interactive = false }: ParticleCanvas
     };
 
     const step = (time: number) => {
-      rafId = requestAnimationFrame(step);
-      if (!visible) return;
+      rafId = 0;
+      if (!visible || !pageVisible) return;
 
       const dt = Math.min(2, (time - lastTime) / 16.67);
       lastTime = time;
@@ -301,7 +298,35 @@ const ParticleCanvas = ({ mode, className, interactive = false }: ParticleCanvas
 
       maybeSpawnBolt();
       drawBolt();
+      scheduleFrame();
     };
+
+    const scheduleFrame = () => {
+      if (!reduceMotion && visible && pageVisible && rafId === 0) {
+        rafId = requestAnimationFrame(step);
+      }
+    };
+
+    const updateVisibility = (isVisible: boolean) => {
+      visible = isVisible;
+      if (visible && pageVisible) {
+        scheduleFrame();
+      } else {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        updateVisibility(entries[0]?.isIntersecting ?? false);
+      },
+      { threshold: 0.05 },
+    );
+    io.observe(canvas);
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
 
     if (reduceMotion) {
       // Static, low-cost single frame instead of a running animation loop.
@@ -320,13 +345,21 @@ const ParticleCanvas = ({ mode, className, interactive = false }: ParticleCanvas
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
     } else {
-      rafId = requestAnimationFrame(step);
+      scheduleFrame();
     }
+
+    const handlePageVisibility = () => {
+      pageVisible = document.visibilityState === "visible";
+      updateVisibility(visible);
+    };
+
+    document.addEventListener("visibilitychange", handlePageVisibility);
 
     return () => {
       cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
       io.disconnect();
+      document.removeEventListener("visibilitychange", handlePageVisibility);
       if (interactive) canvas.removeEventListener("pointermove", handlePointer);
       if (orientationHandler) {
         window.removeEventListener("deviceorientation", orientationHandler);

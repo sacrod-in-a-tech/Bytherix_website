@@ -66,13 +66,8 @@ export default function TeamProfile({ slug, onBack }: TeamProfileProps) {
       return;
     }
 
-    if (window.history.length > 1) {
-      window.history.back();
-      return;
-    }
-
-    window.history.pushState({}, "", "/our-team");
-    window.dispatchEvent(new PopStateEvent("popstate"));
+    // Fallback: if mounted standalone without onBack, go to /our-team
+    window.location.href = "/our-team";
   };
 
   if (!member) {

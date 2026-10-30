@@ -1,26 +1,34 @@
 import {
+  createContext,
   lazy,
   Suspense,
+  useContext,
   useEffect,
   useState,
 } from "react";
+import { MotionConfig } from "framer-motion";
 
 import {
-  Routes,
-  Route,
+  createBrowserRouter,
   Navigate,
-  useParams,
-  useNavigate,
+  Outlet,
+  RouterProvider,
   useLocation,
+  useNavigate,
+  useParams,
 } from "react-router-dom";
 
 import Navbar from "./components/layout/navbar/Navbar";
 import { INTRO_TOTAL_MS } from "./components/layout/navbar/constants/navbar.constants";
 import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 import ThemeToggle from "./components/ui/ThemeToggle";
 import TeamProfile from "./components/pages/team/pages/TeamProfile";
 
-const Home = lazy(() => import("./components/pages/landing/Home"));
+const DockedContext = createContext(false);
+
+const loadHome = () => import("./components/pages/landing/Home");
+const Home = lazy(loadHome);
 
 const OurTeam = lazy(
   () => import("./components/pages/team/Team")
@@ -74,11 +82,11 @@ const AboutCompany = lazy(
   () => import("./components/pages/aboutcompany/AboutCompanyPage")
 );
 
+const SPLASH_KEY = "bytherix_splash_shown";
+
 /**
- * Routes that render as dedicated, full-viewport
- * experiences with no site chrome (navbar / theme
- * toggle). Authentication pages own their entire
- * screen per the Bytherix auth redesign.
+ * Routes that render as dedicated, full-viewport experiences with no site
+ * chrome (navbar / theme toggle). Auth pages own their entire screen.
  */
 const CHROMELESS_ROUTES = ["/login", "/register"];
 
@@ -95,188 +103,160 @@ function TeamProfileRoute() {
 }
 
 /**
- * Scrolls to the top whenever the route changes.
- * React Router controls navigation, so no manual popstate
- * handling is required.
+ * On every navigation:
+ *  • If the URL has a hash, scroll to that element (e.g. /#services).
+ *  • Otherwise scroll to the top of the page.
+ *
+ * Placed inside the Layout so it runs after the new page mounts.
  */
-function ScrollToTop() {
-  const { pathname } = useLocation();
+function ScrollHandler() {
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [pathname]);
+    let frameId = 0;
+
+    if (hash) {
+      const id = hash.slice(1);
+      const attempt = (tries: number) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "auto"
+              : "smooth",
+            block: "start",
+          });
+        } else if (tries > 0) {
+          frameId = requestAnimationFrame(() => attempt(tries - 1));
+        }
+      };
+      attempt(20);
+    } else {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    return () => {
+      if (frameId !== 0) {
+        cancelAnimationFrame(frameId);
+      }
+    };
+  }, [pathname, hash]);
 
   return null;
 }
 
-/**
- * Renders the persistent site chrome (navbar + theme
- * toggle) on every route except the chromeless auth
- * routes, where the page owns the full viewport.
- */
-function SiteChrome({ docked }: { docked: boolean }) {
+function Layout() {
+  const docked = useContext(DockedContext);
   const { pathname } = useLocation();
-
   const isChromeless = CHROMELESS_ROUTES.includes(pathname);
-
-  if (isChromeless) {
-    return null;
-  }
 
   return (
     <>
-      <ThemeToggle />
+      <ScrollHandler />
+
+      {!isChromeless && (
+        <>
+          <ThemeToggle />
+          {/*
+            Navbar stays mounted while pages change,
+            so its intro animation does not restart on navigation.
+          */}
+          <Navbar docked={docked} />
+        </>
+      )}
 
       {/*
-        Navbar stays mounted while pages change,
-        so its intro animation does not restart
-        during navigation.
+        Suspense here means the old page stays visible until the new
+        lazy chunk is ready — no blank flash between routes.
       */}
-      <Navbar docked={docked} />
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 }
 
-function App() {
-  const [docked, setDocked] = useState(false);
+function HomeRoute() {
+  const docked = useContext(DockedContext);
+  return <Home docked={docked} />;
+}
 
-  /**
-   * Navbar intro animation is controlled only on the
-   * initial application mount.
-   *
-   * Navbar remains mounted across route changes, so
-   * the intro animation does not restart when navigating.
-   */
+function createAppRouter() {
+  return createBrowserRouter([
+    {
+      element: <Layout />,
+      children: [
+
+        { path: "/", element: <HomeRoute /> },
+        { path: "/about-company", element: <AboutCompany /> },
+        { path: "/our-team", element: <OurTeam /> },
+        { path: "/team/:slug", element: <TeamProfileRoute /> },
+        { path: "/shop", element: <Shop /> },
+        { path: "/products", element: <OurProducts /> },
+        { path: "/products/our-founder", element: <OurFounder /> },
+        { path: "/products/one-for-all", element: <OneForAll /> },
+        { path: "/products/pam", element: <PAM /> },
+        { path: "/portfolios", element: <OurPortfolios /> },
+        { path: "/our-story", element: <OurStoryPage /> },
+        { path: "/blogs", element: <BlogsPage /> },
+        { path: "/blogs/:slug", element: <BlogArticle /> },
+        { path: "/login", element: <LoginPage /> },
+        { path: "/register", element: <RegisterPage /> },
+        { path: "*", element: <Navigate to="/" replace /> },
+      ],
+    },
+  ]);
+}
+
+const appRouter = createAppRouter();
+
+// ─── Root app ─────────────────────────────────────────────────────────────────
+
+function App() {
+  const initialDocked =
+    typeof sessionStorage !== "undefined" &&
+    sessionStorage.getItem(SPLASH_KEY) === "true";
+
+  const [docked, setDocked] = useState(initialDocked);
+
   useEffect(() => {
+    if (initialDocked) {
+      return;
+    }
+
+    const introDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? 0
+      : INTRO_TOTAL_MS;
     const timer = window.setTimeout(() => {
       setDocked(true);
-    }, INTRO_TOTAL_MS);
+      sessionStorage.setItem(SPLASH_KEY, "true");
+    }, introDelay);
 
     return () => {
       window.clearTimeout(timer);
     };
-  }, []);
+  }, [initialDocked]);
 
   return (
-    <ThemeProvider>
-      <main className="relative min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
-        <div className="relative">
-          <ScrollToTop />
-
-          <SiteChrome docked={docked} />
-
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* Home */}
-              <Route
-                path="/"
-                element={<Home docked={docked} />}
-              />
-
-              
-              {/* About Company */}
-              <Route
-                path="/about-company"
-                element={<AboutCompany />}
-              />
-
-              {/* Team */}
-              <Route
-                path="/our-team"
-                element={<OurTeam />}
-              />
-
-              <Route
-                path="/team/:slug"
-                element={<TeamProfileRoute />}
-              />
-
-              {/* Shop */}
-              <Route
-                path="/shop"
-                element={<Shop />}
-              />
-
-              {/* Products */}
-              <Route
-                path="/products"
-                element={<OurProducts />}
-              />
-
-              <Route
-                path="/products/our-founder"
-                element={<OurFounder />}
-              />
-
-              <Route
-                path="/products/one-for-all"
-                element={<OneForAll />}
-              />
-
-              <Route
-                path="/products/pam"
-                element={<PAM />}
-              />
-
-              {/* Portfolios */}
-              <Route
-                path="/portfolios"
-                element={<OurPortfolios />}
-              />
-
-              {/* Our Story */}
-              <Route
-                path="/our-story"
-                element={<OurStoryPage />}
-              />
-
-              {/* Blog listing page */}
-              <Route
-                path="/blogs"
-                element={<BlogsPage />}
-              />
-
-              {/* Individual blog article page */}
-              <Route
-                path="/blogs/:slug"
-                element={<BlogArticle />}
-              />
-
-              {/* Authentication */}
-              <Route
-                path="/login"
-                element={<LoginPage />}
-              />
-
-              <Route
-                path="/register"
-                element={<RegisterPage />}
-              />
-
-              {/* Fallback */}
-              <Route
-                path="*"
-                element={
-                  <Navigate
-                    to="/"
-                    replace
-                  />
-                }
-              />
-            </Routes>
-          </Suspense>
-        </div>
-      </main>
-    </ThemeProvider>
+    <MotionConfig reducedMotion="user">
+      <ThemeProvider>
+        <AuthProvider>
+          <DockedContext.Provider value={docked}>
+            <main className="relative min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
+              <RouterProvider router={appRouter} />
+            </main>
+          </DockedContext.Provider>
+        </AuthProvider>
+      </ThemeProvider>
+    </MotionConfig>
   );
 }
 
+// ─── Page-level loading fallback ─────────────────────────────────────────────
+
 function PageLoader() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#050814]">
+    <div className="fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center bg-[#050814]">
       <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white" />
     </div>
   );

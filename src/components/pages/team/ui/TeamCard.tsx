@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import type { KeyboardEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import type { TeamMember } from "../data/team";
 
 interface TeamCardProps {
@@ -10,27 +11,10 @@ interface TeamCardProps {
 
 export default function TeamCard({ member, active = false, position }: TeamCardProps) {
   const isCenter = position === "center";
+  const navigate = useNavigate();
 
   const openProfile = () => {
-    const path = `/team/${member.slug}`;
-
-    if (window.location.pathname === path) {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-
-      return;
-    }
-
-    window.history.pushState({}, "", path);
-
-    window.dispatchEvent(new PopStateEvent("popstate"));
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    navigate(`/team/${member.slug}`);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {

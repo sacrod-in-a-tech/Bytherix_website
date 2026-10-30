@@ -43,9 +43,14 @@ const PartnerNetworkBackground = () => {
     let particles: Particle[] = [];
     let width = 0;
     let height = 0;
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let dpr = Math.min(
+      window.devicePixelRatio || 1,
+      window.innerWidth < 768 ? 1.25 : 1.5,
+    );
     let isDark = document.documentElement.classList.contains("dark");
     let animationFrameId = 0;
+    let isInViewport = false;
+    let pageVisible = document.visibilityState === "visible";
 
     const buildParticles = () => {
       const area = width * height;
@@ -67,7 +72,10 @@ const PartnerNetworkBackground = () => {
     const resize = () => {
       width = container.clientWidth;
       height = container.clientHeight;
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(
+        window.devicePixelRatio || 1,
+        window.innerWidth < 768 ? 1.25 : 1.5,
+      );
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -93,6 +101,15 @@ const PartnerNetworkBackground = () => {
     };
 
     const drawFrame = () => {
+      animationFrameId = 0;
+      if (
+        !isInViewport ||
+        !pageVisible ||
+        reducedMotionQuery.matches
+      ) {
+        return;
+      }
+
       ctx.clearRect(0, 0, width, height);
 
       const lineOpacityBase = isDark ? 0.16 : 0.09;
@@ -138,10 +155,13 @@ const PartnerNetworkBackground = () => {
     const start = () => {
       resize();
 
+      if (!isInViewport || !pageVisible) {
+        return;
+      }
+
       if (reducedMotionQuery.matches) {
         drawStaticFrame();
-      } else {
-        cancelAnimationFrame(animationFrameId);
+      } else if (animationFrameId === 0) {
         drawFrame();
       }
     };
@@ -149,8 +169,32 @@ const PartnerNetworkBackground = () => {
     const handleResize = () => {
       resize();
 
-      if (reducedMotionQuery.matches) {
+      if (reducedMotionQuery.matches && isInViewport && pageVisible) {
         drawStaticFrame();
+      }
+    };
+
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isInViewport = entry.isIntersecting;
+      if (isInViewport) {
+        start();
+      } else {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = 0;
+      }
+    });
+    intersectionObserver.observe(container);
+
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(container);
+
+    const handlePageVisibility = () => {
+      pageVisible = document.visibilityState === "visible";
+      if (pageVisible) {
+        start();
+      } else {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = 0;
       }
     };
 
@@ -181,6 +225,7 @@ const PartnerNetworkBackground = () => {
     });
 
     window.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", handlePageVisibility);
     reducedMotionQuery.addEventListener("change", handleMotionPreferenceChange);
 
     start();
@@ -188,7 +233,10 @@ const PartnerNetworkBackground = () => {
     return () => {
       cancelAnimationFrame(animationFrameId);
       themeObserver.disconnect();
+      intersectionObserver.disconnect();
+      resizeObserver.disconnect();
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handlePageVisibility);
       reducedMotionQuery.removeEventListener(
         "change",
         handleMotionPreferenceChange,

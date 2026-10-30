@@ -1,14 +1,23 @@
-import { Fragment, useEffect, useState } from "react";
+import {
+  Fragment,
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { Quote } from "lucide-react";
 
-import Wavebackground from "./Wavebackground";
 import TestimonialCard from "./ui/TestimonialCard";
 import TestimonialControls from "./TestimonialControls";
 
 import { testimonials } from "./data/testimonials";
+import { useAnimationVisibility } from "../../../../../utils/useAnimationVisibility";
+
+const Wavebackground = lazy(() => import("./Wavebackground"));
 
 const highlightBrand = (message: string) => {
   const parts = message.split(/(Bytherix)/g);
@@ -27,10 +36,19 @@ const highlightBrand = (message: string) => {
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const isAnimationVisible = useAnimationVisibility(sectionRef);
+  const [hasEntered, setHasEntered] = useState(false);
 
   const prefersReducedMotion = useReducedMotion();
 
   const activeTestimonial = testimonials[activeIndex];
+
+  useEffect(() => {
+    if (isAnimationVisible) {
+      setHasEntered(true);
+    }
+  }, [isAnimationVisible]);
 
   const previousIndex = (activeIndex - 1 + testimonials.length) % testimonials.length;
   const nextIndex = (activeIndex + 1) % testimonials.length;
@@ -51,20 +69,20 @@ const Testimonials = () => {
   }, []);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !isAnimationVisible || prefersReducedMotion) return;
 
     const interval = window.setInterval(() => {
       setActiveIndex((current) => (current === testimonials.length - 1 ? 0 : current + 1));
     }, 2800);
 
     return () => window.clearInterval(interval);
-  }, [isPaused]);
+  }, [isAnimationVisible, isPaused, prefersReducedMotion]);
 
   const pauseSlider = () => setIsPaused(true);
   const resumeSlider = () => setIsPaused(false);
 
   return (
-    <section id="testimonials" className="relative w-full overflow-hidden bg-[#f6f8f7] px-4 py-8 text-[#111827] transition-colors duration-300 dark:bg-[#071426] dark:text-white sm:px-6 sm:py-10 md:px-8 md:py-12 lg:px-0">
+    <section ref={sectionRef} id="testimonials" className="relative w-full overflow-hidden bg-[#f6f8f7] px-4 py-8 text-[#111827] transition-colors duration-300 dark:bg-[#071426] dark:text-white sm:px-6 sm:py-10 md:px-8 md:py-12 lg:px-0">
       <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-10 h-64 w-64 rounded-full bg-[#0d604f]/[0.035] blur-3xl transition-colors duration-300 dark:bg-[#1b806d]/[0.08] sm:h-80 sm:w-80" />
 
       <div aria-hidden="true" className="pointer-events-none absolute -right-32 bottom-0 h-64 w-64 rounded-full bg-[#0d604f]/[0.04] blur-3xl transition-colors duration-300 dark:bg-[#1b806d]/[0.07] sm:h-80 sm:w-80" />
@@ -80,7 +98,11 @@ const Testimonials = () => {
       >
         <div className="relative w-full overflow-hidden rounded-xl border border-black/[0.06] bg-white/70 px-5 py-6 shadow-[0_18px_55px_rgba(16,60,50,0.07)] backdrop-blur-sm transition-colors duration-300 dark:border-teal-500/20 dark:bg-[#050e1a]/95 dark:shadow-[0_18px_55px_rgba(0,0,0,0.35)] sm:px-7 sm:py-7 md:px-9 md:py-8 lg:px-10 lg:py-9 xl:px-12 xl:py-10">
           <div className="pointer-events-none absolute inset-0 block">
-            <Wavebackground paused={Boolean(prefersReducedMotion)} />
+            <Suspense fallback={null}>
+              {hasEntered && (
+                <Wavebackground paused={Boolean(prefersReducedMotion)} />
+              )}
+            </Suspense>
           </div>
 
           <motion.div

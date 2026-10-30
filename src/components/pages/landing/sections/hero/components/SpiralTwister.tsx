@@ -2,11 +2,20 @@ import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const DESKTOP_STRANDS = 160;
-const MOBILE_STRANDS = 85;
+const DESKTOP_STRANDS = 120;
+const MOBILE_STRANDS = 64;
 
-const POINTS_PER_STRAND = 110;
-const PARTICLE_COUNT = 900;
+const POINTS_PER_STRAND = 88;
+const DESKTOP_PARTICLE_COUNT = 700;
+const MOBILE_PARTICLE_COUNT = 360;
+
+type StrandPointData = {
+    angle: number;
+    radius: number;
+    wavePhase: number;
+    secondaryWavePhase: number;
+    baseZ: number;
+};
 
 type StrandData = {
     radius: number;
@@ -16,6 +25,8 @@ type StrandData = {
     thickness: number;
     ellipse: number;
     turbulence: number;
+    positions: Float32Array;
+    points: StrandPointData[];
 };
 
 const HeroTwister = () => {
@@ -29,10 +40,17 @@ const HeroTwister = () => {
         if (!container || !canvas) return;
 
         const isMobile = window.innerWidth < 768;
+        const reducedMotionQuery = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        );
+        let reducedMotion = reducedMotionQuery.matches;
 
         const strandCount = isMobile
             ? MOBILE_STRANDS
             : DESKTOP_STRANDS;
+        const particleCount = isMobile
+            ? MOBILE_PARTICLE_COUNT
+            : DESKTOP_PARTICLE_COUNT;
 
         // =====================================================
         // SCENE
@@ -61,7 +79,7 @@ const HeroTwister = () => {
             canvas,
             antialias: true,
             alpha: true,
-            powerPreference: "high-performance",
+            powerPreference: isMobile ? "low-power" : "high-performance",
         });
 
         renderer.setSize(
@@ -70,7 +88,10 @@ const HeroTwister = () => {
         );
 
         renderer.setPixelRatio(
-            Math.min(window.devicePixelRatio, 1.8)
+            Math.min(
+                window.devicePixelRatio || 1,
+                isMobile ? 1.25 : 1.5
+            )
         );
 
         // Transparent — background comes from HeroBackground
@@ -153,15 +174,7 @@ const HeroTwister = () => {
                 Math.random() *
                 1.1;
 
-            strandData.push({
-                radius,
-                phase,
-                speed,
-                depth,
-                thickness,
-                ellipse,
-                turbulence,
-            });
+            const points: StrandPointData[] = [];
 
             // ---------------------------------------------------
             // Initial strand geometry
@@ -175,6 +188,29 @@ const HeroTwister = () => {
                 const p =
                     point /
                     (POINTS_PER_STRAND - 1);
+
+                const angleBase =
+                    p *
+                    Math.PI *
+                    2 *
+                    2.3 +
+                    phase;
+
+                const animationRadius =
+                    radius *
+                    (
+                        0.25 +
+                        Math.pow(p, 0.72) *
+                        0.75
+                    );
+
+                points.push({
+                    angle: angleBase,
+                    radius: animationRadius,
+                    wavePhase: p * Math.PI * 8 + phase,
+                    secondaryWavePhase: p * Math.PI * 5 + phase,
+                    baseZ: depth + (p - 0.5) * 28,
+                });
 
                 const angle =
                     p *
@@ -264,6 +300,18 @@ const HeroTwister = () => {
                     material
                 );
 
+            strandData.push({
+                radius,
+                phase,
+                speed,
+                depth,
+                thickness,
+                ellipse,
+                turbulence,
+                positions,
+                points,
+            });
+
             line.userData = {
                 strandIndex,
             };
@@ -277,17 +325,17 @@ const HeroTwister = () => {
 
         const particlePositions =
             new Float32Array(
-                PARTICLE_COUNT * 3
+                particleCount * 3
             );
 
         const particleColors =
             new Float32Array(
-                PARTICLE_COUNT * 3
+                particleCount * 3
             );
 
         for (
             let i = 0;
-            i < PARTICLE_COUNT;
+            i < particleCount;
             i++
         ) {
             const index = i * 3;
@@ -466,7 +514,7 @@ const HeroTwister = () => {
         // =====================================================
 
         const intro =
-            gsap.timeline();
+            gsap.timeline({ paused: true });
 
         intro
             .fromTo(
@@ -501,6 +549,10 @@ const HeroTwister = () => {
                 "<"
             );
 
+        if (reducedMotion) {
+            intro.progress(1).pause();
+        }
+
         // =====================================================
         // GSAP CONTINUOUS ROTATION
         // =====================================================
@@ -517,6 +569,8 @@ const HeroTwister = () => {
                     repeat: -1,
 
                     ease: "none",
+
+                    paused: true,
                 }
             );
 
@@ -539,6 +593,8 @@ const HeroTwister = () => {
                     yoyo: true,
 
                     ease: "sine.inOut",
+
+                    paused: true,
                 }
             );
 
@@ -546,23 +602,27 @@ const HeroTwister = () => {
         // CLOCK
         // =====================================================
 
-        const clock =
-            new THREE.Clock();
-
         let animationFrame = 0;
+        let lastFrameTime = 0;
+        let elapsedTime = 0;
+        let isInViewport = false;
+        let pageVisible = document.visibilityState === "visible";
+        let isActive = false;
 
         // =====================================================
         // ANIMATION
         // =====================================================
 
         const animate = () => {
-            animationFrame =
-                requestAnimationFrame(
-                    animate
-                );
+            animationFrame = 0;
+            if (!isActive) return;
 
-            const elapsed =
-                clock.getElapsedTime();
+            const now = performance.now();
+            if (lastFrameTime !== 0) {
+                elapsedTime += (now - lastFrameTime) / 1000;
+            }
+            lastFrameTime = now;
+            const elapsed = elapsedTime;
 
             // ---------------------------------------------------
             // Smooth mouse
@@ -602,237 +662,123 @@ const HeroTwister = () => {
             // Animate vortex strands
             // ---------------------------------------------------
 
-            vortexGroup.children.forEach(
-                (child) => {
-                    if (
-                        !(child instanceof THREE.Line)
-                    ) {
-                        return;
-                    }
+            for (
+                let strandIndex = 0;
+                strandIndex < strandData.length;
+                strandIndex++
+            ) {
+                const data = strandData[strandIndex];
+                const positions = data.positions;
+                const points = data.points;
 
-                    const strandIndex =
-                        child.userData
-                            .strandIndex;
+                for (let pointIndex = 0; pointIndex < points.length; pointIndex++) {
+                    const point = points[pointIndex];
+                    const angle = point.angle + elapsed * data.speed;
+                    const wave =
+                        Math.sin(point.wavePhase + elapsed * 0.7) *
+                        data.turbulence;
+                    const wave2 =
+                        Math.cos(point.secondaryWavePhase - elapsed * 0.45) *
+                        data.turbulence *
+                        0.5;
+                    const index = pointIndex * 3;
 
-                    if (
-                        strandIndex === undefined
-                    ) {
-                        return;
-                    }
-
-                    const data =
-                        strandData[
-                        strandIndex
-                        ];
-
-                    const geometry =
-                        child.geometry;
-
-                    const position =
-                        geometry.getAttribute(
-                            "position"
-                        ) as THREE.BufferAttribute;
-
-                    for (
-                        let point = 0;
-                        point < POINTS_PER_STRAND;
-                        point++
-                    ) {
-                        const p =
-                            point /
-                            (
-                                POINTS_PER_STRAND -
-                                1
-                            );
-
-                        // ------------------------------------------------
-                        // FLOWING ANGLE
-                        // ------------------------------------------------
-
-                        const angle =
-                            p *
-                            Math.PI *
-                            2 *
-                            2.3 +
-                            data.phase +
-                            elapsed *
-                            data.speed;
-
-                        // ------------------------------------------------
-                        // TORNADO COMPRESSION
-                        // ------------------------------------------------
-
-                        const compression =
-                            Math.pow(
-                                p,
-                                0.72
-                            );
-
-                        const currentRadius =
-                            data.radius *
-                            (
-                                0.25 +
-                                compression *
-                                0.75
-                            );
-
-                        // ------------------------------------------------
-                        // ORGANIC TURBULENCE
-                        // ------------------------------------------------
-
-                        const wave =
-                            Math.sin(
-                                p *
-                                Math.PI *
-                                8 +
-                                elapsed *
-                                0.7 +
-                                data.phase
-                            ) *
-                            data.turbulence;
-
-                        const wave2 =
-                            Math.cos(
-                                p *
-                                Math.PI *
-                                5 -
-                                elapsed *
-                                0.45 +
-                                data.phase
-                            ) *
-                            data.turbulence *
-                            0.5;
-
-                        // ------------------------------------------------
-                        // POSITION
-                        // ------------------------------------------------
-
-                        const x =
-                            Math.cos(angle) *
-                            (
-                                currentRadius +
-                                wave
-                            );
-
-                        const y =
-                            Math.sin(angle) *
-                            (
-                                currentRadius *
-                                data.ellipse
-                            ) +
-                            wave2;
-
-                        const z =
-                            data.depth +
-                            (
-                                p - 0.5
-                            ) *
-                            28 +
-                            Math.sin(
-                                angle * 0.45 +
-                                elapsed * 0.25
-                            ) *
-                            1.5;
-
-                        const index =
-                            point * 3;
-
-                        position.array[
-                            index
-                        ] = x;
-
-                        position.array[
-                            index + 1
-                        ] = y;
-
-                        position.array[
-                            index + 2
-                        ] = z;
-                    }
-
-                    position.needsUpdate =
-                        true;
+                    positions[index] =
+                        Math.cos(angle) * (point.radius + wave);
+                    positions[index + 1] =
+                        Math.sin(angle) *
+                            (point.radius * data.ellipse) +
+                        wave2;
+                    positions[index + 2] =
+                        point.baseZ +
+                        Math.sin(angle * 0.45 + elapsed * 0.25) * 1.5;
                 }
-            );
+
+                const line = vortexGroup.children[strandIndex] as THREE.Line;
+                (
+                    line.geometry.getAttribute("position") as THREE.BufferAttribute
+                ).needsUpdate = true;
+            }
 
             // ---------------------------------------------------
             // PARTICLE FIELD
             // ---------------------------------------------------
 
-            const particlePosition =
-                particleGeometry.getAttribute(
-                    "position"
-                ) as THREE.BufferAttribute;
-
+            particles.rotation.z += 0.0007;
+            const particlePositionArray =
+                particlePositions;
             for (
-                let i = 0;
-                i < PARTICLE_COUNT;
-                i++
+                let index = 2;
+                index < particleCount * 3;
+                index += 3
             ) {
-                const index = i * 3;
-
-                let x =
-                    particlePosition.array[
-                    index
-                    ];
-
-                let y =
-                    particlePosition.array[
-                    index + 1
-                    ];
-
-                let z =
-                    particlePosition.array[
-                    index + 2
-                    ];
-
-                const angle =
-                    Math.atan2(y, x) +
-                    0.0007;
-
-                const radius =
-                    Math.sqrt(
-                        x * x +
-                        y * y
-                    );
-
-                x =
-                    Math.cos(angle) *
-                    radius;
-
-                y =
-                    Math.sin(angle) *
-                    radius;
-
-                z += 0.015;
-
-                if (z > 18) {
-                    z = -18;
+                particlePositionArray[index] += 0.015;
+                if (particlePositionArray[index] > 18) {
+                    particlePositionArray[index] = -18;
                 }
-
-                particlePosition.array[
-                    index
-                ] = x;
-
-                particlePosition.array[
-                    index + 1
-                ] = y;
-
-                particlePosition.array[
-                    index + 2
-                ] = z;
             }
 
-            particlePosition.needsUpdate =
-                true;
+            (
+                particleGeometry.getAttribute("position") as THREE.BufferAttribute
+            ).needsUpdate = true;
 
             renderer.render(
                 scene,
                 camera
             );
+
+            if (isActive) {
+                animationFrame = requestAnimationFrame(animate);
+            }
         };
 
-        animate();
+        const updateAnimation = () => {
+            const shouldAnimate =
+                isInViewport &&
+                pageVisible &&
+                !reducedMotion;
+
+            isActive = shouldAnimate;
+            intro.paused(!shouldAnimate);
+            rotationTween.paused(!shouldAnimate);
+            glowTween.paused(!shouldAnimate);
+
+            if (shouldAnimate) {
+                lastFrameTime = performance.now();
+                if (animationFrame === 0) {
+                    animationFrame = requestAnimationFrame(animate);
+                }
+            } else {
+                cancelAnimationFrame(animationFrame);
+                animationFrame = 0;
+                lastFrameTime = 0;
+                renderer.render(scene, camera);
+            }
+        };
+
+        const intersectionObserver = new IntersectionObserver(([entry]) => {
+            isInViewport = entry.isIntersecting;
+            updateAnimation();
+        }, { threshold: 0.01 });
+        intersectionObserver.observe(container);
+
+        const resizeObserver = new ResizeObserver(() => {
+            handleResize();
+        });
+        resizeObserver.observe(container);
+
+        const handlePageVisibility = () => {
+            pageVisible = document.visibilityState === "visible";
+            updateAnimation();
+        };
+        const handleMotionPreference = (event: MediaQueryListEvent) => {
+            reducedMotion = event.matches;
+            updateAnimation();
+        };
+
+        document.addEventListener("visibilitychange", handlePageVisibility);
+        reducedMotionQuery.addEventListener("change", handleMotionPreference);
+        renderer.render(scene, camera);
 
         // =====================================================
         // RESIZE
@@ -844,6 +790,8 @@ const HeroTwister = () => {
 
             const height =
                 container.clientHeight;
+
+            if (width === 0 || height === 0) return;
 
             camera.aspect =
                 width / height;
@@ -857,8 +805,8 @@ const HeroTwister = () => {
 
             renderer.setPixelRatio(
                 Math.min(
-                    window.devicePixelRatio,
-                    1.8
+                    window.devicePixelRatio || 1,
+                    window.innerWidth < 768 ? 1.25 : 1.5
                 )
             );
         };
@@ -867,6 +815,7 @@ const HeroTwister = () => {
             "resize",
             handleResize
         );
+        handleResize();
 
         // =====================================================
         // CLEANUP
@@ -881,6 +830,16 @@ const HeroTwister = () => {
                 "resize",
                 handleResize
             );
+            document.removeEventListener(
+                "visibilitychange",
+                handlePageVisibility
+            );
+            reducedMotionQuery.removeEventListener(
+                "change",
+                handleMotionPreference
+            );
+            intersectionObserver.disconnect();
+            resizeObserver.disconnect();
 
             container.removeEventListener(
                 "mousemove",

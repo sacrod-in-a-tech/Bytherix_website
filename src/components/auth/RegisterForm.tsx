@@ -306,18 +306,18 @@ const RegisterForm = () => {
                   className="h-1 flex-1 overflow-hidden rounded-full bg-white/[0.08]"
                 >
                   <motion.div
-                    initial={{ width: 0 }}
+                    initial={{ scaleX: 0 }}
                     animate={{
-                      width:
+                      scaleX:
                         segment <= passwordStrength.score
-                          ? "100%"
-                          : "0%",
+                          ? 1
+                          : 0,
                     }}
                     transition={{
                       duration: 0.25,
                       ease: "easeOut",
                     }}
-                    className={`h-full rounded-full ${
+                    className={`h-full w-full origin-left rounded-full ${
                       segment <= passwordStrength.score
                         ? passwordStrength.color
                         : ""

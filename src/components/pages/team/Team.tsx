@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import TeamCard from "./ui/TeamCard";
 import { teamMembers } from "./data/team";
+import { useAnimationVisibility } from "../../../utils/useAnimationVisibility";
 
 const networkNodes = [
   { x: "7%", y: "18%", size: 4, delay: 0 },
@@ -45,6 +46,10 @@ const networkLines = [
 export default function Team() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const isAnimationVisible = useAnimationVisibility(sectionRef);
+  const prefersReducedMotion = useReducedMotion();
+  const animateBackground = isAnimationVisible && !prefersReducedMotion;
 
   const totalMembers = teamMembers.length;
 
@@ -59,14 +64,14 @@ export default function Team() {
   };
 
   useEffect(() => {
-    if (isPaused || totalMembers <= 1) return;
+    if (isPaused || !isAnimationVisible || prefersReducedMotion || totalMembers <= 1) return;
 
     const interval = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % totalMembers);
     }, 4000);
 
     return () => window.clearInterval(interval);
-  }, [isPaused, totalMembers]);
+  }, [isAnimationVisible, isPaused, prefersReducedMotion, totalMembers]);
 
   const visibleMembers = useMemo(() => {
     if (!totalMembers) return [];
@@ -84,7 +89,7 @@ export default function Team() {
   if (!totalMembers) return null;
 
   return (
-    <section id="team" className="relative isolate overflow-hidden bg-[var(--bg-primary)] pt-14 pb-4 sm:pt-16 sm:pb-5 lg:pt-20 lg:pb-6">
+    <section ref={sectionRef} id="team" className="relative isolate overflow-hidden bg-[var(--bg-primary)] pt-14 pb-4 sm:pt-16 sm:pb-5 lg:pt-20 lg:pb-6">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
         <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1000 600" preserveAspectRatio="none">
           <defs>
@@ -115,8 +120,16 @@ export default function Team() {
               stroke="url(#teamNetworkGradient)"
               strokeWidth="1"
               initial={{ opacity: 0.15 }}
-              animate={{ opacity: [0.12, 0.55, 0.12] }}
-              transition={{ duration: line.duration, delay: line.delay, repeat: Infinity, ease: "easeInOut" }}
+              animate={
+                animateBackground
+                  ? { opacity: [0.12, 0.55, 0.12] }
+                  : { opacity: 0.15 }
+              }
+              transition={
+                animateBackground
+                  ? { duration: line.duration, delay: line.delay, repeat: Infinity, ease: "easeInOut" }
+                  : { duration: 0 }
+              }
             />
           ))}
 
@@ -131,8 +144,16 @@ export default function Team() {
               strokeWidth="2"
               strokeDasharray="3 80"
               filter="url(#teamNetworkGlow)"
-              animate={{ strokeDashoffset: [0, -100] }}
-              transition={{ duration: 5 + index * 0.25, repeat: Infinity, ease: "linear", delay: line.delay }}
+              animate={
+                animateBackground
+                  ? { strokeDashoffset: [0, -100] }
+                  : { strokeDashoffset: 0 }
+              }
+              transition={
+                animateBackground
+                  ? { duration: 5 + index * 0.25, repeat: Infinity, ease: "linear", delay: line.delay }
+                  : { duration: 0 }
+              }
             />
           ))}
 
@@ -144,21 +165,46 @@ export default function Team() {
               r={node.size}
               fill={index % 3 === 0 ? "#3157D5" : index % 3 === 1 ? "#00AEEF" : "#20C997"}
               initial={{ opacity: 0.25 }}
-              animate={{ opacity: [0.2, 0.9, 0.2], r: [node.size, node.size + 1.5, node.size] }}
-              transition={{ duration: 2.5, delay: node.delay, repeat: Infinity, ease: "easeInOut" }}
+              animate={
+                animateBackground
+                  ? { opacity: [0.2, 0.9, 0.2], scale: [1, 1.5, 1] }
+                  : { opacity: 0.25, scale: 1 }
+              }
+              transition={
+                animateBackground
+                  ? { duration: 2.5, delay: node.delay, repeat: Infinity, ease: "easeInOut" }
+                  : { duration: 0 }
+              }
+              style={{ transformBox: "fill-box", transformOrigin: "center" }}
             />
           ))}
         </svg>
 
         <motion.div
-          animate={{ x: ["-10%", "110%"], y: ["20%", "70%", "30%"] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+          animate={
+            animateBackground
+              ? { x: ["-10%", "110%"], y: ["20%", "70%", "30%"] }
+              : { x: "-10%", y: "20%" }
+          }
+          transition={
+            animateBackground
+              ? { duration: 14, repeat: Infinity, ease: "easeInOut" }
+              : { duration: 0 }
+          }
           className="absolute h-48 w-48 rounded-full bg-[#3157D5]/10 blur-[90px] dark:bg-[#3157D5]/20"
         />
 
         <motion.div
-          animate={{ x: ["100%", "0%", "80%"], y: ["70%", "25%", "80%"] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          animate={
+            animateBackground
+              ? { x: ["100%", "0%", "80%"], y: ["70%", "25%", "80%"] }
+              : { x: "100%", y: "70%" }
+          }
+          transition={
+            animateBackground
+              ? { duration: 18, repeat: Infinity, ease: "easeInOut" }
+              : { duration: 0 }
+          }
           className="absolute h-52 w-52 rounded-full bg-[#00AEEF]/10 blur-[90px] dark:bg-[#00AEEF]/20"
         />
 

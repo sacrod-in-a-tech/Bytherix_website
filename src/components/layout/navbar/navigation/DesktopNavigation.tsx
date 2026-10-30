@@ -414,7 +414,7 @@ const DesktopNavigation = ({
             }}
             className="absolute left-3 right-3 top-[calc(100%-2px)] z-[90] hidden xl:block"
           >
-            <div className="mx-auto w-full max-w-[1600px] overflow-hidden rounded-b-2xl rounded-t-xl border border-white/[0.14] bg-[#080F29]/95 shadow-[0_18px_42px_rgba(0,0,0,0.45),0_0_30px_rgba(0,174,239,0.08)] backdrop-blur-xl">
+            <div className="mx-auto w-full max-w-[1600px] overflow-hidden rounded-b-2xl rounded-t-xl border border-white/[0.14] bg-[#080F29] shadow-[0_18px_42px_rgba(0,0,0,0.45),0_0_30px_rgba(0,174,239,0.08)]">
               {/* Top glow line */}
               <div className="mx-auto h-px w-32 bg-gradient-to-r from-transparent via-[#00AEEF]/60 to-transparent" />
 

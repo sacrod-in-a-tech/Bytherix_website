@@ -309,19 +309,18 @@
 .founder-card::after {
   content: "";
   position: absolute;
-  left: -100%;
   top: 0;
   width: 50%;
   height: 100%;
   pointer-events: none;
-  transform: skewX(-18deg);
+  transform: translateX(-200%) skewX(-18deg);
   background: linear-gradient(
     90deg,
     transparent,
     rgba(255, 255, 255, 0.07),
     transparent
   );
-  transition: left 700ms ease;
+  transition: transform 700ms ease;
 }
 
 .founder-card:hover {
@@ -337,7 +336,7 @@
 }
 
 .founder-card:hover::after {
-  left: 150%;
+  transform: translateX(300%) skewX(-18deg);
 }
 
 .founder-card > * {
@@ -1337,5 +1336,20 @@
 @media (prefers-reduced-motion: reduce) {
   .founder-closing-title {
     animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .founder-orb {
+    filter: blur(60px);
+  }
+
+  .founder-title-gradient {
+    animation: none;
+  }
+
+  .founder-closing-title {
+    animation: none;
+    filter: drop-shadow(0 0 18px rgba(251, 146, 60, 0.15));
   }
 }

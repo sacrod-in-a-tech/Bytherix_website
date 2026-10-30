@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import NavbarBrand from "./NavbarBrand";
 import DesktopNavigation from "./navigation/DesktopNavigation";
@@ -10,6 +11,7 @@ export interface NavbarProps {
 
 const Navbar = ({ docked }: NavbarProps) => {
   const introPlayedRef = useRef(false);
+  const navigate = useNavigate();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -30,31 +32,8 @@ const Navbar = ({ docked }: NavbarProps) => {
      NAVIGATION
   ========================== */
   const navigateTo = (path: string) => {
-    const currentPath = window.location.pathname + window.location.hash;
-
-    if (currentPath === path) {
-      closeMenu();
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-
-      return;
-    }
-
-    window.history.pushState({}, "", path);
-
-    window.dispatchEvent(new PopStateEvent("popstate"));
-
+    navigate(path);
     closeMenu();
-
-    window.setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }, 0);
   };
 
   /* =========================
@@ -65,7 +44,9 @@ const Navbar = ({ docked }: NavbarProps) => {
 
     if (element) {
       element.scrollIntoView({
-        behavior: "smooth",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
         block: "start",
       });
     }
@@ -86,22 +67,6 @@ const Navbar = ({ docked }: NavbarProps) => {
       "All Products": "/shop",
       "Digital Products": "/shop",
       Software: "/shop",
-
-      // "Web Development": "/services/web-development",
-      // "App Development": "/services/app-development",
-      // "Game Development": "/services/game-development",
-      // "E-commerce Development": "/services/e-commerce-development",
-      // "Maintenance & AMC": "/services/maintenance-amc",
-      // "AI & Machine Learning": "/services/ai-machine-learning",
-      // "Cloud & DevOps": "/services/cloud-devops",
-      // "Cyber Security": "/services/cyber-security",
-      // "IoT & Robotics": "/services/iot-robotics",
-      // "Blockchain & Web3": "/services/blockchain-web3",
-      // "Data Analytics & BI": "/services/data-analytics-bi",
-      // "UI/UX Design": "/services/ui-ux-design",
-      // "Digital Marketing": "/services/digital-marketing",
-      // "Graphic Design": "/services/graphic-design",
-      // "AR/VR & 3D": "/services/ar-vr-3d",
     };
 
     const pagePath = pageMap[item];
@@ -111,8 +76,8 @@ const Navbar = ({ docked }: NavbarProps) => {
       return;
     }
 
+    // In-page hash sections — navigate to /#sectionId so ScrollHandler picks it up
     const sectionMap: Record<string, string> = {
-      "Our Story": "story",
       Testimonials: "testimonials",
       "Contact Us": "contact",
       "Our Services": "services",
@@ -130,26 +95,15 @@ const Navbar = ({ docked }: NavbarProps) => {
       return;
     }
 
-    if (window.location.pathname !== "/") {
-      window.history.pushState({}, "", `/#${sectionId}`);
-
-      window.dispatchEvent(new PopStateEvent("popstate"));
-
-      window.setTimeout(() => {
-        scrollToSection(sectionId);
-      }, 100);
-
+    // If already on home, just scroll directly
+    if (window.location.pathname === "/") {
+      scrollToSection(sectionId);
       closeMenu();
-
       return;
     }
 
-    window.history.replaceState({}, "", `/#${sectionId}`);
-
-    window.setTimeout(() => {
-      scrollToSection(sectionId);
-    }, 0);
-
+    // Navigate to home with hash — ScrollHandler will scroll once home mounts
+    navigate(`/#${sectionId}`);
     closeMenu();
   };
 
@@ -182,26 +136,13 @@ const Navbar = ({ docked }: NavbarProps) => {
       return;
     }
 
-    if (window.location.pathname !== "/") {
-      window.history.pushState({}, "", `/#${sectionId}`);
-
-      window.dispatchEvent(new PopStateEvent("popstate"));
-
-      window.setTimeout(() => {
-        scrollToSection(sectionId);
-      }, 100);
-
+    if (window.location.pathname === "/") {
+      scrollToSection(sectionId);
       closeMenu();
-
       return;
     }
 
-    window.history.replaceState({}, "", `/#${sectionId}`);
-
-    window.setTimeout(() => {
-      scrollToSection(sectionId);
-    }, 0);
-
+    navigate(`/#${sectionId}`);
     closeMenu();
   };
 
@@ -210,33 +151,31 @@ const Navbar = ({ docked }: NavbarProps) => {
   ========================== */
   const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-
     navigateTo("/");
-
-    window.setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }, 0);
   };
 
   return (
     <>
       <header
         className="
-          relative
+          sticky
+          top-0
           z-[100]
           w-full
-          bg-[#050814]
+          bg-[#050814]/90
+          backdrop-blur-md
           px-3
-          py-3
+          py-2
           sm:px-4
-          sm:py-3
+          sm:py-2.5
           lg:px-5
-          lg:py-4
+          lg:py-3
           xl:px-6
         "
+        style={{
+          opacity: docked ? 1 : 0,
+          transition: "opacity 400ms cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
         onMouseLeave={() => {
           setActiveDropdown(null);
           setHoveredNavItem(null);
@@ -247,7 +186,7 @@ const Navbar = ({ docked }: NavbarProps) => {
             relative
             mx-auto
             flex
-            min-h-[62px]
+            min-h-[54px]
             w-full
             max-w-[1600px]
             items-center
@@ -257,12 +196,12 @@ const Navbar = ({ docked }: NavbarProps) => {
             bg-[#080F29]
             px-4
             shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_8px_25px_rgba(0,0,0,0.35)]
-            sm:min-h-[66px]
+            sm:min-h-[58px]
             sm:px-5
-            lg:min-h-[68px]
+            lg:min-h-[62px]
             lg:rounded-[22px]
             lg:px-6
-            xl:min-h-[70px]
+            xl:min-h-[64px]
             xl:px-7
           "
         >
