@@ -186,7 +186,7 @@ export default function TeamProfile({ slug, onBack }: TeamProfileProps) {
         </div>
       </motion.section>
 
-      <section className="mx-auto max-w-[1600px] px-5 pb-20 pt-4 sm:px-8 sm:pb-24 sm:pt-6 lg:px-16 lg:pb-28 lg:pt-8 xl:px-20">
+      <section className="mx-auto max-w-[1600px] px-5 pb-3 pt-4 sm:px-8 sm:pb-24 sm:pt-6 lg:px-16 lg:pb-15 lg:pt-8 xl:px-20">
         <div className="mx-auto max-w-[1250px] space-y-6">
           {journeyParagraphs.map((paragraph, index) => (
             <p key={index} className="text-justify text-base leading-8 text-[var(--text-secondary)] sm:text-lg sm:leading-9">
@@ -197,7 +197,7 @@ export default function TeamProfile({ slug, onBack }: TeamProfileProps) {
       </section>
 
       <section className="border-t border-black/5">
-        <div className="mx-auto max-w-[1600px] px-5 py-16 text-center sm:px-8 lg:px-16 lg:py-20 xl:px-20">
+        <div className="mx-auto max-w-[1600px] px-5 py-10 text-center sm:px-8 lg:px-16 lg:py-0 xl:px-20">
           <p className="text-sm text-[var(--text-secondary)]">
             Discover more about the people building Bytherix.
           </p>

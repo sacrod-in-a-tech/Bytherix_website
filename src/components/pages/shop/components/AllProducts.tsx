@@ -80,7 +80,7 @@ export default function AllProducts({ filter }: AllProductsProps) {
                 </p>
               </div>
 
-              <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
+          <div className="grid w-full max-w-2xl grid-cols-1 sm:grid-cols-2 justify-start gap-x-6 sm:gap-x-10 gap-y-4 sm:gap-y-4">
                 {digitalProducts.map((product, index) => (
                   <ProductCard
                     key={product.id}
