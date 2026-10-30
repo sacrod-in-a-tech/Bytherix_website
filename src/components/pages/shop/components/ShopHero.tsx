@@ -1,9 +1,14 @@
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import ProductNetworkBackground from "./ProductNetworkBackground";
+import { useAnimationVisibility } from "../../../../utils/useAnimationVisibility";
 
 export default function ShopHero() {
   const ref = useRef<HTMLElement>(null);
+  const orbitRef = useRef<HTMLDivElement>(null);
+  const isOrbitVisible = useAnimationVisibility(orbitRef);
+  const prefersReducedMotion = useReducedMotion();
+  const shouldAnimateOrbit = isOrbitVisible && !prefersReducedMotion;
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -76,7 +81,7 @@ export default function ShopHero() {
             RIGHT ORBITAL / RADAR SYSTEM
         ===================================================== */}
 
-        <div className="pointer-events-none absolute right-[-170px] top-1/2 hidden h-[500px] w-[500px] -translate-y-1/2 lg:block xl:right-[-70px] 2xl:right-[-20px]">
+        <div ref={orbitRef} className="pointer-events-none absolute right-[-170px] top-1/2 hidden h-[500px] w-[500px] -translate-y-1/2 lg:block xl:right-[-70px] 2xl:right-[-20px]">
           {/* Outer glow */}
 
           <div className="absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#00AEEF]/[0.035] blur-[70px]" />
@@ -116,13 +121,14 @@ export default function ShopHero() {
           {/* Center glow */}
 
           <motion.div
-            animate={{
-              scale: [0.9, 1.15, 0.9],
-              opacity: [0.35, 0.7, 0.35],
-            }}
+            animate={
+              shouldAnimateOrbit
+                ? { scale: [0.9, 1.15, 0.9], opacity: [0.35, 0.7, 0.35] }
+                : { scale: 0.9, opacity: 0.35 }
+            }
             transition={{
-              duration: 3.8,
-              repeat: Infinity,
+              duration: shouldAnimateOrbit ? 3.8 : 0,
+              repeat: shouldAnimateOrbit ? Infinity : 0,
               ease: "easeInOut",
             }}
             className="absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#00AEEF]/10 blur-3xl"
@@ -137,12 +143,10 @@ export default function ShopHero() {
           ================================================= */}
 
           <motion.div
-            animate={{
-              rotate: 360,
-            }}
+            animate={{ rotate: shouldAnimateOrbit ? 360 : 0 }}
             transition={{
-              duration: 34,
-              repeat: Infinity,
+              duration: shouldAnimateOrbit ? 34 : 0,
+              repeat: shouldAnimateOrbit ? Infinity : 0,
               ease: "linear",
             }}
             className="absolute inset-0"
@@ -169,42 +173,45 @@ export default function ShopHero() {
           ================================================= */}
 
           <motion.span
-            animate={{
-              scale: [1, 1.55, 1],
-              opacity: [0.35, 1, 0.35],
-            }}
+            animate={
+              shouldAnimateOrbit
+                ? { scale: [1, 1.55, 1], opacity: [0.35, 1, 0.35] }
+                : { scale: 1, opacity: 0.35 }
+            }
             transition={{
-              duration: 2.8,
-              repeat: Infinity,
+              duration: shouldAnimateOrbit ? 2.8 : 0,
+              repeat: shouldAnimateOrbit ? Infinity : 0,
               ease: "easeInOut",
             }}
             className="absolute left-[21%] top-[27%] h-2.5 w-2.5 rounded-full bg-[#00AEEF] shadow-[0_0_18px_4px_rgba(0,174,239,0.45)]"
           />
 
           <motion.span
-            animate={{
-              scale: [1, 1.45, 1],
-              opacity: [0.35, 0.95, 0.35],
-            }}
+            animate={
+              shouldAnimateOrbit
+                ? { scale: [1, 1.45, 1], opacity: [0.35, 0.95, 0.35] }
+                : { scale: 1, opacity: 0.35 }
+            }
             transition={{
-              duration: 3.4,
-              repeat: Infinity,
+              duration: shouldAnimateOrbit ? 3.4 : 0,
+              repeat: shouldAnimateOrbit ? Infinity : 0,
               ease: "easeInOut",
-              delay: 0.7,
+              delay: shouldAnimateOrbit ? 0.7 : 0,
             }}
             className="absolute right-[21%] top-[28%] h-2 w-2 rounded-full bg-[#38BDF8] shadow-[0_0_18px_4px_rgba(56,189,248,0.45)]"
           />
 
           <motion.span
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.3, 0.9, 0.3],
-            }}
+            animate={
+              shouldAnimateOrbit
+                ? { scale: [1, 1.5, 1], opacity: [0.3, 0.9, 0.3] }
+                : { scale: 1, opacity: 0.3 }
+            }
             transition={{
-              duration: 3.1,
-              repeat: Infinity,
+              duration: shouldAnimateOrbit ? 3.1 : 0,
+              repeat: shouldAnimateOrbit ? Infinity : 0,
               ease: "easeInOut",
-              delay: 1.2,
+              delay: shouldAnimateOrbit ? 1.2 : 0,
             }}
             className="absolute bottom-[25%] left-[30%] h-2 w-2 rounded-full bg-[#3157D5] shadow-[0_0_18px_4px_rgba(49,87,213,0.45)]"
           />

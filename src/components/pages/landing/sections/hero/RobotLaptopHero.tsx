@@ -131,6 +131,8 @@ const RobotLaptopHero = () => {
         <img
           src={robotLaptopGif}
           alt="Bytherix robot presenting a laptop"
+          fetchPriority="high"
+          decoding="async"
           className="
             block
             w-full

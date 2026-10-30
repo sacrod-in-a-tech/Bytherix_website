@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import ServiceCard from "./ui/ServiceCard";
 import { services } from "./data/services";
+import { useAnimationVisibility } from "../../../../../utils/useAnimationVisibility";
 
 const GAP = 20;
 
 export default function Services() {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const isAnimationVisible = useAnimationVisibility(containerRef);
+  const prefersReducedMotion = useReducedMotion();
 
   const [containerWidth, setContainerWidth] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
@@ -93,7 +96,7 @@ export default function Services() {
   ------------------------------------------------- */
 
   useEffect(() => {
-    if (isPaused || maxIndex === 0) return;
+    if (isPaused || !isAnimationVisible || prefersReducedMotion || maxIndex === 0) return;
 
     const timer = window.setInterval(() => {
       setActiveIndex((current) =>
@@ -104,7 +107,7 @@ export default function Services() {
     return () => {
       window.clearInterval(timer);
     };
-  }, [isPaused, maxIndex]);
+  }, [isAnimationVisible, isPaused, maxIndex, prefersReducedMotion]);
 
   /* -------------------------------------------------
       Navigation

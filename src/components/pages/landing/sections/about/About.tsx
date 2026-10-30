@@ -1,13 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import {
   motion,
   useReducedMotion,
   useScroll,
   useTransform,
 } from "framer-motion";
-import GlobeCanvas from "./GlobeCanvas";
 import AboutCard from "./ui/AboutCard";
 import FeatureIcon from "./ui/FeatureIcon";
 import {
@@ -30,8 +36,9 @@ import {
   Wifi,
   type LucideIcon,
 } from "lucide-react";
+import { useAnimationVisibility } from "../../../../../utils/useAnimationVisibility";
 
-
+const GlobeCanvas = lazy(() => import("./GlobeCanvas"));
 
 export default function About() {
 
@@ -42,6 +49,8 @@ export default function About() {
 ];
   const sectionRef = useRef<HTMLElement | null>(null);
   const reducedMotion = useReducedMotion();
+  const isSectionVisible = useAnimationVisibility(sectionRef);
+  const [hasEntered, setHasEntered] = useState(false);
 
   const [displayedSlide, setDisplayedSlide] = useState<number>(0);
   const [featureSlide, setFeatureSlide] = useState<number>(0);
@@ -52,6 +61,12 @@ export default function About() {
   const flipUnlockTimerRef = useRef<number | null>(null);
   const themeTransitionTimerRef = useRef<number | null>(null);
   const lastThemeRef = useRef<boolean | null>(null);
+
+  useEffect(() => {
+    if (isSectionVisible) {
+      setHasEntered(true);
+    }
+  }, [isSectionVisible]);
 
   /* Theme transition */
 
@@ -308,7 +323,9 @@ export default function About() {
                 }
                 className="relative h-112 w-112 shrink-0 overflow-visible opacity-50 dark:opacity-80"
               >
-                <GlobeCanvas />
+                <Suspense fallback={null}>
+                  {hasEntered && <GlobeCanvas />}
+                </Suspense>
 
                 <div className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,.13)_0%,rgba(59,130,246,.07)_35%,rgba(203,213,225,.04)_55%,transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle,rgba(0,174,239,.34)_0%,rgba(49,87,213,.22)_32%,rgba(124,58,237,.18)_55%,transparent_75%)]" />
               </motion.div>
@@ -470,7 +487,9 @@ export default function About() {
                   }
                   className="relative h-80 w-80 shrink-0 overflow-visible opacity-30 sm:h-96 sm:w-96 sm:opacity-40 md:h-96 md:w-96 md:opacity-45 lg:h-128 lg:w-128 lg:opacity-50 xl:h-128 xl:w-128 xl:opacity-55 dark:opacity-60 lg:dark:opacity-80"
                 >
-                  <GlobeCanvas />
+                  <Suspense fallback={null}>
+                    {hasEntered && <GlobeCanvas />}
+                  </Suspense>
 
                   <div className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,.13)_0%,rgba(59,130,246,.07)_35%,rgba(203,213,225,.04)_55%,transparent_72%)] blur-3xl dark:bg-[radial-gradient(circle,rgba(0,174,239,.34)_0%,rgba(49,87,213,.22)_32%,rgba(124,58,237,.18)_55%,transparent_75%)]" />
                 </motion.div>

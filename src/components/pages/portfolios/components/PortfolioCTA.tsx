@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const PortfolioCTA = () => {
   return (
@@ -29,8 +30,8 @@ const PortfolioCTA = () => {
               around your business and your audience.
             </p>
 
-            <a
-              href="/contact"
+            <Link
+              to="/#contact"
               className="group mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-slate-900 transition-all duration-300 hover:bg-blue-500 hover:text-white"
             >
               Start a Conversation
@@ -39,7 +40,7 @@ const PortfolioCTA = () => {
                 size={17}
                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>
