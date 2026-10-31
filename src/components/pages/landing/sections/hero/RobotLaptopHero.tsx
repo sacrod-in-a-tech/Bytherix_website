@@ -1,17 +1,25 @@
 import {
   motion,
   useMotionValue,
+  useReducedMotion,
   useSpring,
   useTransform,
 } from "framer-motion";
 import { useRef } from "react";
 import robotLaptopGif from "../../../../../assets/robot_blink_full.gif";
+import { useAnimationVisibility } from "../../../../../utils/useAnimationVisibility";
 
 const MAX_TILT_DEG = 5;
 const MAX_LIFT_PX = 6;
 
-const RobotLaptopHero = () => {
+interface RobotLaptopHeroProps {
+  docked: boolean;
+}
+
+const RobotLaptopHero = ({ docked }: RobotLaptopHeroProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isVisible = useAnimationVisibility(containerRef);
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -55,6 +63,8 @@ const RobotLaptopHero = () => {
   const handlePointerMove = (
     event: React.PointerEvent<HTMLDivElement>
   ) => {
+    if (prefersReducedMotion) return;
+
     const rect =
       containerRef.current?.getBoundingClientRect();
 
@@ -95,25 +105,26 @@ const RobotLaptopHero = () => {
         perspective: 1200,
       }}
     >
+      <div
+        className={`hero-tech-orbit${isVisible && !prefersReducedMotion ? " is-active" : ""}`}
+        aria-hidden="true"
+      >
+        <span className="hero-tech-orbit__ring hero-tech-orbit__ring--outer" />
+        <span className="hero-tech-orbit__ring hero-tech-orbit__ring--middle" />
+        <span className="hero-tech-orbit__ring hero-tech-orbit__ring--inner" />
+      </div>
+
       <motion.div
         className="
           relative
           w-full
           max-w-[760px]
-          will-change-transform
         "
-        initial={{
-          opacity: 0,
-          scale: 0.94,
-          y: 20,
-        }}
-        animate={{
-          opacity: 1,
-          scale: 1,
-          y: 0,
-        }}
+        initial={docked ? false : { opacity: 0, scale: 0.97, y: 16 }}
+        animate={docked ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.97, y: 16 }}
         transition={{
-          duration: 1,
+          duration: prefersReducedMotion ? 0 : 0.85,
+          delay: prefersReducedMotion ? 0 : 0.12,
           ease: [0.22, 1, 0.36, 1],
         }}
         style={{
@@ -124,87 +135,37 @@ const RobotLaptopHero = () => {
           transformStyle: "preserve-3d",
         }}
       >
-        {/* =====================================================
-            ROBOT
-            ===================================================== */}
-
-        <img
-          src={robotLaptopGif}
-          alt="Bytherix robot presenting a laptop"
-          fetchPriority="high"
-          decoding="async"
-          className="
-            block
-            w-full
-            h-auto
-            select-none
-            pointer-events-none
-            object-contain
-            drop-shadow-[0_30px_50px_rgba(0,0,0,0.35)]
-          "
-          draggable={false}
-        />
-
-        {/* =====================================================
-            CONTACT SHADOW
-            ===================================================== */}
-
-        <motion.div
-          className="
-            absolute
-            left-1/2
-            -translate-x-1/2
-            pointer-events-none
-          "
-          style={{
-            bottom: "2%",
-            width: "58%",
-            height: "18px",
-          }}
-          animate={{
-            scaleX: [1, 0.94, 1],
-            scaleY: [1, 0.9, 1],
-            opacity: [0.55, 0.4, 0.55],
-          }}
-          transition={{
-            duration: 4.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+        <div
+          className={`hero-robot-float${isVisible && !prefersReducedMotion ? " is-active" : ""}`}
         >
-          {/* Soft shadow */}
-          <div
+          <img
+            src={robotLaptopGif}
+            alt="Bytherix robot presenting a laptop"
+            fetchPriority="high"
+            decoding="async"
             className="
-              absolute
-              inset-0
-              rounded-[50%]
+              block
+              w-full
+              h-auto
+              select-none
+              pointer-events-none
+              object-contain
             "
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.16) 52%, transparent 75%)",
-              filter: "blur(12px)",
-              transform: "scaleY(0.7)",
-            }}
+            draggable={false}
           />
-
-          {/* Core shadow */}
           <div
             className="
               absolute
               left-1/2
-              top-1
+              bottom-[2%]
               -translate-x-1/2
-              w-[78%]
               h-3
+              w-[58%]
               rounded-[50%]
+              bg-black/20
             "
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 70%)",
-              filter: "blur(4px)",
-            }}
           />
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );

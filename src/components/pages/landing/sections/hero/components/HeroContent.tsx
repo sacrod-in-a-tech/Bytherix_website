@@ -1,7 +1,9 @@
 import gsap from "gsap";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { useReducedMotion } from "framer-motion";
 
 import SocialProof from "./SocialProof";
+import { useAnimationVisibility } from "../../../../../../utils/useAnimationVisibility";
 
 interface HeroContentProps {
   docked: boolean;
@@ -20,6 +22,9 @@ const ROTATING_WORDS = [
 
 const HeroContent = ({ docked }: HeroContentProps) => {
   const rotatorRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  const isVisible = useAnimationVisibility(rotatorRef);
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
   useLayoutEffect(() => {
     const rotator = rotatorRef.current;
@@ -34,75 +39,68 @@ const HeroContent = ({ docked }: HeroContentProps) => {
     if (!words.length) return;
 
     const ctx = gsap.context(() => {
-      // Initial state
       gsap.set(words, {
         opacity: 0,
-        y: 28,
-        filter: "blur(6px)",
+        y: 16,
       });
 
-      // First word
       gsap.set(words[0], {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
       });
+      words[0].classList.add("is-current");
 
-      // Rotating words timeline
       const timeline = gsap.timeline({
         repeat: -1,
         paused: true,
       });
+      timelineRef.current = timeline;
 
       words.forEach((word, index) => {
         const nextWord = words[(index + 1) % words.length];
 
         timeline
-          // Hold current word
           .to({}, {
-            duration: 1,
+            duration: 1.65,
           })
-
-          // Exit current word
           .to(word, {
             opacity: 0,
-            y: -24,
-            filter: "blur(5px)",
-            duration: 0.9,
+            y: -14,
+            duration: 0.38,
             ease: "power2.inOut",
+            onComplete: () => word.classList.remove("is-current"),
           })
-
-          // Prepare next word
           .set(nextWord, {
             opacity: 0,
-            y: 26,
-            filter: "blur(6px)",
+            y: 14,
           })
-
-          // Enter next word
           .to(nextWord, {
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
-            duration: 1,
+            duration: 0.48,
             ease: "power3.out",
+            onStart: () => nextWord.classList.add("is-current"),
           });
       });
-
-      timeline.play();
-
-      return () => {
-        timeline.kill();
-      };
     }, rotator);
 
     return () => {
+      timelineRef.current?.kill();
+      timelineRef.current = null;
       ctx.revert();
     };
   }, []);
 
+  useEffect(() => {
+    timelineRef.current?.paused(
+      !docked || !isVisible || prefersReducedMotion,
+    );
+  }, [docked, isVisible, prefersReducedMotion]);
+
   return (
     <div
+      data-hero-ready={docked}
+      aria-hidden={!docked}
       className="
         relative
         z-20
@@ -113,15 +111,10 @@ const HeroContent = ({ docked }: HeroContentProps) => {
         text-center
         lg:text-left
       "
-      style={{
-        opacity: docked ? 1 : 0,
-        transform: docked ? "translateY(0)" : "translateY(20px)",
-        transition:
-          "opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1)",
-      }}
+      style={{ containerType: "inline-size" }}
     >
       {/* Heading */}
-      <div>
+      <div className="hero-reveal hero-reveal--heading">
         <h1
           className="
             text-4xl
@@ -143,11 +136,9 @@ const HeroContent = ({ docked }: HeroContentProps) => {
           ref={rotatorRef}
           className="
             relative
-            ml-7
-            sm:ml-10
-            md:ml-12
-            lg:ml-15
-            xl:ml-20
+            mx-auto
+            lg:mx-0
+            w-full
             mt-3
             h-[3.2rem]
             sm:h-[3.7rem]
@@ -160,31 +151,8 @@ const HeroContent = ({ docked }: HeroContentProps) => {
           {ROTATING_WORDS.map((word) => (
             <span
               key={word}
-              className="
-                hero-rotating-word
-                absolute
-                inset-x-0
-                top-0
-                whitespace-nowrap
-                text-3xl
-                sm:text-4xl
-                md:text-5xl
-                lg:text-[3.7rem]
-                xl:text-[4.1rem]
-                font-extrabold
-                leading-none
-                tracking-[-0.04em]
-                bg-linear-to-r
-                from-cyan-300
-                via-sky-400
-                to-blue-500
-                bg-clip-text
-                text-transparent
-                will-change-transform
-              "
-              style={{
-                textShadow: "0 0 35px rgba(56,189,248,0.10)",
-              }}
+             className="hero-rotating-word absolute inset-x-0 top-0 left-14 whitespace-nowrap font-extrabold leading-none tracking-[-0.04em] bg-linear-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent"
+              style={{ fontSize: "clamp(1.25rem, 11cqw, 3.5rem)" }}
             >
               {word}
             </span>
@@ -193,20 +161,7 @@ const HeroContent = ({ docked }: HeroContentProps) => {
       </div>
 
       {/* Description */}
-      <p
-        className="
-          mt-6
-          max-w-[540px]
-          mx-auto
-          lg:mx-0
-          px-2
-          sm:px-0
-          text-sm
-          sm:text-base
-          leading-[1.7]
-          text-white/55
-        "
-      >
+     <p className="hero-reveal hero-reveal--description mt-2 max-w-[540px] mx-auto lg:mx-0 px-2 sm:px-0 text-sm sm:text-base leading-[1.7] text-white/55">
         We design and engineer modern digital products,
         intelligent systems, and connected experiences —
         from web and mobile platforms to AI, IoT, robotics,
@@ -214,7 +169,7 @@ const HeroContent = ({ docked }: HeroContentProps) => {
       </p>
 
       {/* Social Proof */}
-      <div className="mt-5">
+      <div className="hero-reveal hero-reveal--proof mt-5">
         <SocialProof />
       </div>
 

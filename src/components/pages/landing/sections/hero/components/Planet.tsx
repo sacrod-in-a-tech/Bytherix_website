@@ -1,5 +1,7 @@
 import gsap from "gsap";
 import { useLayoutEffect, useRef } from "react";
+import { useReducedMotion } from "framer-motion";
+import { useAnimationVisibility } from "../../../../../../utils/useAnimationVisibility";
 
 interface PlanetProps {
     className?: string;
@@ -27,14 +29,14 @@ const Planet = ({
     zIndex = 50,
 }: PlanetProps) => {
     const planetRef = useRef<HTMLDivElement>(null);
+    const isVisible = useAnimationVisibility(planetRef);
+    const prefersReducedMotion = useReducedMotion() ?? false;
 
     useLayoutEffect(() => {
         const planet = planetRef.current;
         if (!planet) return;
 
         const ctx = gsap.context(() => {
-            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
             gsap.set(planet, {
                 x: 0,
                 y: 0,
@@ -43,7 +45,7 @@ const Planet = ({
                 force3D: true,
             });
 
-            if (reduceMotion) return;
+            if (prefersReducedMotion || !isVisible) return;
 
             gsap.to(planet, {
                 x: floatX,
@@ -59,7 +61,7 @@ const Planet = ({
         }, planet);
 
         return () => ctx.revert();
-    }, [floatX, floatY, duration, delay]);
+    }, [floatX, floatY, duration, delay, isVisible, prefersReducedMotion]);
 
     return (
         <div

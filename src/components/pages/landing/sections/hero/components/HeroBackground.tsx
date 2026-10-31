@@ -1,18 +1,29 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import Planet from "./Planet";
 
 const HeroTwister = lazy(() => import("./SpiralTwister"));
 
-const HeroBackground = () => {
+interface HeroBackgroundProps {
+  active: boolean;
+}
+
+const HeroBackground = ({ active }: HeroBackgroundProps) => {
   const [showTwister, setShowTwister] = useState(false);
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
+    if (!active || prefersReducedMotion) {
+      setShowTwister(false);
+      return;
+    }
+
     let frameId = requestAnimationFrame(() => {
       frameId = requestAnimationFrame(() => setShowTwister(true));
     });
 
     return () => cancelAnimationFrame(frameId);
-  }, []);
+  }, [active, prefersReducedMotion]);
 
   return (
     <div
@@ -56,82 +67,6 @@ const HeroBackground = () => {
         }}
       />
 
-      {/* Main blue atmosphere */}
-      <div
-        className="
-          absolute
-          left-[25%]
-          top-[4%]
-          z-[1]
-          h-[76%]
-          w-[55%]
-          rounded-full
-          blur-[160px]
-          opacity-50
-        "
-        style={{
-          background:
-            "color-mix(in srgb, var(--color-blue) 5%, transparent)",
-        }}
-      />
-
-      {/* Center blue glow */}
-      <div
-        className="
-          absolute
-          left-[36%]
-          top-[20%]
-          z-[1]
-          h-[34%]
-          w-[28%]
-          rounded-full
-          blur-[120px]
-          opacity-40
-        "
-        style={{
-          background:
-            "color-mix(in srgb, var(--color-blue) 4%, transparent)",
-        }}
-      />
-
-      {/* Lower-left subtle green atmosphere */}
-      <div
-        className="
-          absolute
-          -left-[4%]
-          bottom-[8%]
-          z-[1]
-          h-[26%]
-          w-[22%]
-          rounded-full
-          blur-[150px]
-          opacity-50
-        "
-        style={{
-          background:
-            "color-mix(in srgb, var(--color-green) 2%, transparent)",
-        }}
-      />
-
-      {/* Lower-right subtle red atmosphere */}
-      <div
-        className="
-          absolute
-          right-[2%]
-          bottom-[12%]
-          z-[1]
-          h-[18%]
-          w-[14%]
-          rounded-full
-          blur-[140px]
-          opacity-45
-        "
-        style={{
-          background:
-            "color-mix(in srgb, var(--color-red) 2%, transparent)",
-        }}
-      />
-
       {/* Top atmospheric light */}
       <div
         className="absolute inset-0 z-[1] h-full w-full"
@@ -158,7 +93,6 @@ const HeroBackground = () => {
           -translate-x-1/2
           -translate-y-1/2
           rounded-full
-          blur-[120px]
           opacity-80
         "
         style={{

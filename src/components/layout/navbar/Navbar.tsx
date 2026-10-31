@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import NavbarBrand from "./NavbarBrand";
@@ -10,7 +10,6 @@ export interface NavbarProps {
 }
 
 const Navbar = ({ docked }: NavbarProps) => {
-  const introPlayedRef = useRef(false);
   const navigate = useNavigate();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -157,6 +156,8 @@ const Navbar = ({ docked }: NavbarProps) => {
   return (
     <>
       <header
+        aria-hidden={!docked}
+        inert={!docked}
         className="
           sticky
           top-0
@@ -224,7 +225,6 @@ const Navbar = ({ docked }: NavbarProps) => {
           ========================== */}
           <NavbarBrand
             docked={docked}
-            introPlayedRef={introPlayedRef}
             onLogoClick={handleLogoClick}
           />
 

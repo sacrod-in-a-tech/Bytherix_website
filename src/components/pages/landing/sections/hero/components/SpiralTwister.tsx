@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 const DESKTOP_STRANDS = 120;
-const MOBILE_STRANDS = 64;
+const MOBILE_STRANDS = 40;
 
 const POINTS_PER_STRAND = 88;
 const DESKTOP_PARTICLE_COUNT = 700;
-const MOBILE_PARTICLE_COUNT = 360;
+const MOBILE_PARTICLE_COUNT = 240;
 
 type StrandPointData = {
     angle: number;
@@ -40,6 +40,8 @@ const HeroTwister = () => {
         if (!container || !canvas) return;
 
         const isMobile = window.innerWidth < 768;
+        const isLowEnd = isMobile || window.navigator.hardwareConcurrency <= 4;
+        const targetFrameInterval = isLowEnd ? 1000 / 30 : 1000 / 60;
         const reducedMotionQuery = window.matchMedia(
             "(prefers-reduced-motion: reduce)"
         );
@@ -618,6 +620,14 @@ const HeroTwister = () => {
             if (!isActive) return;
 
             const now = performance.now();
+            if (
+                lastFrameTime !== 0 &&
+                now - lastFrameTime < targetFrameInterval * 0.9
+            ) {
+                animationFrame = requestAnimationFrame(animate);
+                return;
+            }
+
             if (lastFrameTime !== 0) {
                 elapsedTime += (now - lastFrameTime) / 1000;
             }
