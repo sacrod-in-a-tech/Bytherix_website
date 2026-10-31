@@ -172,35 +172,6 @@ Products: [
   ],
 };
 
-export const introLetterVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 24,
-    filter: "blur(5px)",
-  },
-
-  visible: (index: number) => ({
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      delay: index * 0.035,
-      duration: 0.28,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
-
-export const INTRO_LETTERS = BRAND.length + TECHNOLOGY.length;
-
-export const INTRO_DURATION = 0.28;
-
-export const INTRO_STAGGER = (INTRO_LETTERS - 1) * 0.035;
-
-export const INTRO_FINISH = INTRO_STAGGER + INTRO_DURATION;
-
-export const INTRO_TOTAL_MS = Math.ceil((INTRO_FINISH + 0.45) * 1000);
-
 export const dropdownVariants: Variants = {
   hidden: {
     opacity: 0,

@@ -3,6 +3,7 @@ import {
   lazy,
   Suspense,
   useContext,
+  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -19,7 +20,7 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/layout/navbar/Navbar";
-import { INTRO_TOTAL_MS } from "./components/layout/navbar/constants/navbar.constants";
+import BrandIntro from "./components/layout/BrandIntro";
 import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import ThemeToggle from "./components/ui/ThemeToggle";
@@ -82,7 +83,17 @@ const AboutCompany = lazy(
   () => import("./components/pages/aboutcompany/AboutCompanyPage")
 );
 
-const SPLASH_KEY = "bytherix_splash_shown";
+const PrivacyPolicy = lazy(
+  () => import("./components/pages/legal/PrivacyPolicy")
+);
+
+const SalesAndRefunds = lazy(
+  () => import("./components/pages/legal/SalesAndRefunds")
+);
+
+const TermsOfUse = lazy(
+  () => import("./components/pages/legal/TermsOfUse")
+);
 
 /**
  * Routes that render as dedicated, full-viewport experiences with no site
@@ -158,8 +169,7 @@ function Layout() {
         <>
           <ThemeToggle />
           {/*
-            Navbar stays mounted while pages change,
-            so its intro animation does not restart on navigation.
+            Keep the navbar mounted while pages change to preserve its state.
           */}
           <Navbar docked={docked} />
         </>
@@ -200,6 +210,9 @@ function createAppRouter() {
         { path: "/our-story", element: <OurStoryPage /> },
         { path: "/blogs", element: <BlogsPage /> },
         { path: "/blogs/:slug", element: <BlogArticle /> },
+        { path: "/privacy-policy", element: <PrivacyPolicy /> },
+        { path: "/sales-and-refunds", element: <SalesAndRefunds /> },
+        { path: "/terms-of-use", element: <TermsOfUse /> },
         { path: "/login", element: <LoginPage /> },
         { path: "/register", element: <RegisterPage /> },
         { path: "*", element: <Navigate to="/" replace /> },
@@ -210,49 +223,48 @@ function createAppRouter() {
 
 const appRouter = createAppRouter();
 
-// ─── Root app ─────────────────────────────────────────────────────────────────
 
 function App() {
-  const initialDocked =
-    typeof sessionStorage !== "undefined" &&
-    sessionStorage.getItem(SPLASH_KEY) === "true";
+  const [introVisible, setIntroVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
 
-  const [docked, setDocked] = useState(initialDocked);
+    return (
+      window.location.pathname === "/" &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  });
+  const [docked, setDocked] = useState(() => !introVisible);
 
-  useEffect(() => {
-    if (initialDocked) {
-      return;
-    }
-
-    const introDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ? 0
-      : INTRO_TOTAL_MS;
-    const timer = window.setTimeout(() => {
-      setDocked(true);
-      sessionStorage.setItem(SPLASH_KEY, "true");
-    }, introDelay);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [initialDocked]);
+  const revealHome = useCallback(() => setDocked(true), []);
+  const completeIntro = useCallback(() => {
+    setDocked(true);
+    setIntroVisible(false);
+  }, []);
 
   return (
     <MotionConfig reducedMotion="user">
       <ThemeProvider>
         <AuthProvider>
           <DockedContext.Provider value={docked}>
-            <main className="relative min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
+            <main
+              aria-hidden={introVisible}
+              inert={introVisible}
+              className="relative min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]"
+            >
               <RouterProvider router={appRouter} />
             </main>
+            {introVisible && (
+              <BrandIntro
+                onRevealStart={revealHome}
+                onComplete={completeIntro}
+              />
+            )}
           </DockedContext.Provider>
         </AuthProvider>
       </ThemeProvider>
     </MotionConfig>
   );
 }
-
-// ─── Page-level loading fallback ─────────────────────────────────────────────
 
 function PageLoader() {
   return (
